@@ -370,6 +370,106 @@ body {
     opacity: 1;
     transform: translateY(0);
 }
+    @media (max-width: 768px) {
+    /* 1. Horizontal Scroll Hatane Ke Liye */
+    body, html {
+        overflow-x: hidden !important;
+        width: 100%;
+    }
+
+    /* 2. Hero Section & Text Settings */
+    .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-top: 100px;
+    }
+
+    .hero-text {
+        text-align: center;
+        margin-top: 20px;
+        z-index: 10;
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    .hero-title .title-main {
+        font-size: 3rem !important; /* Font size chhota kiya */
+        letter-spacing: 5px;
+        line-height: 1;
+    }
+
+    .hero-title .title-sub {
+        font-size: 1.2rem !important;
+        letter-spacing: 10px;
+        display: block;
+        margin-top: 10px;
+    }
+
+    .description {
+        font-size: 0.9rem !important;
+        max-width: 100%;
+        margin: 20px auto !important;
+    }
+
+    /* 3. Character (Itachi) Size for Mobile */
+    .character-wrapper {
+        position: relative;
+        margin-top: 30px;
+        width: 100%;
+        max-width: 320px; /* Phone pe itachi chhota dikhega */
+        height: auto;
+    }
+
+    .itachi-image {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
+
+    /* 4. Disable 3D Hover on Mobile (Kyunki phone pe mouse nahi hota) */
+    .hero-3d-item, .character-wrapper, .eyes-parallax {
+        transform: none !important;
+    }
+
+    /* 5. Cards & Grids ko ek ke niche ek lane ke liye */
+    .character-cards {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        padding: 20px;
+    }
+
+    .character-card {
+        width: 100%;
+        max-width: 340px;
+    }
+
+    .sharingan-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 0 20px;
+    }
+
+    .story-content, .sharingan-content {
+        padding: 30px 20px;
+        text-align: center;
+    }
+
+    /* 6. Footer Fixes for Mobile */
+    .footer-brand {
+        font-size: 2rem !important;
+    }
+
+    .footer-nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
 </style>
 
 </head>
