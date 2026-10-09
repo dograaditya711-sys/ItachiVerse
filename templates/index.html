@@ -22,6 +22,14 @@
 
 
 <style>
+    .navbar {
+    position: relative;
+    z-index: 9999 !important;
+}
+.menu {
+    position: relative;
+    z-index: 10000 !important;
+}
 /* =====================================================
    CINEMATIC ITACHI FORMATION
 ===================================================== */
@@ -370,7 +378,21 @@ body {
     opacity: 1;
     transform: translateY(0);
 }
-    @media (max-width: 768px) {
+/* =====================================================
+   DESKTOP (LAPTOP) VIEW - Default Navbar
+===================================================== */
+.menu {
+    display: none; /* Laptop par 3 line hide rahengi */
+}
+
+.nav-links {
+    display: flex; /* Laptop par link dikhenge */
+}
+
+/* =====================================================
+   MOBILE RESPONSIVENESS FIXES (PHONE KE LIYE)
+===================================================== */
+@media (max-width: 768px) {
     /* 1. Horizontal Scroll Hatane Ke Liye */
     body, html {
         overflow-x: hidden !important;
@@ -396,7 +418,7 @@ body {
     }
 
     .hero-title .title-main {
-        font-size: 3rem !important; /* Font size chhota kiya */
+        font-size: 3rem !important;
         letter-spacing: 5px;
         line-height: 1;
     }
@@ -419,7 +441,7 @@ body {
         position: relative;
         margin-top: 30px;
         width: 100%;
-        max-width: 320px; /* Phone pe itachi chhota dikhega */
+        max-width: 320px;
         height: auto;
     }
 
@@ -429,12 +451,12 @@ body {
         object-fit: contain;
     }
 
-    /* 4. Disable 3D Hover on Mobile (Kyunki phone pe mouse nahi hota) */
+    /* 4. Disable 3D Hover on Mobile */
     .hero-3d-item, .character-wrapper, .eyes-parallax {
         transform: none !important;
     }
 
-    /* 5. Cards & Grids ko ek ke niche ek lane ke liye */
+    /* 5. Cards & Grids */
     .character-cards {
         display: flex;
         flex-direction: column;
@@ -460,7 +482,7 @@ body {
         text-align: center;
     }
 
-    /* 6. Footer Fixes for Mobile */
+    /* 6. Footer Fixes */
     .footer-brand {
         font-size: 2rem !important;
     }
@@ -469,9 +491,12 @@ body {
         flex-direction: column;
         gap: 15px;
     }
-}
+
+    /* =====================================================
+       MOBILE MENU (PHONE PAR HAMBURGER MENU)
+    ===================================================== */
     .menu {
-        display: block;
+        display: block; /* Phone par 3 line dikhengi */
         cursor: pointer;
         font-size: 28px;
         color: #ffffff;
@@ -479,10 +504,10 @@ body {
     }
 
     .nav-links {
-        display: none; /* By default hide the links on mobile */
+        display: none !important; /* Phone par normal links hide rahenge */
         flex-direction: column;
         position: absolute;
-        top: 60px; /* Navbar ke theek niche */
+        top: 60px;
         left: 0;
         width: 100%;
         background: rgba(5, 5, 5, 0.95);
@@ -493,9 +518,8 @@ body {
         text-align: center;
     }
 
-    /* Jab javascript active class lagayega tab menu dikhega */
     .nav-links.active {
-        display: flex;
+        display: flex !important; /* Click karne par dikhenge */
     }
 
     .nav-links a {
@@ -504,6 +528,7 @@ body {
         font-size: 1.2rem;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
+}
 </style>
 
 </head>
@@ -2124,6 +2149,28 @@ document.addEventListener(
 
 </script>
 <script>
+    ===================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+    const menuBtn = document.querySelector('.menu');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (menuBtn && navLinks) {
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Touch ko block hone se rokega
+
+            navLinks.classList.toggle('active');
+
+            // Icon change effect (☰ to X)
+            if (navLinks.classList.contains('active')) {
+                menuBtn.innerHTML = '✕';
+                menuBtn.style.color = '#e50914'; // Red color
+            } else {
+                menuBtn.innerHTML = '☰';
+                menuBtn.style.color = '#ffffff'; // White color
+            }
+        });
+    }
+});
 /* =====================================================
    MOBILE MENU TOGGLE SCRIPT
 ===================================================== */
