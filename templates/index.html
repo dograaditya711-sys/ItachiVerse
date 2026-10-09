@@ -323,7 +323,7 @@ body {
 .dropdown {
     display: inline-block;
     position: relative;
-    /* माउस का होवर टूटने से बचाने के लिए एरिया थोड़ा बड़ा किया है */
+    /* माउस का होवर टूटने से बचाने के लिए एरिया थोड़ा बड़ा किया है */
     padding-bottom: 15px;
     margin-bottom: -15px;
 }
@@ -341,7 +341,7 @@ body {
     left: 0;
     border-radius: 4px;
     overflow: hidden;
-    transform: translateY(15px); /* हल्का सा नीचे से ऊपर आने का इफ़ेक्ट */
+    transform: translateY(15px); /* हल्का सा नीचे से ऊपर आने का इफ़ेक्ट */
     transition: all 0.3s ease;
 }
 
@@ -527,6 +527,59 @@ body {
         margin: 0;
         font-size: 1.2rem;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+}
+
+/* =====================================================
+   FINAL NAVBAR FIX (DESKTOP & MOBILE DONO KE LIYE NAYA CODE)
+===================================================== */
+
+/* 1. DESKTOP (LAPTOP) VIEW - Default */
+.navbar {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    position: relative;
+    z-index: 9999 !important;
+    width: 100%;
+}
+
+.nav-links {
+    display: flex !important; /* Laptop par links humesha dikhenge */
+    align-items: center;
+    gap: 15px;
+}
+
+.menu {
+    display: none !important; /* Laptop par 3 line humesha chhipi rahengi */
+}
+
+/* 2. MOBILE (PHONE) VIEW */
+@media (max-width: 768px) {
+    .menu {
+        display: block !important; /* Phone par 3 line dikhengi */
+        cursor: pointer;
+        font-size: 28px;
+        color: #ffffff;
+        z-index: 10000 !important;
+    }
+
+    .nav-links {
+        display: none !important; /* Phone par links shuru mein chhipe rahenge */
+        flex-direction: column !important;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: rgba(5, 5, 5, 0.98);
+        border-bottom: 2px solid #e50914;
+        padding: 20px 0;
+        z-index: 9999;
+    }
+
+    /* Jab button click hoga, tab ye class active hogi */
+    .nav-links.active {
+        display: flex !important; /* Phone par click karne ke baad links dikhenge */
     }
 }
 </style>
@@ -2149,7 +2202,9 @@ document.addEventListener(
 
 </script>
 <script>
-    ===================================================== */
+/* =====================================================
+   MOBILE MENU TOGGLE SCRIPT (100% WORKING)
+===================================================== */
 document.addEventListener('DOMContentLoaded', () => {
     const menuBtn = document.querySelector('.menu');
     const navLinks = document.querySelector('.nav-links');
@@ -2167,29 +2222,6 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 menuBtn.innerHTML = '☰';
                 menuBtn.style.color = '#ffffff'; // White color
-            }
-        });
-    }
-});
-/* =====================================================
-   MOBILE MENU TOGGLE SCRIPT
-===================================================== */
-document.addEventListener('DOMContentLoaded', () => {
-    const menuBtn = document.querySelector('.menu');
-    const navLinks = document.querySelector('.nav-links');
-
-    if (menuBtn && navLinks) {
-        menuBtn.addEventListener('click', () => {
-            // Click karne par menu open/close hoga
-            navLinks.classList.toggle('active');
-
-            // Icon change karne ka effect (☰ to X)
-            if (navLinks.classList.contains('active')) {
-                menuBtn.innerHTML = '✕';
-                menuBtn.style.color = '#e50914'; // Red color when open
-            } else {
-                menuBtn.innerHTML = '☰';
-                menuBtn.style.color = '#ffffff'; // White color when closed
             }
         });
     }
