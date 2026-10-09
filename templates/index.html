@@ -470,6 +470,40 @@ body {
         gap: 15px;
     }
 }
+    .menu {
+        display: block;
+        cursor: pointer;
+        font-size: 28px;
+        color: #ffffff;
+        z-index: 1001;
+    }
+
+    .nav-links {
+        display: none; /* By default hide the links on mobile */
+        flex-direction: column;
+        position: absolute;
+        top: 60px; /* Navbar ke theek niche */
+        left: 0;
+        width: 100%;
+        background: rgba(5, 5, 5, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 20px 0;
+        border-bottom: 2px solid #e50914;
+        z-index: 1000;
+        text-align: center;
+    }
+
+    /* Jab javascript active class lagayega tab menu dikhega */
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links a {
+        padding: 15px;
+        margin: 0;
+        font-size: 1.2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
 </style>
 
 </head>
@@ -2087,7 +2121,26 @@ document.addEventListener(
 
     }
 );
+===================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+    const menuBtn = document.querySelector('.menu');
+    const navLinks = document.querySelector('.nav-links');
 
+    if (menuBtn && navLinks) {
+        menuBtn.addEventListener('click', () => {
+            // Click karne par menu open/close hoga
+            navLinks.classList.toggle('active');
+
+            // Icon change karne ka effect (☰ to X)
+            if (navLinks.classList.contains('active')) {
+                menuBtn.innerHTML = '✕';
+                menuBtn.style.color = '#e50914'; // Red color when open
+            } else {
+                menuBtn.innerHTML = '☰';
+                menuBtn.style.color = '#ffffff'; // White color when closed
+            }
+        });
+    }
 </script>
 
 
