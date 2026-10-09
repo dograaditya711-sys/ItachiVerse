@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sharingan | ItachiVerse</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/pages.css') }}">
+
+</head>
+
+<body class="detail-page">
+
+<header class="detail-nav">
+
+    <a href="{{ url_for('home') }}" class="detail-logo">
+        ITACHI<span>VERSE</span>
+    </a>
+
+    <nav>
+        <a href="{{ url_for('home') }}">HOME</a>
+        <a href="{{ url_for('story') }}">STORY</a>
+        <a href="{{ url_for('characters') }}">CHARACTERS</a>
+        <a href="{{ url_for('explore') }}">EXPLORE</a>
+    </nav>
+
+</header>
+
+
+<section class="detail-hero">
+
+    <div class="detail-image">
+
+        <img
+            src="{{ url_for('static', filename='images/sharingan.png') }}"
+            alt="Sharingan">
+
+    </div>
+
+
+    <div class="detail-text">
+
+        <p class="detail-kicker">
+            DŌJUTSU
+        </p>
+
+        <h1>
+            SHARINGAN
+        </h1>
+
+        <h3>
+            THE EYE OF PERCEPTION
+        </h3>
+
+        <p>
+            The Sharingan is a dōjutsu associated with the
+            Uchiha clan. It allows its users to perceive
+            movements, copy certain techniques and see
+            chakra in ways ordinary shinobi cannot.
+        </p>
+
+        <p>
+            Its abilities develop through different stages,
+            with the Mangekyō Sharingan representing an
+            advanced evolution of the dōjutsu.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="detail-info">
+
+    <div>
+        <small>TYPE</small>
+        <strong>DŌJUTSU</strong>
+    </div>
+
+    <div>
+        <small>CLAN</small>
+        <strong>UCHIHA</strong>
+    </div>
+
+    <div>
+        <small>ABILITY</small>
+        <strong>PERCEPTION</strong>
+    </div>
+
+    <div>
+        <small>EVOLUTION</small>
+        <strong>MANGEKYŌ</strong>
+    </div>
+
+</section>
+
+
+<section class="detail-story">
+
+    <p>ABILITIES</p>
+
+    <h2>
+        THE EYES<br>
+        THAT SEE<br>
+        EVERYTHING.
+    </h2>
+
+    <p>
+        The Sharingan is associated with enhanced perception,
+        visual analysis and several powerful techniques.
+        Its development is closely connected with the history
+        of the Uchiha clan.
+    </p>
+
+</section>
+
+
+<section class="detail-ending">
+
+    <h2>
+        EVERY EYE<br>
+        HAS A STORY.
+    </h2>
+
+    <a href="{{ url_for('explore') }}">
+        ← BACK TO EXPLORE
+    </a>
+
+</section>
+
+</body>
+</html>

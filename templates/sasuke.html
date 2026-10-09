@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sasuke Uchiha | ItachiVerse</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/pages.css') }}">
+</head>
+
+<body class="detail-page">
+
+<header class="detail-nav">
+
+    <a href="{{ url_for('home') }}" class="detail-logo">
+        ITACHI<span>VERSE</span>
+    </a>
+
+    <nav>
+        <a href="{{ url_for('home') }}">HOME</a>
+        <a href="{{ url_for('story') }}">STORY</a>
+        <a href="{{ url_for('characters') }}">CHARACTERS</a>
+        <a href="{{ url_for('explore') }}">EXPLORE</a>
+    </nav>
+
+</header>
+
+
+<section class="detail-hero">
+
+    <div class="detail-image">
+        <img src="{{ url_for('static', filename='images/sasuke.png') }}"
+             alt="Sasuke Uchiha">
+    </div>
+
+    <div class="detail-text">
+
+        <p class="detail-kicker">
+            UCHIHA CLAN
+        </p>
+
+        <h1>
+            SASUKE
+            <span>UCHIHA</span>
+        </h1>
+
+        <h3>
+            THE LAST SURVIVOR OF A BROKEN CLAN
+        </h3>
+
+        <p>
+            Sasuke Uchiha is the younger brother of Itachi Uchiha
+            and one of the central characters of Naruto.
+            After surviving the destruction of the Uchiha clan,
+            Sasuke dedicated himself to becoming powerful enough
+            to confront his brother.
+        </p>
+
+        <p>
+            His journey moves from revenge and hatred toward
+            understanding, identity and his place in the shinobi world.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="detail-info">
+
+    <div>
+        <small>CLAN</small>
+        <strong>UCHIHA</strong>
+    </div>
+
+    <div>
+        <small>VILLAGE</small>
+        <strong>KONOHA</strong>
+    </div>
+
+    <div>
+        <small>DOUJUTSU</small>
+        <strong>SHARINGAN</strong>
+    </div>
+
+    <div>
+        <small>KNOWN FOR</small>
+        <strong>RINNEGAN</strong>
+    </div>
+
+</section>
+
+
+<section class="detail-story">
+
+    <p>THE JOURNEY</p>
+
+    <h2>
+        FROM REVENGE<br>
+        TO UNDERSTANDING
+    </h2>
+
+    <p>
+        Sasuke's story is deeply connected to Itachi,
+        the Uchiha clan and the history of the Hidden Leaf.
+        His decisions repeatedly place him between revenge,
+        loyalty and the future of the shinobi world.
+    </p>
+
+</section>
+
+
+<section class="detail-ending">
+
+    <h2>
+        THE SHADOW OF ITACHI
+        NEVER LEFT HIM.
+    </h2>
+
+    <a href="{{ url_for('characters') }}">
+        ← BACK TO CHARACTERS
+    </a>
+
+</section>
+
+</body>
+</html>

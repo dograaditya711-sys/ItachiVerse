@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ItachiVerse — The Story</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/story.css') }}">
+
+</head>
+
+
+<body class="story-page">
+
+
+<!-- =====================================================
+     3D BACKGROUND
+===================================================== -->
+
+<div id="story-canvas"></div>
+
+<div class="cinematic-vignette"></div>
+
+<div class="scanlines"></div>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="story-nav">
+
+    <a href="{{ url_for('home') }}" class="story-logo">
+        ITACHI<span>VERSE</span>
+    </a>
+
+
+    <nav>
+
+        <a href="{{ url_for('home') }}">
+            HOME
+        </a>
+
+        <a href="{{ url_for('story') }}" class="active">
+            STORY
+        </a>
+
+        <a href="{{ url_for('characters') }}">
+            CHARACTERS
+        </a>
+
+        <a href="{{ url_for('explore') }}">
+            EXPLORE
+        </a>
+<a href="{{ url_for('shinobi') }}" class="database-btn">
+        <span>ENTER SHINOBI DATABASE</span>
+        <b>→</b>
+    </a>
+
+    </nav>
+
+</header>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="story-hero">
+
+
+    <div class="hero-orbit">
+
+        <div class="hero-ring ring-one"></div>
+        <div class="hero-ring ring-two"></div>
+        <div class="hero-ring ring-three"></div>
+
+        <div class="chakra-core">
+
+            <div class="chakra-eye"></div>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-copy">
+
+        <span class="hero-small">
+            THE CHRONICLES OF THE UCHIHA
+        </span>
+
+
+        <p class="hero-japanese">
+            暁の影
+        </p>
+
+
+        <h1>
+
+            THE STORY OF
+
+            <span>
+                ITACHI UCHIHA
+            </span>
+
+        </h1>
+
+
+        <p class="hero-description">
+
+            A journey through the life of a shinobi
+            whose choices became one of the most
+            complicated chapters in the history of
+            the Uchiha clan.
+
+        </p>
+
+
+        <div class="hero-scroll">
+
+            <span></span>
+
+            SCROLL TO ENTER
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     INTRO
+===================================================== -->
+
+<section class="story-introduction">
+
+
+    <div class="section-label">
+        00 / PROLOGUE
+    </div>
+
+
+    <div class="intro-grid">
+
+
+        <div>
+
+            <p class="red-text">
+                THE SHADOW
+            </p>
+
+            <h2>
+                BEFORE THE
+                <span>LEGEND</span>
+                BECAME A STORY.
+            </h2>
+
+        </div>
+
+
+        <div>
+
+            <p>
+
+                Itachi Uchiha's story is connected to the
+                Uchiha clan, Konohagakure, the ANBU,
+                Akatsuki and most importantly his younger
+                brother Sasuke.
+
+            </p>
+
+            <p>
+
+                The following chapters present a
+                chronological, fictional-universe overview
+                of the events surrounding his life.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     TIMELINE
+===================================================== -->
+
+<section class="story-timeline-section">
+
+
+    <div class="timeline-heading">
+
+        <span>
+            CHRONICLES
+        </span>
+
+        <h2>
+            THE SHADOWED
+            <strong>PATH</strong>
+        </h2>
+
+        <p>
+            Follow the chapters.
+        </p>
+
+    </div>
+
+
+    <div class="story-line"></div>
+
+
+    <!-- 01 -->
+
+    <article class="story-card"
+             data-story="childhood">
+
+        <div class="story-card-number">
+            01
+        </div>
+
+
+        <div class="story-card-image">
+
+            <div class="image-glow"></div>
+
+            <img
+                src="{{ url_for('static', filename='images/itachi-face.png') }}"
+                alt="Itachi">
+
+        </div>
+
+
+        <div class="story-card-content">
+
+            <span>
+                UCHIHA
+            </span>
+
+            <h2>
+                THE PRODIGY
+            </h2>
+
+            <p>
+
+                A young Itachi begins his journey
+                inside the Uchiha clan and quickly
+                develops an unusual understanding
+                of the shinobi world.
+
+            </p>
+
+            <a href="{{ url_for('story_detail', slug='childhood') }}">
+
+                ENTER CHAPTER
+
+                <b>→</b>
+
+            </a>
+
+        </div>
+
+    </article>
+
+
+
+    <!-- 02 -->
+
+    <article class="story-card reverse"
+             data-story="war">
+
+
+        <div class="story-card-number">
+            02
+        </div>
+
+
+        <div class="story-card-image">
+
+            <div class="image-glow"></div>
+
+            <img
+                src="{{ url_for('static', filename='images/itachi-eyes.png') }}"
+                alt="Itachi">
+
+        </div>
+
+
+        <div class="story-card-content">
+
+            <span>
+                WAR
+            </span>
+
+            <h2>
+                THE SHINOBI WORLD
+            </h2>
+
+            <p>
+
+                His experiences with conflict shape
+                his understanding of violence,
+                sacrifice and the meaning of peace.
+
+            </p>
+
+            <a href="{{ url_for('story_detail', slug='war') }}">
+
+                ENTER CHAPTER
+
+                <b>→</b>
+
+            </a>
+
+        </div>
+
+    </article>
+
+
+
+    <!-- 03 -->
+
+    <article class="story-card"
+             data-story="anbu">
+
+
+        <div class="story-card-number">
+            03
+        </div>
+
+
+        <div class="story-card-image">
+
+            <div class="image-glow"></div>
+
+            <img
+                src="{{ url_for('static', filename='images/itachi.png') }}"
+                alt="Itachi">
+
+        </div>
+
+
+        <div class="story-card-content">
+
+            <span>
+                ANBU
+            </span>
+
+            <h2>
+                THE MASKED SHINOBI
+            </h2>
+
+            <p>
+
+                Itachi enters the ANBU and becomes
+                involved in increasingly complex
+                political and clan tensions.
+
+            </p>
+
+            <a href="{{ url_for('story_detail', slug='anbu') }}">
+
+                ENTER CHAPTER
+
+                <b>→</b>
+
+            </a>
+
+        </div>
+
+    </article>
+
+
+
+    <!-- 04 -->
+
+    <article class="story-card reverse"
+             data-story="uchiha">
+
+
+        <div class="story-card-number">
+            04
+        </div>
+
+
+        <div class="story-card-image">
+
+            <div class="image-glow"></div>
+
+            <img
+                src="{{ url_for('static', filename='images/uchiha.png') }}"
+                alt="Uchiha">
+
+        </div>
+
+
+        <div class="story-card-content">
+
+            <span>
+                CLAN
+            </span>
+
+            <h2>
+                THE UCHIHA CRISIS
+            </h2>
+
+            <p>
+
+                Tensions between the Uchiha clan
+                and Konoha reach a critical point.
+
+            </p>
+
+            <a href="{{ url_for('story_detail', slug='uchiha') }}">
+
+                ENTER CHAPTER
+
+                <b>→</b>
+
+            </a>
+
+        </div>
+
+    </article>
+
+
+
+    <!-- 05 -->
+
+    <article class="story-card"
+             data-story="night">
+
+
+        <div class="story-card-number">
+            05
+        </div>
+
+
+        <div class="story-card-image">
+
+            <div class="image-glow"></div>
+
+            <img
+                src="{{ url_for('static', filename='images/itachi-face.png') }}"
+                alt="Itachi">
+
+        </div>
+
+
+        <div class="story-card-content">
+
+            <span>
+                TRAGEDY
+            </span>
+
+            <h2>
+                THE NIGHT OF THE CLAN
+            </h2>
+
+            <p>
+
+                The destruction of the Uchiha clan
+                becomes the defining tragedy of
+                Itachi's life.
+
+            </p>
+
+            <a href="{{ url_for('story_detail', slug='night') }}">
+
+                ENTER CHAPTER
+
+                <b>→</b>
+
+            </a>
+
+        </div>
+
+    </article>
+
+
+
+    <!-- 06 -->
+
+    <article class="story-card reverse"
+             data-story="sacrifice">
+
+
+        <div class="story-card-number">
+            06
+        </div>
+
+
+        <div class="story-card-image">
+
+            <div class="image-glow"></div>
+
+            <img
+                src="{{ url_for('static', filename='images/itachi-eyes.png') }}"
+                alt="Sharingan">
+
+        </div>
+
+
+        <div class="story-card-content">
+
+            <span>
+                SACRIFICE
+            </span>
+
+            <h2>
+                THE BROTHER
+            </h2>
+
+            <p>
+
+                Much of Itachi's actions are connected
+                to his relationship with Sasuke.
+
+            </p>
+
+            <a href="{{ url_for('story_detail', slug='sacrifice') }}">
+
+                ENTER CHAPTER
+
+                <b>→</b>
+
+            </a>
+
+        </div>
+
+    </article>
+
+
+
+    <!-- 07 -->
+
+    <article class="story-card"
+             data-story="akatsuki">
+
+
+        <div class="story-card-number">
+            07
+        </div>
+
+
+        <div class="story-card-image">
+
+            <div class="image-glow"></div>
+
+            <img
+                src="{{ url_for('static', filename='images/akatsuki.png') }}"
+                alt="Akatsuki">
+
+        </div>
+
+
+        <div class="story-card-content">
+
+            <span>
+                AKATSUKI
+            </span>
+
+            <h2>
+                THE RED CLOUD
+            </h2>
+
+            <p>
+
+                Itachi joins Akatsuki and works
+                alongside Kisame while continuing
+                to operate in the shadows.
+
+            </p>
+
+            <a href="{{ url_for('story_detail', slug='akatsuki') }}">
+
+                ENTER CHAPTER
+
+                <b>→</b>
+
+            </a>
+
+        </div>
+
+    </article>
+
+
+
+    <!-- 08 -->
+
+    <article class="story-card reverse"
+             data-story="sasuke">
+
+
+        <div class="story-card-number">
+            08
+        </div>
+
+
+        <div class="story-card-image">
+
+            <div class="image-glow"></div>
+
+            <img
+                src="{{ url_for('static', filename='images/sasuke.png') }}"
+                alt="Sasuke">
+
+        </div>
+
+
+        <div class="story-card-content">
+
+            <span>
+                BROTHERHOOD
+            </span>
+
+            <h2>
+                THE LAST ENCOUNTER
+            </h2>
+
+            <p>
+
+                The relationship between Itachi
+                and Sasuke reaches its final stage.
+
+            </p>
+
+            <a href="{{ url_for('story_detail', slug='sasuke') }}">
+
+                ENTER CHAPTER
+
+                <b>→</b>
+
+            </a>
+
+        </div>
+
+    </article>
+
+
+
+    <!-- 09 -->
+
+    <article class="story-card"
+             data-story="truth">
+
+
+        <div class="story-card-number">
+            09
+        </div>
+
+
+        <div class="story-card-image">
+
+            <div class="image-glow"></div>
+
+            <img
+                src="{{ url_for('static', filename='images/itachi-face.png') }}"
+                alt="Itachi">
+
+        </div>
+
+
+        <div class="story-card-content">
+
+            <span>
+                TRUTH
+            </span>
+
+            <h2>
+                WHAT REMAINED
+            </h2>
+
+            <p>
+
+                Sasuke eventually learns more about
+                the circumstances surrounding his
+                brother and the Uchiha tragedy.
+
+            </p>
+
+            <a href="{{ url_for('story_detail', slug='truth') }}">
+
+                ENTER CHAPTER
+
+                <b>→</b>
+
+            </a>
+
+        </div>
+
+    </article>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     3D CHAKRA SECTION
+===================================================== -->
+
+<section class="chakra-section">
+
+
+    <div class="chakra-copy">
+
+        <span>
+            THE EYE OF THE UCHIHA
+        </span>
+
+        <h2>
+            A WORLD
+            <strong>BEYOND SHADOW.</strong>
+        </h2>
+
+        <p>
+
+            Move your cursor around the scene.
+            The chakra core reacts to your movement.
+
+        </p>
+
+    </div>
+
+
+    <div class="chakra-stage">
+
+        <div class="chakra-orb-large">
+
+            <div class="orb-ring"></div>
+
+            <div class="orb-ring second"></div>
+
+            <div class="orb-core"></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FINAL
+===================================================== -->
+
+<section class="story-ending">
+
+
+    <span>
+        THE END OF ONE CHAPTER
+    </span>
+
+
+    <h2>
+
+        THE SHADOW
+        <br>
+
+        REMAINS.
+
+    </h2>
+
+
+    <p>
+
+        Some stories end.
+        Their consequences do not.
+
+    </p>
+
+
+    <a href="{{ url_for('characters') }}">
+
+        EXPLORE THE CHARACTERS
+
+        <b>→</b>
+
+    </a>
+
+
+</section>
+
+
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
+</script>
+
+
+<script
+    src="{{ url_for('static', filename='js/story.js') }}">
+</script>
+
+
+</body>
+
+</html>

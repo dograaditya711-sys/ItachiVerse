@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Madara Uchiha | ItachiVerse</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/pages.css') }}">
+
+
+<style>
+/* Added visual layer — existing classes/code remain untouched */
+.madara-gallery-card.featured-card{position:relative;overflow:hidden;}
+.gallery-eyes-visual{position:absolute;inset:0 0 auto 0;height:52%;z-index:0;overflow:hidden;pointer-events:none;background:#080305;}
+.gallery-eyes-visual img{width:100%;height:100%;display:block;object-fit:cover;object-position:center;filter:saturate(1.25) contrast(1.12) brightness(.78);transform:scale(1.08);animation:madaraEyesFloat 7s ease-in-out infinite;}
+.eyes-red-glow{position:absolute;inset:-30%;z-index:1;background:radial-gradient(circle,rgba(255,0,0,.35),transparent 55%);mix-blend-mode:screen;animation:madaraEyeGlow 3.2s ease-in-out infinite;}
+.eyes-scanline{position:absolute;inset:0;z-index:2;background:repeating-linear-gradient(to bottom,transparent 0,transparent 4px,rgba(255,0,0,.055) 5px,transparent 6px);opacity:.7;animation:scanMove 5s linear infinite;}
+.eyes-vignette{position:absolute;inset:0;z-index:3;background:radial-gradient(circle at center,transparent 35%,rgba(0,0,0,.72) 100%);}
+.featured-card .gallery-image{position:relative;z-index:4;margin-top:52%;}
+@keyframes madaraEyesFloat{0%,100%{transform:scale(1.08) translate3d(0,0,0);}50%{transform:scale(1.13) translate3d(-1%,1%,0);}}
+@keyframes madaraEyeGlow{0%,100%{opacity:.45;transform:scale(.9);}50%{opacity:.95;transform:scale(1.08);}}
+@keyframes scanMove{from{transform:translateY(-8%);}to{transform:translateY(8%);}}
+@media(max-width:700px){.gallery-eyes-visual{height:46%;}.featured-card .gallery-image{margin-top:46%;}}
+</style>
+
+</head>
+
+
+<body class="madara-page">
+
+<!-- =========================================================
+     CINEMATIC BACKGROUND
+========================================================= -->
+
+<div class="madara-bg">
+
+    <div class="red-glow glow-one"></div>
+    <div class="red-glow glow-two"></div>
+    <div class="red-glow glow-three"></div>
+
+    <div class="chakra-orb orb-one"></div>
+    <div class="chakra-orb orb-two"></div>
+    <div class="chakra-orb orb-three"></div>
+
+    <div class="blood-moon"></div>
+
+</div>
+
+
+<!-- PARTICLE CANVAS -->
+
+<canvas id="madaraParticles"></canvas>
+
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<header class="detail-nav madara-nav">
+
+    <a href="{{ url_for('home') }}"
+       class="detail-logo">
+
+        ITACHI<span>VERSE</span>
+
+    </a>
+
+
+    <nav>
+
+        <a href="{{ url_for('home') }}">
+            HOME
+        </a>
+
+        <a href="{{ url_for('story') }}">
+            STORY
+        </a>
+
+        <a href="{{ url_for('characters') }}">
+            CHARACTERS
+        </a>
+
+        <a href="{{ url_for('explore') }}">
+            EXPLORE
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- =========================================================
+     FLOATING 3D NINJA SYMBOL
+========================================================= -->
+
+<div class="ninja-3d">
+
+    <div class="shuriken">
+
+        <div class="blade blade-1"></div>
+        <div class="blade blade-2"></div>
+        <div class="blade blade-3"></div>
+        <div class="blade blade-4"></div>
+
+        <div class="shuriken-core"></div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="madara-hero">
+
+    <div class="hero-noise"></div>
+    <div class="hero-grid"></div>
+
+
+    <!-- ROTATING SHARINGAN -->
+
+    <div class="madara-eye-orbit">
+
+        <div class="orbit-ring ring-one"></div>
+        <div class="orbit-ring ring-two"></div>
+        <div class="orbit-ring ring-three"></div>
+
+        <div class="orbit-core">
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN IMAGE -->
+
+    <div class="madara-hero-image parallax-image">
+
+        <div class="image-shadow"></div>
+
+        <div class="image-red-aura"></div>
+
+        <img
+            src="{{ url_for('static', filename='images/madara.png') }}"
+            alt="Madara Uchiha"
+        >
+
+    </div>
+
+
+    <!-- HERO TEXT -->
+
+    <div class="madara-hero-content">
+
+        <span class="hero-index">
+            03 / THE LEGEND
+        </span>
+
+
+        <h1>
+            MADARA
+            <span>UCHIHA</span>
+        </h1>
+
+
+        <div class="hero-line"></div>
+
+
+        <p class="hero-title">
+            THE SHADOW THAT CHANGED
+            THE SHINOBI WORLD
+        </p>
+
+
+        <p class="hero-description">
+
+            One of the most influential figures in the
+            history of the Uchiha clan. His vision of
+            peace, power and conflict shaped generations
+            of shinobi.
+
+        </p>
+
+
+        <a href="#legacy"
+           class="hero-button">
+
+            ENTER HIS LEGACY
+
+            <span>↓</span>
+
+        </a>
+
+    </div>
+
+
+    <div class="scroll-indicator">
+
+        <span>
+            SCROLL TO DISCOVER
+        </span>
+
+        <i></i>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     INTRO
+========================================================= -->
+
+<section class="madara-intro reveal">
+
+    <div class="section-number">
+        01
+    </div>
+
+
+    <div class="intro-heading">
+
+        <p>
+            THE UCHIHA LEGEND
+        </p>
+
+        <h2>
+            POWER<br>
+            WITHOUT<br>
+            LIMITS.
+        </h2>
+
+    </div>
+
+
+    <div class="intro-copy">
+
+        <p>
+            Madara Uchiha was one of the founders of
+            Konohagakure alongside Hashirama Senju.
+        </p>
+
+        <p>
+            His interpretation of peace eventually
+            separated him from the path chosen by the
+            village.
+        </p>
+
+        <p>
+            His name became permanently connected with
+            the history of the Uchiha and the shinobi
+            world.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     MADARA IMAGE GALLERY
+========================================================= -->
+
+<section class="madara-gallery reveal">
+
+    <div class="gallery-heading">
+
+        <span>
+            02 / VISUAL CHRONICLE
+        </span>
+
+        <h2>
+            THE MANY FACES<br>
+            OF MADARA
+        </h2>
+
+        <p>
+            Three visions of the Uchiha legend.
+        </p>
+
+    </div>
+
+
+    <div class="madara-gallery-grid">
+
+
+        <!-- IMAGE 01 -->
+
+        <article class="madara-gallery-card tilt-card">
+
+            <div class="gallery-card-number">
+                01
+            </div>
+
+            <div class="gallery-image">
+
+                <div class="gallery-glow"></div>
+
+                <img
+                    src="{{ url_for('static', filename='images/madara-akatsuki.png') }}"
+                    alt="Madara Akatsuki"
+                >
+
+            </div>
+
+            <div class="gallery-card-info">
+
+                <span>
+                    THE SHADOW
+                </span>
+
+                <h3>
+                    AKATSUKI
+                </h3>
+
+                <p>
+                    The dark silhouette of the Uchiha
+                    emerging from the shadows.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <!-- IMAGE 02 -->
+
+        <article class="madara-gallery-card tilt-card featured-card">
+
+
+    <!-- EXTRA MADARA EYES VISUAL -->
+    <div class="gallery-eyes-visual" aria-hidden="true">
+        <div class="eyes-red-glow"></div>
+        <img
+            src="{{ url_for('static', filename='images/madara-eyes.png') }}"
+            alt=""
+        >
+        <div class="eyes-scanline"></div>
+        <div class="eyes-vignette"></div>
+    </div>
+
+            <div class="gallery-card-number">
+                02
+            </div>
+
+            <div class="gallery-image">
+
+                <div class="gallery-glow"></div>
+
+                <img
+                    src="{{ url_for('static', filename='images/madara-sword.png') }}"
+                    alt="Madara with sword"
+                >
+
+            </div>
+
+            <div class="gallery-card-info">
+
+                <span>
+                    THE WARRIOR
+                </span>
+
+                <h3>
+                    BATTLE READY
+                </h3>
+
+                <p>
+                    A legendary shinobi prepared to enter
+                    the battlefield.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <!-- IMAGE 03 -->
+
+        <article class="madara-gallery-card tilt-card">
+
+            <div class="gallery-card-number">
+                03
+            </div>
+
+            <div class="gallery-image">
+
+                <div class="gallery-glow"></div>
+
+                <img
+                    src="{{ url_for('static', filename='images/madara-war.png') }}"
+                    alt="Madara war armor"
+                >
+
+            </div>
+
+            <div class="gallery-card-info">
+
+                <span>
+                    THE WAR LORD
+                </span>
+
+                <h3>
+                    UCHIHA POWER
+                </h3>
+
+                <p>
+                    The armored presence that became a symbol
+                    of overwhelming power.
+                </p>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     3D MADARA DEPTH SECTION
+========================================================= -->
+
+<section class="madara-depth-section">
+
+    <div class="depth-background-text">
+        MADARA
+    </div>
+
+
+    <div class="depth-image-wrapper">
+
+        <div class="depth-ring ring-a"></div>
+        <div class="depth-ring ring-b"></div>
+        <div class="depth-ring ring-c"></div>
+
+        <div class="chakra-pulse"></div>
+
+        <img
+            src="{{ url_for('static', filename='images/madara-war.png') }}"
+            alt="Madara Uchiha"
+            class="depth-madara"
+        >
+
+        <div class="depth-light"></div>
+
+    </div>
+
+
+    <div class="depth-caption">
+
+        <span>
+            THE GHOST OF THE UCHIHA
+        </span>
+
+        <h2>
+            A NAME<br>
+            THAT SURVIVED<br>
+            THE AGES.
+        </h2>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     STATS
+========================================================= -->
+
+<section class="madara-stats reveal">
+
+    <div class="stat-card">
+
+        <small>
+            CLAN
+        </small>
+
+        <strong>
+            UCHIHA
+        </strong>
+
+        <span>
+            THE BLOODLINE
+        </span>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <small>
+            RIVAL
+        </small>
+
+        <strong>
+            HASHIRAMA
+        </strong>
+
+        <span>
+            THE GOD OF SHINOBI
+        </span>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <small>
+            DOJUTSU
+        </small>
+
+        <strong>
+            RINNEGAN
+        </strong>
+
+        <span>
+            THE EYE OF POWER
+        </span>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <small>
+            LEGACY
+        </small>
+
+        <strong>
+            LEGEND
+        </strong>
+
+        <span>
+            BEYOND GENERATIONS
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     POWERS
+========================================================= -->
+
+<section class="madara-powers reveal">
+
+    <div class="powers-heading">
+
+        <span>
+            03 / ABILITIES
+        </span>
+
+        <h2>
+            THE POWER<br>
+            OF MADARA
+        </h2>
+
+    </div>
+
+
+    <div class="power-grid">
+
+
+        <article class="power-card">
+
+            <div class="power-number">
+                01
+            </div>
+
+            <div class="power-icon">
+                ◉
+            </div>
+
+            <h3>
+                SHARINGAN
+            </h3>
+
+            <p>
+                The characteristic dōjutsu of the
+                Uchiha clan, granting extraordinary
+                visual perception.
+            </p>
+
+            <span class="power-line"></span>
+
+        </article>
+
+
+        <article class="power-card">
+
+            <div class="power-number">
+                02
+            </div>
+
+            <div class="power-icon">
+                ◉
+            </div>
+
+            <h3>
+                MANGEKYŌ
+            </h3>
+
+            <p>
+                An advanced evolution of the
+                Sharingan associated with powerful
+                techniques.
+            </p>
+
+            <span class="power-line"></span>
+
+        </article>
+
+
+        <article class="power-card">
+
+            <div class="power-number">
+                03
+            </div>
+
+            <div class="power-icon">
+                ◎
+            </div>
+
+            <h3>
+                RINNEGAN
+            </h3>
+
+            <p>
+                A legendary dōjutsu connected with
+                immense abilities and ancient power.
+            </p>
+
+            <span class="power-line"></span>
+
+        </article>
+
+
+        <article class="power-card">
+
+            <div class="power-number">
+                04
+            </div>
+
+            <div class="power-icon">
+                ✦
+            </div>
+
+            <h3>
+                SUSANOO
+            </h3>
+
+            <p>
+                A gigantic chakra construct associated
+                with the Mangekyō Sharingan.
+            </p>
+
+            <span class="power-line"></span>
+
+        </article>
+
+
+        <article class="power-card">
+
+            <div class="power-number">
+                05
+            </div>
+
+            <div class="power-icon">
+                ◈
+            </div>
+
+            <h3>
+                METEOR
+            </h3>
+
+            <p>
+                Madara demonstrated destructive
+                techniques on a scale capable of
+                overwhelming entire battlefields.
+            </p>
+
+            <span class="power-line"></span>
+
+        </article>
+
+
+        <article class="power-card">
+
+            <div class="power-number">
+                06
+            </div>
+
+            <div class="power-icon">
+                ∞
+            </div>
+
+            <h3>
+                CHAKRA
+            </h3>
+
+            <p>
+                His enormous chakra reserves became
+                one of the defining elements of his
+                legendary reputation.
+            </p>
+
+            <span class="power-line"></span>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FLOATING MADARA
+========================================================= -->
+
+<section class="madara-floating-section">
+
+    <div class="floating-copy">
+
+        <span>
+            UCHIHA
+        </span>
+
+        <h2>
+            FEAR<br>
+            THE<br>
+            SHADOW.
+        </h2>
+
+    </div>
+
+
+    <div class="floating-character">
+
+        <div class="character-aura"></div>
+
+        <img
+            src="{{ url_for('static', filename='images/madara-akatsuki.png') }}"
+            alt="Madara"
+        >
+
+    </div>
+
+
+    <div class="floating-symbol">
+
+        <div class="symbol-ring"></div>
+
+        <div class="symbol-center">
+
+            <i></i>
+            <i></i>
+            <i></i>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     RIVAL
+========================================================= -->
+
+<section class="rival-section reveal">
+
+    <div class="rival-left">
+
+        <span>
+            THE ETERNAL CONFLICT
+        </span>
+
+        <h2>
+            MADARA
+            <em>VS</em>
+            HASHIRAMA
+        </h2>
+
+    </div>
+
+
+    <div class="rival-right">
+
+        <p>
+            Madara's story is deeply connected with
+            Hashirama Senju.
+        </p>
+
+        <p>
+            Their different visions of peace created
+            one of the defining conflicts in the
+            history of the shinobi world.
+        </p>
+
+
+        <div class="battle-line">
+
+            <span></span>
+
+            <strong>
+                UCHIHA
+            </strong>
+
+            <b>
+                VS
+            </b>
+
+            <strong>
+                SENJU
+            </strong>
+
+            <span></span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     TIMELINE
+========================================================= -->
+
+<section class="madara-timeline reveal">
+
+    <div class="timeline-heading">
+
+        <span>
+            04 / CHRONICLE
+        </span>
+
+        <h2>
+            THE PATH<br>
+            OF MADARA
+        </h2>
+
+    </div>
+
+
+    <div class="timeline">
+
+
+        <article class="timeline-item">
+
+            <div class="timeline-dot"></div>
+
+            <span>
+                01
+            </span>
+
+            <h3>
+                CHILDHOOD
+            </h3>
+
+            <p>
+                Madara grew within the Uchiha clan
+                during an era of constant conflict.
+            </p>
+
+        </article>
+
+
+        <article class="timeline-item">
+
+            <div class="timeline-dot"></div>
+
+            <span>
+                02
+            </span>
+
+            <h3>
+                HASHIRAMA
+            </h3>
+
+            <p>
+                His relationship and rivalry with
+                Hashirama became central to his story.
+            </p>
+
+        </article>
+
+
+        <article class="timeline-item">
+
+            <div class="timeline-dot"></div>
+
+            <span>
+                03
+            </span>
+
+            <h3>
+                KONOHA
+            </h3>
+
+            <p>
+                Madara became one of the founding
+                figures surrounding the creation of
+                Konohagakure.
+            </p>
+
+        </article>
+
+
+        <article class="timeline-item">
+
+            <div class="timeline-dot"></div>
+
+            <span>
+                04
+            </span>
+
+            <h3>
+                LEGACY
+            </h3>
+
+            <p>
+                His ideas continued influencing the
+                shinobi world long after his era.
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CINEMATIC IMAGE
+========================================================= -->
+
+<section class="madara-visual reveal">
+
+    <div class="visual-bg-text">
+        UCHIHA
+    </div>
+
+
+    <img
+        src="{{ url_for('static', filename='images/madara-sword.png') }}"
+        alt="Madara Uchiha"
+    >
+
+
+
+    <div class="visual-overlay"></div>
+
+
+    <div class="visual-content">
+
+        <span>
+            THE LEGEND
+        </span>
+
+        <h2>
+            HIS WILL<br>
+            NEVER<br>
+            FADED.
+        </h2>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FINAL QUOTE
+========================================================= -->
+
+<section class="madara-quote reveal">
+
+    <div class="quote-mark">
+        “
+    </div>
+
+    <p>
+        The history of the shinobi world cannot be
+        separated from the ambitions and conflicts
+        that shaped it.
+    </p>
+
+    <span>
+        — THE LEGACY OF MADARA
+    </span>
+
+</section>
+
+
+<!-- =========================================================
+     FINAL
+========================================================= -->
+
+<section class="madara-ending" id="legacy">
+
+    <div class="ending-background">
+        MADARA
+    </div>
+
+
+    <div class="ending-content">
+
+        <span>
+            THE END OF THE CHRONICLE
+        </span>
+
+
+        <h2>
+            THE LEGEND
+            <br>
+            NEVER
+            <span>DISAPPEARED.</span>
+        </h2>
+
+
+        <div class="ending-buttons">
+
+            <a href="{{ url_for('characters') }}">
+                ← BACK TO CHARACTERS
+            </a>
+
+            <a href="{{ url_for('story') }}">
+                DISCOVER THE STORY →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script src="{{ url_for('static', filename='js/madara-3d.js') }}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,2268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Explore | ItachiVerse</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/pages.css') }}">
+
+    <style>
+        /* =========================================================
+           ITACHIVERSE — EXPLORE CINEMATIC 3D ADD-ON
+           Original Flask routes and original content are preserved.
+           Everything below adds animation, depth, sections and motion.
+           ========================================================= */
+
+        :root {
+            --red: #e50914;
+            --bright-red: #ff2028;
+            --deep-red: #4d0005;
+            --black: #030303;
+            --soft-black: #090909;
+            --white: #f4f0ed;
+            --muted: #a9a1a0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body.explore-page {
+            background:
+                radial-gradient(circle at 50% 25%, rgba(105,0,5,.20), transparent 35%),
+                #030303;
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        body.explore-page::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                linear-gradient(90deg, rgba(255,0,0,.025) 1px, transparent 1px),
+                linear-gradient(rgba(255,0,0,.018) 1px, transparent 1px);
+            background-size: 90px 90px;
+            mask-image: linear-gradient(to bottom, black, transparent 90%);
+        }
+
+        /* =========================================================
+           CINEMATIC HERO
+           ========================================================= */
+
+        .explore-cinematic-hero {
+            min-height: 100vh;
+            position: relative;
+            isolation: isolate;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 50% 50%, rgba(150,0,0,.14), transparent 28%),
+                linear-gradient(to bottom, #020202 0%, #070000 60%, #020202 100%);
+        }
+
+        .explore-cinematic-hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -5;
+            background:
+                radial-gradient(circle at 50% 40%, rgba(255,0,0,.12), transparent 25%),
+                radial-gradient(circle at 20% 70%, rgba(100,0,0,.13), transparent 25%),
+                radial-gradient(circle at 80% 20%, rgba(100,0,0,.13), transparent 25%);
+        }
+
+        .hero-vignette {
+            position: absolute;
+            inset: 0;
+            z-index: 20;
+            pointer-events: none;
+            background:
+                radial-gradient(circle, transparent 35%, rgba(0,0,0,.30) 72%, rgba(0,0,0,.88) 100%);
+        }
+
+        .hero-scanline {
+            position: absolute;
+            inset: 0;
+            z-index: 19;
+            pointer-events: none;
+            opacity: .16;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 4px,
+                rgba(255,255,255,.035) 5px
+            );
+        }
+
+        .hero-title-wrap {
+            position: relative;
+            z-index: 12;
+            width: min(1200px, 90vw);
+            text-align: center;
+            transform: translateZ(0);
+            transition: transform .15s ease-out;
+        }
+
+        .hero-kicker {
+            color: #ff3a3a;
+            letter-spacing: .55em;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 22px;
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(4rem, 12vw, 11rem);
+            line-height: .76;
+            letter-spacing: -.055em;
+            text-transform: uppercase;
+            color: #f4f0ed;
+            text-shadow:
+                0 0 25px rgba(255,0,0,.14),
+                0 25px 70px rgba(0,0,0,.9);
+        }
+
+        .hero-title span {
+            display: block;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255,255,255,.42);
+            text-shadow: none;
+            transform: translateX(7%);
+        }
+
+        .hero-description {
+            max-width: 680px;
+            margin: 45px auto 0;
+            color: #b9b1af;
+            font-size: 15px;
+            line-height: 1.9;
+            letter-spacing: .04em;
+        }
+
+        .hero-scroll {
+            margin-top: 50px;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            color: #aaa;
+            font-size: 9px;
+            letter-spacing: .45em;
+        }
+
+        .hero-scroll-line {
+            width: 1px;
+            height: 65px;
+            background: linear-gradient(to bottom, #ff2028, transparent);
+            animation: scrollLine 1.8s infinite ease-in-out;
+        }
+
+        @keyframes scrollLine {
+            0%, 100% { transform: scaleY(.3); transform-origin: top; opacity: .35; }
+            50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+        }
+
+        /* =========================================================
+           3D RED EARTH
+           ========================================================= */
+
+        .earth-stage {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: min(720px, 72vw);
+            aspect-ratio: 1;
+            transform:
+                translate(-50%, -50%)
+                translate3d(var(--earth-x, 0px), var(--earth-y, 0px), 0);
+            z-index: 3;
+            pointer-events: none;
+            perspective: 1200px;
+        }
+
+        .earth-shadow {
+            position: absolute;
+            width: 78%;
+            height: 13%;
+            left: 11%;
+            bottom: 4%;
+            background: #000;
+            filter: blur(28px);
+            opacity: .8;
+            transform: rotateX(70deg);
+        }
+
+        .earth {
+            position: absolute;
+            inset: 5%;
+            border-radius: 50%;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            background:
+                radial-gradient(circle at 34% 30%,
+                    #ff6a6a 0%,
+                    #f01924 9%,
+                    #a00008 27%,
+                    #3c0004 57%,
+                    #090000 80%);
+            box-shadow:
+                inset -55px -25px 90px rgba(0,0,0,.92),
+                inset 20px 20px 55px rgba(255,50,50,.22),
+                0 0 40px rgba(255,0,0,.22),
+                0 0 130px rgba(170,0,0,.17);
+            animation: earthFloat 7s ease-in-out infinite;
+        }
+
+        .earth::before {
+            content: "";
+            position: absolute;
+            inset: -10%;
+            border-radius: 50%;
+            background:
+                repeating-conic-gradient(
+                    from 8deg,
+                    transparent 0deg 17deg,
+                    rgba(255,70,70,.20) 18deg 19deg,
+                    transparent 20deg 38deg
+                );
+            mix-blend-mode: screen;
+            transform: rotate(18deg);
+            animation: earthRotate 28s linear infinite;
+        }
+
+        .earth::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background:
+                radial-gradient(
+                    ellipse at 27% 37%,
+                    rgba(255,100,100,.45) 0 3%,
+                    transparent 4%
+                ),
+                radial-gradient(
+                    ellipse at 61% 26%,
+                    rgba(255,70,70,.33) 0 5%,
+                    transparent 6%
+                ),
+                radial-gradient(
+                    ellipse at 67% 61%,
+                    rgba(255,70,70,.27) 0 8%,
+                    transparent 9%
+                ),
+                radial-gradient(
+                    ellipse at 39% 69%,
+                    rgba(255,40,40,.25) 0 7%,
+                    transparent 8%
+                );
+            mix-blend-mode: screen;
+        }
+
+        .earth-glow {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 1px solid rgba(255,45,45,.55);
+            box-shadow:
+                0 0 25px rgba(255,0,0,.3),
+                0 0 90px rgba(255,0,0,.18),
+                inset 0 0 45px rgba(255,0,0,.12);
+            animation: glowPulse 3.8s ease-in-out infinite;
+        }
+
+        .earth-ring {
+            position: absolute;
+            inset: -5%;
+            border-radius: 50%;
+            border: 1px solid rgba(255,30,30,.24);
+            transform: rotateX(68deg) rotateZ(-18deg);
+            animation: ringRotate 13s linear infinite;
+        }
+
+        .earth-ring.two {
+            inset: -9%;
+            transform: rotateY(66deg) rotateZ(20deg);
+            animation-duration: 18s;
+        }
+
+        .earth-ring.three {
+            inset: -14%;
+            transform: rotateX(74deg) rotateZ(74deg);
+            animation-duration: 24s;
+            opacity: .45;
+        }
+
+        @keyframes earthFloat {
+            0%, 100% { transform: translateY(0) rotateZ(0deg); }
+            50% { transform: translateY(-18px) rotateZ(1deg); }
+        }
+
+        @keyframes earthRotate {
+            from { transform: rotate(0deg) scale(1.08); }
+            to { transform: rotate(360deg) scale(1.08); }
+        }
+
+        @keyframes ringRotate {
+            from { transform: rotateX(68deg) rotateZ(0deg); }
+            to { transform: rotateX(68deg) rotateZ(360deg); }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: .55; }
+            50% { opacity: 1; }
+        }
+
+        /* =========================================================
+           EAGLE / BIRD FLIGHT
+           ========================================================= */
+
+        .eagle-flight {
+            position: absolute;
+            z-index: 15;
+            left: -240px;
+            top: 22%;
+            width: 180px;
+            height: 100px;
+            pointer-events: none;
+            animation: eagleAcross 17s linear infinite;
+            filter:
+                drop-shadow(0 0 8px rgba(255,0,0,.32))
+                drop-shadow(0 18px 25px rgba(0,0,0,.8));
+        }
+
+        .eagle-svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+            animation: eagleBob 2.5s ease-in-out infinite;
+        }
+
+        .wing {
+            transform-origin: center;
+            animation: wingBeat .65s ease-in-out infinite alternate;
+        }
+
+        .wing-right {
+            animation-delay: -.18s;
+        }
+
+        @keyframes eagleAcross {
+            0% {
+                transform: translateX(-260px) translateY(0) scale(.65);
+                opacity: 0;
+            }
+            7% { opacity: 1; }
+            48% { transform: translateX(65vw) translateY(-55px) scale(.9); }
+            92% { opacity: 1; }
+            100% {
+                transform: translateX(calc(100vw + 320px)) translateY(40px) scale(.65);
+                opacity: 0;
+            }
+        }
+
+        @keyframes eagleBob {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-9px) rotate(2deg); }
+        }
+
+        @keyframes wingBeat {
+            from { transform: rotate(-4deg) translateY(0); }
+            to { transform: rotate(18deg) translateY(-8px); }
+        }
+
+        /* Additional distant birds */
+        .bird {
+            position: absolute;
+            z-index: 10;
+            width: 48px;
+            height: 22px;
+            opacity: .6;
+            pointer-events: none;
+        }
+
+        .bird::before,
+        .bird::after {
+            content: "";
+            position: absolute;
+            width: 24px;
+            height: 9px;
+            border-top: 2px solid rgba(20,20,20,.95);
+            border-radius: 50%;
+            top: 7px;
+        }
+
+        .bird::before {
+            left: 0;
+            transform: rotate(16deg);
+        }
+
+        .bird::after {
+            right: 0;
+            transform: rotate(-16deg);
+        }
+
+        .bird-one {
+            top: 25%;
+            left: 18%;
+            animation: distantBird 11s linear infinite;
+        }
+
+        .bird-two {
+            top: 68%;
+            left: 72%;
+            transform: scale(.65);
+            animation: distantBirdTwo 15s linear infinite;
+        }
+
+        .bird-three {
+            top: 38%;
+            left: 78%;
+            transform: scale(.4);
+            animation: distantBirdThree 19s linear infinite;
+        }
+
+        @keyframes distantBird {
+            0% { transform: translateX(-80px) translateY(20px) scale(.8); }
+            50% { transform: translateX(250px) translateY(-80px) scale(1); }
+            100% { transform: translateX(650px) translateY(40px) scale(.6); }
+        }
+
+        @keyframes distantBirdTwo {
+            0% { margin-left: 0; margin-top: 0; }
+            50% { margin-left: -300px; margin-top: -100px; }
+            100% { margin-left: -700px; margin-top: 50px; }
+        }
+
+        @keyframes distantBirdThree {
+            0% { transform: translate(0,0) scale(.4); }
+            50% { transform: translate(-250px,70px) scale(.65); }
+            100% { transform: translate(-650px,-30px) scale(.4); }
+        }
+
+        /* =========================================================
+           PARTICLES
+           ========================================================= */
+
+        .explore-particles,
+        .explore-particles::before,
+        .explore-particles::after {
+            position: absolute;
+            inset: 0;
+            content: "";
+            pointer-events: none;
+            z-index: 8;
+        }
+
+        .explore-particles {
+            background-image:
+                radial-gradient(circle, rgba(255,50,50,.8) 0 1px, transparent 2px),
+                radial-gradient(circle, rgba(255,0,0,.55) 0 1px, transparent 2px);
+            background-size: 170px 190px, 260px 220px;
+            background-position: 10px 20px, 70px 80px;
+            animation: particleDrift 18s linear infinite;
+            opacity: .35;
+        }
+
+        .explore-particles::before {
+            background-image:
+                radial-gradient(circle, rgba(255,90,90,.8) 0 1px, transparent 2px);
+            background-size: 330px 280px;
+            animation: particleDriftReverse 24s linear infinite;
+        }
+
+        .explore-particles::after {
+            background:
+                linear-gradient(
+                    125deg,
+                    transparent 0 43%,
+                    rgba(255,0,0,.09) 44%,
+                    transparent 45% 100%
+                );
+            background-size: 500px 500px;
+            animation: redSweep 11s linear infinite;
+        }
+
+        @keyframes particleDrift {
+            from { transform: translateY(0); }
+            to { transform: translateY(-190px); }
+        }
+
+        @keyframes particleDriftReverse {
+            from { transform: translate(0,0); }
+            to { transform: translate(180px,-280px); }
+        }
+
+        @keyframes redSweep {
+            from { background-position: -500px 0; }
+            to { background-position: 100vw 100vh; }
+        }
+
+        /* =========================================================
+           ORIGINAL HEADER — PRESERVED
+           ========================================================= */
+
+        .explore-header {
+            position: relative;
+            min-height: 70vh;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            overflow: hidden;
+            isolation: isolate;
+            padding: 150px 7vw 90px;
+            background:
+                radial-gradient(circle at 50% 50%, rgba(140,0,0,.15), transparent 30%);
+        }
+
+        .explore-header::before {
+            content: "";
+            position: absolute;
+            width: 550px;
+            height: 550px;
+            border-radius: 50%;
+            background: rgba(160,0,0,.16);
+            filter: blur(100px);
+            z-index: -1;
+            animation: headerPulse 5s ease-in-out infinite;
+        }
+
+        @keyframes headerPulse {
+            0%, 100% { transform: scale(.8); opacity: .3; }
+            50% { transform: scale(1.2); opacity: .7; }
+        }
+
+        .explore-header p {
+            color: #e21a22;
+            letter-spacing: .5em;
+            font-size: 11px;
+            margin-bottom: 20px;
+        }
+
+        .explore-header h1 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(5rem, 13vw, 13rem);
+            line-height: .8;
+            margin: 0;
+            letter-spacing: -.05em;
+            text-shadow: 0 0 40px rgba(255,0,0,.12);
+        }
+
+        /* =========================================================
+           INTERACTIVE 3D SECTION INTRO
+           ========================================================= */
+
+        .explore-intro {
+            min-height: 60vh;
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 70px;
+            padding: 120px 9vw;
+            background:
+                linear-gradient(
+                    90deg,
+                    #030303,
+                    #090000 50%,
+                    #030303
+                );
+            overflow: hidden;
+        }
+
+        .intro-copy {
+            position: relative;
+            z-index: 4;
+            transform: translateZ(0);
+        }
+
+        .intro-kicker {
+            color: #ef222a;
+            letter-spacing: .42em;
+            font-size: 10px;
+            margin-bottom: 18px;
+        }
+
+        .intro-copy h2 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(3rem, 6vw, 7rem);
+            line-height: .88;
+            margin: 0 0 30px;
+        }
+
+        .intro-copy h2 span {
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255,255,255,.35);
+        }
+
+        .intro-copy p {
+            max-width: 560px;
+            color: #9d9695;
+            line-height: 1.9;
+            font-size: 15px;
+        }
+
+        .intro-orbit {
+            position: relative;
+            width: min(480px, 80vw);
+            aspect-ratio: 1;
+            margin: auto;
+            perspective: 1000px;
+        }
+
+        .orbit-core {
+            position: absolute;
+            inset: 25%;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 30% 25%, #ff5656, #a00008 35%, #160000 75%);
+            box-shadow:
+                0 0 45px rgba(255,0,0,.25),
+                inset -25px -20px 35px rgba(0,0,0,.8);
+            animation: coreSpin 10s linear infinite;
+        }
+
+        .orbit-line {
+            position: absolute;
+            inset: 8%;
+            border: 1px solid rgba(255,0,0,.25);
+            border-radius: 50%;
+            transform: rotateX(70deg) rotateZ(20deg);
+            animation: orbitSpin 10s linear infinite;
+        }
+
+        .orbit-line.two {
+            inset: 16%;
+            transform: rotateY(68deg) rotateZ(-30deg);
+            animation-duration: 15s;
+        }
+
+        .orbit-line.three {
+            inset: 2%;
+            transform: rotateX(64deg) rotateZ(90deg);
+            animation-duration: 20s;
+        }
+
+        @keyframes coreSpin {
+            from { transform: rotate(0); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes orbitSpin {
+            from { transform: rotateX(70deg) rotateZ(0deg); }
+            to { transform: rotateX(70deg) rotateZ(360deg); }
+        }
+
+        /* =========================================================
+           ORIGINAL EXPLORE GRID — ENHANCED
+           ========================================================= */
+
+        .explore-grid {
+            position: relative;
+            padding: 80px 6vw 150px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 35px;
+            perspective: 1500px;
+            background:
+                radial-gradient(circle at 50% 20%, rgba(130,0,0,.1), transparent 40%);
+        }
+
+        .explore-card {
+            position: relative;
+            min-height: 700px;
+            overflow: hidden;
+            isolation: isolate;
+            border: 1px solid rgba(255,255,255,.09);
+            background: #080808;
+            transform-style: preserve-3d;
+            transition:
+                transform .7s cubic-bezier(.2,.75,.2,1),
+                border-color .4s ease,
+                box-shadow .4s ease;
+            box-shadow: 0 30px 80px rgba(0,0,0,.65);
+            opacity: 0;
+            transform: translateY(80px) rotateX(5deg);
+        }
+
+        .explore-card.revealed {
+            opacity: 1;
+            transform: translateY(0) rotateX(0);
+        }
+
+        .explore-card:hover {
+            border-color: rgba(255,25,25,.45);
+            box-shadow:
+                0 40px 100px rgba(0,0,0,.8),
+                0 0 50px rgba(255,0,0,.08);
+        }
+
+        .explore-card:nth-child(1),
+        .explore-card:nth-child(4) {
+            min-height: 780px;
+        }
+
+        .explore-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.04);
+            filter:
+                brightness(.56)
+                contrast(1.13)
+                saturate(.95);
+            transition:
+                transform 1.8s cubic-bezier(.2,.75,.2,1),
+                filter 1s ease;
+        }
+
+        .explore-card:hover .explore-image {
+            transform: scale(1.14);
+            filter:
+                brightness(.73)
+                contrast(1.1)
+                saturate(1.08);
+        }
+
+        .explore-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background:
+                linear-gradient(to bottom,
+                    rgba(0,0,0,.05),
+                    rgba(0,0,0,.05) 30%,
+                    rgba(0,0,0,.82) 82%,
+                    #020202 100%);
+        }
+
+        .explore-card::after {
+            content: "";
+            position: absolute;
+            inset: 12px;
+            border: 1px solid rgba(255,0,0,.0);
+            z-index: 8;
+            pointer-events: none;
+            transition: border-color .5s ease;
+        }
+
+        .explore-card:hover::after {
+            border-color: rgba(255,30,30,.24);
+        }
+
+        .explore-number {
+            position: absolute;
+            top: 35px;
+            right: 38px;
+            z-index: 4;
+            color: rgba(255,255,255,.75);
+            font-size: 11px;
+            letter-spacing: .3em;
+        }
+
+        .explore-content {
+            position: absolute;
+            left: 50px;
+            right: 50px;
+            bottom: 55px;
+            z-index: 5;
+            transform: translateZ(50px);
+        }
+
+        .explore-content span {
+            display: block;
+            color: #ff252d;
+            font-size: 10px;
+            letter-spacing: .42em;
+            margin-bottom: 13px;
+        }
+
+        .explore-content h2 {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(3rem, 5vw, 6rem);
+            line-height: .85;
+            letter-spacing: -.035em;
+        }
+
+        .explore-content p {
+            max-width: 580px;
+            margin: 25px 0 0;
+            color: #b7b0ae;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        /* =========================================================
+           LORE / CINEMATIC CHAPTERS
+           ========================================================= */
+
+        .lore-section {
+            position: relative;
+            padding: 160px 9vw;
+            background:
+                linear-gradient(to bottom, #020202, #0b0000, #020202);
+            overflow: hidden;
+        }
+
+        .lore-section::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 1px;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent,
+                rgba(255,0,0,.45),
+                transparent
+            );
+        }
+
+        .lore-heading {
+            text-align: center;
+            max-width: 850px;
+            margin: 0 auto 120px;
+        }
+
+        .lore-heading small {
+            color: #ef2028;
+            letter-spacing: .5em;
+        }
+
+        .lore-heading h2 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(3.2rem, 7vw, 8rem);
+            line-height: .85;
+            margin: 22px 0;
+        }
+
+        .lore-heading p {
+            color: #8e8887;
+            line-height: 1.8;
+        }
+
+        .lore-row {
+            position: relative;
+            min-height: 460px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 100px;
+            margin-bottom: 100px;
+        }
+
+        .lore-row:nth-child(even) .lore-visual {
+            order: 2;
+        }
+
+        .lore-row:nth-child(even) .lore-text {
+            order: 1;
+        }
+
+        .lore-visual {
+            height: 420px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,.09);
+            background: #050505;
+            transform-style: preserve-3d;
+        }
+
+        .lore-visual::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(135deg, transparent 45%, rgba(255,0,0,.14));
+        }
+
+        .lore-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(.55) contrast(1.1);
+            transform: scale(1.05);
+            transition: transform 1.4s ease, filter 1s ease;
+        }
+
+        .lore-visual:hover img {
+            transform: scale(1.13);
+            filter: brightness(.72) contrast(1.08);
+        }
+
+        .lore-text small {
+            color: #f02028;
+            letter-spacing: .45em;
+        }
+
+        .lore-text h3 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(2.7rem, 5vw, 5.5rem);
+            margin: 15px 0 25px;
+            line-height: .88;
+        }
+
+        .lore-text p {
+            color: #989190;
+            line-height: 1.9;
+            max-width: 540px;
+        }
+
+        .lore-index {
+            font-size: 80px;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255,0,0,.18);
+            margin-bottom: -20px;
+        }
+
+        /* =========================================================
+           ABILITY ORBIT
+           ========================================================= */
+
+        .ability-stage {
+            min-height: 850px;
+            position: relative;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at center, rgba(130,0,0,.2), transparent 35%),
+                #030303;
+        }
+
+        .ability-stage h2 {
+            position: absolute;
+            top: 100px;
+            z-index: 10;
+            text-align: center;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(3rem, 6vw, 7rem);
+            line-height: .85;
+        }
+
+        .ability-orbit {
+            width: min(650px, 78vw);
+            aspect-ratio: 1;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: abilitySpin 25s linear infinite;
+        }
+
+        .ability-core {
+            position: absolute;
+            inset: 31%;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 32% 27%, #ff7b7b, #d0000c 18%, #590006 45%, #070000 78%);
+            box-shadow:
+                0 0 35px rgba(255,0,0,.5),
+                0 0 130px rgba(255,0,0,.17),
+                inset -25px -20px 45px #000;
+            animation: corePulse 3s ease-in-out infinite;
+        }
+
+        .ability-ring {
+            position: absolute;
+            inset: 8%;
+            border: 1px solid rgba(255,0,0,.32);
+            border-radius: 50%;
+            transform: rotateX(72deg);
+        }
+
+        .ability-ring.two {
+            inset: 20%;
+            transform: rotateY(72deg);
+        }
+
+        .ability-ring.three {
+            inset: -4%;
+            transform: rotateX(64deg) rotateZ(30deg);
+        }
+
+        .ability-orb {
+            position: absolute;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 30% 30%, #ff6565, #870008 45%, #090000);
+            box-shadow: 0 0 30px rgba(255,0,0,.3);
+        }
+
+        .ability-orb.one { top: 4%; left: 50%; transform: translateX(-50%); }
+        .ability-orb.two { right: 3%; top: 50%; transform: translateY(-50%); }
+        .ability-orb.three { bottom: 4%; left: 50%; transform: translateX(-50%); }
+        .ability-orb.four { left: 3%; top: 50%; transform: translateY(-50%); }
+
+        @keyframes abilitySpin {
+            from { transform: rotateY(0deg) rotateX(8deg); }
+            to { transform: rotateY(360deg) rotateX(8deg); }
+        }
+
+        @keyframes corePulse {
+            0%, 100% { box-shadow: 0 0 35px rgba(255,0,0,.5), 0 0 130px rgba(255,0,0,.17), inset -25px -20px 45px #000; }
+            50% { box-shadow: 0 0 65px rgba(255,0,0,.75), 0 0 170px rgba(255,0,0,.25), inset -25px -20px 45px #000; }
+        }
+
+        /* =========================================================
+           ORIGINAL BOTTOM — PRESERVED + ENHANCED
+           ========================================================= */
+
+        .explore-bottom {
+            position: relative;
+            min-height: 60vh;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            padding: 100px 30px;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at center, rgba(150,0,0,.18), transparent 35%),
+                #030303;
+        }
+
+        .explore-bottom h2 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(3rem, 7vw, 8rem);
+            line-height: .85;
+            margin: 0;
+        }
+
+        .explore-bottom a {
+            margin-top: 45px;
+            display: inline-block;
+            padding: 18px 30px;
+            border: 1px solid rgba(255,0,0,.5);
+            color: #eee;
+            text-decoration: none;
+            letter-spacing: .2em;
+            font-size: 10px;
+            transition: .4s ease;
+        }
+
+        .explore-bottom a:hover {
+            background: #d90912;
+            border-color: #d90912;
+            box-shadow: 0 0 35px rgba(255,0,0,.25);
+            transform: translateY(-5px);
+        }
+
+        /* =========================================================
+           FOOTER
+           ========================================================= */
+
+        .explore-footer {
+            position: relative;
+            min-height: 330px;
+            padding: 80px 8vw 40px;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 60px;
+            background: #020202;
+            border-top: 1px solid rgba(255,0,0,.16);
+        }
+
+        .footer-brand h3 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 32px;
+            letter-spacing: .08em;
+            margin: 0 0 15px;
+        }
+
+        .footer-brand h3 span {
+            color: #e00009;
+        }
+
+        .footer-brand p,
+        .footer-column a {
+            color: #777;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .footer-column {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-column strong {
+            color: #eee;
+            font-size: 10px;
+            letter-spacing: .35em;
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            text-decoration: none;
+            transition: .3s;
+        }
+
+        .footer-column a:hover {
+            color: #ff3038;
+            transform: translateX(5px);
+        }
+
+        .footer-copy {
+            grid-column: 1 / -1;
+            border-top: 1px solid rgba(255,255,255,.06);
+            padding-top: 25px;
+            color: #4f4f4f;
+            font-size: 10px;
+            letter-spacing: .2em;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 900px) {
+
+            .earth-stage {
+                width: 110vw;
+                opacity: .38;
+            }
+
+            .hero-title-wrap {
+                padding-top: 50px;
+            }
+
+            .explore-intro {
+                grid-template-columns: 1fr;
+                padding: 100px 7vw;
+            }
+
+            .intro-orbit {
+                width: min(390px, 75vw);
+            }
+
+            .explore-grid {
+                grid-template-columns: 1fr;
+                padding-inline: 4vw;
+            }
+
+            .explore-card,
+            .explore-card:nth-child(1),
+            .explore-card:nth-child(4) {
+                min-height: 620px;
+            }
+
+            .lore-section {
+                padding-inline: 7vw;
+            }
+
+            .lore-row,
+            .lore-row:nth-child(even) {
+                grid-template-columns: 1fr;
+                gap: 35px;
+            }
+
+            .lore-row:nth-child(even) .lore-visual,
+            .lore-row:nth-child(even) .lore-text {
+                order: initial;
+            }
+
+            .lore-section::before {
+                display: none;
+            }
+
+            .explore-footer {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .hero-description {
+                font-size: 13px;
+                padding: 0 10px;
+            }
+
+            .eagle-flight {
+                width: 120px;
+            }
+
+            .explore-header {
+                min-height: 60vh;
+                padding-inline: 20px;
+            }
+
+            .explore-header h1 {
+                font-size: 23vw;
+            }
+
+            .explore-content {
+                left: 28px;
+                right: 28px;
+                bottom: 35px;
+            }
+
+            .explore-card,
+            .explore-card:nth-child(1),
+            .explore-card:nth-child(4) {
+                min-height: 530px;
+            }
+
+            .explore-content h2 {
+                font-size: 3.2rem;
+            }
+
+            .lore-visual {
+                height: 300px;
+            }
+
+            .ability-stage {
+                min-height: 650px;
+            }
+
+            .ability-orbit {
+                width: 90vw;
+            }
+
+            .ability-orb {
+                width: 42px;
+                height: 42px;
+            }
+
+            .explore-footer {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-copy {
+                grid-column: auto;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+
+
+<body class="explore-page">
+
+
+<!-- =========================================================
+     ORIGINAL NAVBAR
+     ========================================================= -->
+
+<header class="inner-nav">
+
+    <a href="{{ url_for('home') }}" class="inner-logo">
+        ITACHI<span>VERSE</span>
+    </a>
+
+    <nav class="inner-links">
+
+        <a href="{{ url_for('home') }}">
+            HOME
+        </a>
+
+        <a href="{{ url_for('story') }}">
+            STORY
+        </a>
+
+        <a href="{{ url_for('characters') }}">
+            CHARACTER
+        </a>
+
+        <a href="{{ url_for('explore') }}">
+            EXPLORE
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- =========================================================
+     CINEMATIC 3D HERO
+     ========================================================= -->
+
+<section class="explore-cinematic-hero"
+         id="exploreHero">
+
+    <div class="explore-particles"></div>
+
+    <div class="bird bird-one"></div>
+    <div class="bird bird-two"></div>
+    <div class="bird bird-three"></div>
+
+
+    <!-- EAGLE -->
+
+    <div class="eagle-flight">
+
+        <svg class="eagle-svg"
+             viewBox="0 0 260 120"
+             xmlns="http://www.w3.org/2000/svg">
+
+            <g fill="#050505"
+               stroke="#260000"
+               stroke-width="2">
+
+                <path class="wing"
+                      d="M125 55
+                         C92 25 65 7 13 2
+                         C36 26 54 48 90 65
+                         C57 55 28 60 4 77
+                         C47 82 84 82 122 72 Z"/>
+
+                <path class="wing wing-right"
+                      d="M135 55
+                         C169 24 199 7 248 4
+                         C224 27 205 48 170 65
+                         C204 56 232 61 256 78
+                         C212 82 177 82 137 72 Z"/>
+
+                <path d="M111 55
+                         C122 45 138 45 150 55
+                         L161 77
+                         C147 70 130 70 114 78
+                         Z"/>
+
+                <path d="M148 57
+                         L178 47
+                         L165 63
+                         L185 65
+                         L160 72 Z"/>
+
+                <circle cx="176"
+                        cy="49"
+                        r="2.4"
+                        fill="#ff3038"
+                        stroke="none"/>
+
+            </g>
+
+        </svg>
+
+    </div>
+
+
+    <!-- 3D RED EARTH -->
+
+    <div class="earth-stage"
+         id="earthStage">
+
+        <div class="earth-shadow"></div>
+
+        <div class="earth-ring"></div>
+        <div class="earth-ring two"></div>
+        <div class="earth-ring three"></div>
+
+        <div class="earth">
+
+            <div class="earth-glow"></div>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-title-wrap"
+         id="heroTitle">
+
+        <p class="hero-kicker">
+            ENTER THE SHINOBI WORLD
+        </p>
+
+        <h1 class="hero-title">
+            EXPLORE
+            <span>THE UNKNOWN</span>
+        </h1>
+
+        <p class="hero-description">
+            Step beyond the pages and enter a world of
+            hidden clans, forbidden techniques, legendary
+            eyes and stories written in blood.
+        </p>
+
+        <div class="hero-scroll">
+
+            <span>
+                SCROLL TO EXPLORE
+            </span>
+
+            <i class="hero-scroll-line"></i>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-vignette"></div>
+    <div class="hero-scanline"></div>
+
+</section>
+
+
+<!-- =========================================================
+     ORIGINAL HEADER
+     ========================================================= -->
+
+<section class="explore-header">
+
+    <div>
+
+        <p>
+            ENTER THE SHINOBI WORLD
+        </p>
+
+        <h1>
+            EXPLORE
+        </h1>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     NEW INTRO
+     ========================================================= -->
+
+<section class="explore-intro">
+
+    <div class="intro-copy">
+
+        <div class="intro-kicker">
+            THE WORLD BEYOND THE SHADOW
+        </div>
+
+        <h2>
+            EVERY EYE.<br>
+            EVERY CLAN.<br>
+            <span>EVERY SECRET.</span>
+        </h2>
+
+        <p>
+            The shinobi world is built from ancient clans,
+            powerful dōjutsu, organizations and battles
+            that changed generations. Explore each subject
+            and move deeper into the ItachiVerse.
+        </p>
+
+        <p>
+            This section is designed as a cinematic journey:
+            scroll slowly, watch the world move around you,
+            and open the subjects that interest you.
+        </p>
+
+    </div>
+
+
+    <div class="intro-orbit">
+
+        <div class="orbit-line"></div>
+        <div class="orbit-line two"></div>
+        <div class="orbit-line three"></div>
+
+        <div class="orbit-core"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ORIGINAL EXPLORE GRID
+     ========================================================= -->
+
+<section class="explore-grid">
+
+
+    <!-- ================= SHARINGAN ================= -->
+
+    <article class="explore-card">
+
+        <div class="explore-number">
+            01
+        </div>
+
+        <img
+            src="{{ url_for('static', filename='images/sharingan.png') }}"
+            alt="Sharingan"
+            class="explore-image"
+        >
+
+        <div class="explore-overlay"></div>
+
+        <div class="explore-content">
+
+            <span>
+                EYES
+            </span>
+
+            <h2>
+                SHARINGAN
+            </h2>
+
+            <p>
+                The Sharingan is a dōjutsu belonging
+                to members of the Uchiha clan.
+            </p>
+
+        </div>
+
+    </article>
+
+
+    <!-- ================= AKATSUKI ================= -->
+
+    <article class="explore-card">
+
+        <div class="explore-number">
+            02
+        </div>
+
+        <img
+            src="{{ url_for('static', filename='images/akatsuki.png') }}"
+            alt="Akatsuki"
+            class="explore-image"
+        >
+
+        <div class="explore-overlay"></div>
+
+        <div class="explore-content">
+
+            <span>
+                ORGANIZATION
+            </span>
+
+            <h2>
+                AKATSUKI
+            </h2>
+
+            <p>
+                A criminal organization made up of
+                powerful missing-nin from different
+                shinobi villages.
+            </p>
+
+        </div>
+
+    </article>
+
+
+    <!-- ================= UCHIHA ================= -->
+
+    <article class="explore-card">
+
+        <div class="explore-number">
+            03
+        </div>
+
+        <img
+            src="{{ url_for('static', filename='images/uchiha.png') }}"
+            alt="Uchiha Clan"
+            class="explore-image"
+        >
+
+        <div class="explore-overlay"></div>
+
+        <div class="explore-content">
+
+            <span>
+                CLAN
+            </span>
+
+            <h2>
+                UCHIHA
+            </h2>
+
+            <p>
+                One of the prominent clans of
+                Konohagakure, known for its Sharingan.
+            </p>
+
+        </div>
+
+    </article>
+
+
+    <!-- ================= MANGEKYO ================= -->
+
+    <article class="explore-card">
+
+        <div class="explore-number">
+            04
+        </div>
+
+        <img
+            src="{{ url_for('static', filename='images/mangekyo.png') }}"
+            alt="Mangekyo Sharingan"
+            class="explore-image"
+        >
+
+        <div class="explore-overlay"></div>
+
+        <div class="explore-content">
+
+            <span>
+                DŌJUTSU
+            </span>
+
+            <h2>
+                MANGEKYŌ
+            </h2>
+
+            <p>
+                An advanced form of the Sharingan
+                that grants unique abilities to
+                its awakened users.
+            </p>
+
+        </div>
+
+    </article>
+
+</section>
+
+
+<!-- =========================================================
+     CINEMATIC LORE SECTION
+     ========================================================= -->
+
+<section class="lore-section">
+
+    <div class="lore-heading">
+
+        <small>
+            SHINOBI ARCHIVES
+        </small>
+
+        <h2>
+            BEHIND THE<br>
+            SYMBOLS
+        </h2>
+
+        <p>
+            Every symbol represents a history.
+            Every technique carries a price.
+            Explore the foundations behind the world.
+        </p>
+
+    </div>
+
+
+    <!-- SHARINGAN -->
+
+    <article class="lore-row">
+
+        <div class="lore-visual">
+
+            <img
+                src="{{ url_for('static', filename='images/sharingan.png') }}"
+                alt="Sharingan archive"
+            >
+
+        </div>
+
+        <div class="lore-text">
+
+            <div class="lore-index">
+                01
+            </div>
+
+            <small>
+                DŌJUTSU
+            </small>
+
+            <h3>
+                THE EYE<br>
+                OF PERCEPTION
+            </h3>
+
+            <p>
+                The Sharingan is one of the defining
+                visual abilities connected to the Uchiha.
+                Its development and techniques are tied
+                deeply to the clan's history.
+            </p>
+
+        </div>
+
+    </article>
+
+
+    <!-- AKATSUKI -->
+
+    <article class="lore-row">
+
+        <div class="lore-visual">
+
+            <img
+                src="{{ url_for('static', filename='images/akatsuki.png') }}"
+                alt="Akatsuki archive"
+            >
+
+        </div>
+
+        <div class="lore-text">
+
+            <div class="lore-index">
+                02
+            </div>
+
+            <small>
+                ORGANIZATION
+            </small>
+
+            <h3>
+                THE<br>
+                RED CLOUD
+            </h3>
+
+            <p>
+                Akatsuki became one of the most recognizable
+                organizations in the shinobi world. Its members
+                came from different backgrounds and carried
+                their own histories into the organization.
+            </p>
+
+        </div>
+
+    </article>
+
+
+    <!-- UCHIHA -->
+
+    <article class="lore-row">
+
+        <div class="lore-visual">
+
+            <img
+                src="{{ url_for('static', filename='images/uchiha.png') }}"
+                alt="Uchiha archive"
+            >
+
+        </div>
+
+        <div class="lore-text">
+
+            <div class="lore-index">
+                03
+            </div>
+
+            <small>
+                CLAN
+            </small>
+
+            <h3>
+                BLOOD<br>
+                &amp; LEGACY
+            </h3>
+
+            <p>
+                The Uchiha name is connected with generations
+                of shinobi, powerful eyes and conflicts that
+                shaped the history of Konohagakure.
+            </p>
+
+        </div>
+
+    </article>
+
+
+    <!-- MANGEKYO -->
+
+    <article class="lore-row">
+
+        <div class="lore-visual">
+
+            <img
+                src="{{ url_for('static', filename='images/mangekyo.png') }}"
+                alt="Mangekyo archive"
+            >
+
+        </div>
+
+        <div class="lore-text">
+
+            <div class="lore-index">
+                04
+            </div>
+
+            <small>
+                EVOLUTION
+            </small>
+
+            <h3>
+                THE<br>
+                MANGEKYŌ
+            </h3>
+
+            <p>
+                The Mangekyō represents an advanced stage
+                of the Sharingan and is associated with
+                powerful techniques unique to awakened users.
+            </p>
+
+        </div>
+
+    </article>
+
+</section>
+
+
+<!-- =========================================================
+     LIVE 3D ABILITY WORLD
+     ========================================================= -->
+
+<section class="ability-stage">
+
+    <h2>
+        THE WORLD<br>
+        <span style="color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.35);">
+            NEVER STOPS MOVING.
+        </span>
+    </h2>
+
+
+    <div class="ability-orbit">
+
+        <div class="ability-ring"></div>
+        <div class="ability-ring two"></div>
+        <div class="ability-ring three"></div>
+
+        <div class="ability-core"></div>
+
+        <div class="ability-orb one"></div>
+        <div class="ability-orb two"></div>
+        <div class="ability-orb three"></div>
+        <div class="ability-orb four"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ORIGINAL BOTTOM
+     ========================================================= -->
+
+<section class="explore-bottom">
+
+    <div>
+
+        <h2>
+            EVERY SHADOW HAS A STORY.
+        </h2>
+
+        <a href="{{ url_for('story') }}">
+            DISCOVER THE STORY →
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<footer class="explore-footer">
+
+    <div class="footer-brand">
+
+        <h3>
+            ITACHI<span>VERSE</span>
+        </h3>
+
+        <p>
+            A cinematic fan-made exploration of the
+            shinobi world, its characters, clans,
+            techniques and stories.
+        </p>
+
+    </div>
+
+
+    <div class="footer-column">
+
+        <strong>
+            NAVIGATION
+        </strong>
+
+        <a href="{{ url_for('home') }}">
+            HOME
+        </a>
+
+        <a href="{{ url_for('story') }}">
+            STORY
+        </a>
+
+        <a href="{{ url_for('characters') }}">
+            CHARACTERS
+        </a>
+
+        <a href="{{ url_for('explore') }}">
+            EXPLORE
+        </a>
+
+    </div>
+
+
+    <div class="footer-column">
+
+        <strong>
+            UNIVERSE
+        </strong>
+
+        <a href="#exploreHero">
+            3D WORLD
+        </a>
+
+        <a href="#exploreHero">
+            RED EARTH
+        </a>
+
+        <a href="#exploreHero">
+            EAGLE FLIGHT
+        </a>
+
+        <a href="#lore">
+            SHINOBI ARCHIVES
+        </a>
+
+    </div>
+
+
+    <div class="footer-copy">
+        ITACHIVERSE — CINEMATIC FAN EXPERIENCE
+    </div>
+
+</footer>
+
+
+<!-- =========================================================
+     JAVASCRIPT — 3D PARALLAX + SCROLL REVEAL
+     ========================================================= -->
+
+<script>
+
+    /* =========================================================
+       HERO MOUSE PARALLAX
+       ========================================================= */
+
+    const hero = document.getElementById("exploreHero");
+    const earthStage = document.getElementById("earthStage");
+    const heroTitle = document.getElementById("heroTitle");
+
+    if (hero && earthStage && heroTitle) {
+
+        hero.addEventListener("mousemove", function (event) {
+
+            const rect = hero.getBoundingClientRect();
+
+            const x = (event.clientX - rect.left) / rect.width - 0.5;
+            const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+            earthStage.style.setProperty(
+                "--earth-x",
+                `${x * 22}px`
+            );
+
+            earthStage.style.setProperty(
+                "--earth-y",
+                `${y * 18}px`
+            );
+
+            heroTitle.style.transform =
+                `translate3d(${x * -18}px, ${y * -12}px, 0)`;
+
+        });
+
+
+        hero.addEventListener("mouseleave", function () {
+
+            earthStage.style.setProperty(
+                "--earth-x",
+                "0px"
+            );
+
+            earthStage.style.setProperty(
+                "--earth-y",
+                "0px"
+            );
+
+            heroTitle.style.transform =
+                "translate3d(0,0,0)";
+
+        });
+
+    }
+
+
+    /* =========================================================
+       CARD 3D TILT
+       ========================================================= */
+
+    const cards = document.querySelectorAll(".explore-card");
+
+    cards.forEach(function(card) {
+
+        card.addEventListener("mousemove", function(event) {
+
+            const rect = card.getBoundingClientRect();
+
+            const px =
+                (event.clientX - rect.left) /
+                rect.width;
+
+            const py =
+                (event.clientY - rect.top) /
+                rect.height;
+
+            const rotateY =
+                (px - 0.5) * 8;
+
+            const rotateX =
+                (0.5 - py) * 8;
+
+            card.style.transform =
+                `perspective(1200px)
+                 rotateX(${rotateX}deg)
+                 rotateY(${rotateY}deg)
+                 translateY(-7px)`;
+
+        });
+
+
+        card.addEventListener("mouseleave", function() {
+
+            card.style.transform =
+                "perspective(1200px) rotateX(0deg) rotateY(0deg) translateY(0)";
+
+        });
+
+    });
+
+
+    /* =========================================================
+       SCROLL REVEAL
+       ========================================================= */
+
+    const revealItems =
+        document.querySelectorAll(
+            ".explore-card, .lore-row, .lore-heading"
+        );
+
+    const revealObserver =
+        new IntersectionObserver(
+            function(entries, observer) {
+
+                entries.forEach(function(entry) {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add("revealed");
+
+                        observer.unobserve(entry.target);
+
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.14
+            }
+        );
+
+
+    revealItems.forEach(function(item) {
+
+        revealObserver.observe(item);
+
+    });
+
+
+    /* =========================================================
+       LORE ROW INITIAL STATES
+       ========================================================= */
+
+    document.querySelectorAll(".lore-row").forEach(function(row) {
+
+        row.style.opacity = "0";
+        row.style.transform = "translateY(70px)";
+
+        row.style.transition =
+            "opacity 1s ease, transform 1s cubic-bezier(.2,.75,.2,1)";
+
+    });
+
+
+    const loreObserver =
+        new IntersectionObserver(
+            function(entries, observer) {
+
+                entries.forEach(function(entry) {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.style.opacity = "1";
+                        entry.target.style.transform =
+                            "translateY(0)";
+
+                        observer.unobserve(entry.target);
+
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.16
+            }
+        );
+
+
+    document.querySelectorAll(".lore-row").forEach(function(row) {
+
+        loreObserver.observe(row);
+
+    });
+
+
+    /* =========================================================
+       SCROLL EARTH DEPTH
+       ========================================================= */
+
+    window.addEventListener("scroll", function() {
+
+        const scrollY = window.scrollY;
+
+        if (earthStage) {
+
+            const movement =
+                Math.min(scrollY * 0.08, 70);
+
+            earthStage.style.setProperty(
+                "--scroll-depth",
+                `${movement}px`
+            );
+
+        }
+
+    });
+
+
+    /* =========================================================
+       SMALL RANDOM RED FIREFLIES
+       ========================================================= */
+
+    const heroSection =
+        document.getElementById("exploreHero");
+
+    if (heroSection) {
+
+        for (let i = 0; i < 26; i++) {
+
+            const spark =
+                document.createElement("span");
+
+            spark.style.position = "absolute";
+            spark.style.width = `${Math.random() * 3 + 1}px`;
+            spark.style.height = spark.style.width;
+            spark.style.borderRadius = "50%";
+            spark.style.background = "#ff3038";
+            spark.style.boxShadow = "0 0 9px rgba(255,0,0,.8)";
+            spark.style.left = `${Math.random() * 100}%`;
+            spark.style.top = `${Math.random() * 100}%`;
+            spark.style.opacity = `${Math.random() * .65 + .15}`;
+            spark.style.pointerEvents = "none";
+            spark.style.zIndex = "9";
+
+            spark.animate(
+                [
+                    {
+                        transform: "translate3d(0,0,0)",
+                        opacity: .1
+                    },
+                    {
+                        transform:
+                            `translate3d(
+                                ${(Math.random() - .5) * 150}px,
+                                ${-80 - Math.random() * 150}px,
+                                0
+                            )`,
+                        opacity: .85
+                    },
+                    {
+                        transform:
+                            `translate3d(
+                                ${(Math.random() - .5) * 260}px,
+                                ${-180 - Math.random() * 220}px,
+                                0
+                            )`,
+                        opacity: 0
+                    }
+                ],
+                {
+                    duration: 4000 + Math.random() * 6000,
+                    iterations: Infinity,
+                    delay: Math.random() * -7000
+                }
+            );
+
+            heroSection.appendChild(spark);
+
+        }
+
+    }
+
+
+    /* =========================================================
+       PREVENT HEAVY MOTION ON TOUCH DEVICES
+       ========================================================= */
+
+    if (window.matchMedia("(pointer: coarse)").matches) {
+
+        document.querySelectorAll(".explore-card")
+            .forEach(function(card) {
+
+                card.style.transform =
+                    "none";
+
+            });
+
+    }
+
+</script>
+
+
+</body>
+</html>

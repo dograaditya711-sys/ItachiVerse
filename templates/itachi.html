@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Itachi Uchiha | ItachiVerse</title>
+
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='css/itachi_3d_detail.css') }}">
+
+</head>
+
+
+<body class="itachi-detail-page">
+
+<!-- =========================================================
+     CINEMATIC BACKGROUND
+========================================================= -->
+
+<div class="cinematic-bg"></div>
+
+<div class="red-vignette"></div>
+
+<div class="noise-layer"></div>
+
+<div class="cursor-glow"></div>
+
+
+<!-- =========================================================
+     PARTICLE CANVAS
+========================================================= -->
+
+<canvas id="particleCanvas"></canvas>
+
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<header class="inner-nav">
+
+    <a
+        href="{{ url_for('home') }}"
+        class="inner-logo"
+    >
+        ITACHI<span>VERSE</span>
+    </a>
+
+
+    <nav class="itachi-nav">
+
+        <a href="{{ url_for('home') }}">
+            HOME
+        </a>
+
+        <a href="{{ url_for('story') }}">
+            STORY
+        </a>
+
+        <a href="{{ url_for('characters') }}">
+            CHARACTERS
+        </a>
+
+        <a href="{{ url_for('explore') }}">
+            EXPLORE
+        </a>
+
+    </nav>
+
+
+    <a
+        href="{{ url_for('characters') }}"
+        class="back-link"
+    >
+        ← CHARACTERS
+    </a>
+
+</header>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section
+    class="itachi-detail-hero cinematic-hero"
+    id="hero"
+>
+
+
+    <!-- IMAGE WORLD -->
+
+    <div
+        class="hero-image-world"
+        id="heroWorld"
+    >
+
+        <div class="image-depth-layer"></div>
+
+        <div class="hero-image">
+
+            <img
+                src="{{ url_for('static', filename='images/itachi.png') }}"
+                alt="Itachi Uchiha"
+            >
+
+        </div>
+
+
+        <!-- RED LIGHT -->
+
+        <div class="eye-light eye-light-left"></div>
+
+        <div class="eye-light eye-light-right"></div>
+
+
+        <!-- =================================================
+             EYE BLINK OVERLAYS
+        ================================================= -->
+
+        <div class="animated-eye eye-left">
+
+            <div class="upper-lid"></div>
+
+            <div class="lower-lid"></div>
+
+        </div>
+
+
+        <div class="animated-eye eye-right">
+
+            <div class="upper-lid"></div>
+
+            <div class="lower-lid"></div>
+
+        </div>
+
+
+        <!-- FLOATING CROWS -->
+
+        <div class="crow crow-1">𓅃</div>
+        <div class="crow crow-2">𓅃</div>
+        <div class="crow crow-3">𓅃</div>
+        <div class="crow crow-4">𓅃</div>
+
+
+        <!-- CHAKRA ORBS -->
+
+        <span class="chakra-orb orb-1"></span>
+        <span class="chakra-orb orb-2"></span>
+        <span class="chakra-orb orb-3"></span>
+        <span class="chakra-orb orb-4"></span>
+
+    </div>
+
+
+    <!-- =====================================================
+         HERO CONTENT
+    ===================================================== -->
+
+    <div class="detail-content cinematic-content">
+
+        <span class="hero-index">
+            01 / THE SHINOBI
+        </span>
+
+        <p class="hero-clan">
+            UCHIHA CLAN
+        </p>
+
+        <h1>
+
+            ITACHI
+
+            <span>
+                UCHIHA
+            </span>
+
+        </h1>
+
+
+        <div class="hero-line"></div>
+
+
+        <h3>
+            THE SHINOBI WHO CARRIED THE DARKNESS
+        </h3>
+
+
+        <p class="hero-description">
+
+            Itachi Uchiha stands at the center of one
+            of the most complicated stories surrounding
+            the Uchiha clan and the Hidden Leaf.
+
+            <br><br>
+
+            His story connects family, loyalty,
+            sacrifice, deception and the consequences
+            of choices made in the shadows.
+
+        </p>
+
+
+        <div class="hero-actions">
+
+            <a
+                href="#abilities"
+                class="red-button"
+            >
+                EXPLORE ABILITIES
+            </a>
+
+            <a
+                href="#timeline"
+                class="ghost-button"
+            >
+                ENTER HIS STORY
+            </a>
+
+        </div>
+
+
+        <div class="scroll-indicator">
+
+            <span>
+                SCROLL TO DESCEND
+            </span>
+
+            <i></i>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+<!-- =========================================================
+     3D CHAKRA CORE
+========================================================= -->
+
+<section class="chakra-section">
+
+    <div class="section-label">
+        UCHIHA CHAKRA
+    </div>
+
+
+    <h2>
+        THE EYE THAT SEES
+        <span>BEYOND</span>
+    </h2>
+
+
+    <div class="chakra-stage">
+
+        <div class="chakra-core">
+
+            <div class="chakra-ring ring-one"></div>
+
+            <div class="chakra-ring ring-two"></div>
+
+            <div class="chakra-ring ring-three"></div>
+
+            <div class="chakra-sphere">
+
+                <div class="tomoe tomoe-one"></div>
+
+                <div class="tomoe tomoe-two"></div>
+
+                <div class="tomoe tomoe-three"></div>
+
+            </div>
+
+        </div>
+
+
+        <div class="chakra-info">
+
+            <span>
+                DŌJUTSU
+            </span>
+
+            <h3>
+                SHARINGAN
+            </h3>
+
+            <p>
+                A visual ability associated with the
+                Uchiha clan. Its development is connected
+                to perception, copying techniques and
+                increasingly powerful ocular abilities.
+            </p>
+
+            <div class="chakra-meter">
+
+                <span></span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     STATS
+========================================================= -->
+
+<section class="stats-section cinematic-section">
+
+    <div class="stat-card reveal">
+
+        <small>
+            CLAN
+        </small>
+
+        <strong>
+            UCHIHA
+        </strong>
+
+        <span>
+            血
+        </span>
+
+    </div>
+
+
+    <div class="stat-card reveal">
+
+        <small>
+            VILLAGE
+        </small>
+
+        <strong>
+            KONOHA
+        </strong>
+
+        <span>
+            木
+        </span>
+
+    </div>
+
+
+    <div class="stat-card reveal">
+
+        <small>
+            ORGANIZATION
+        </small>
+
+        <strong>
+            AKATSUKI
+        </strong>
+
+        <span>
+            暁
+        </span>
+
+    </div>
+
+
+    <div class="stat-card reveal">
+
+        <small>
+            DŌJUTSU
+        </small>
+
+        <strong>
+            SHARINGAN
+        </strong>
+
+        <span>
+            眼
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     INTRO
+========================================================= -->
+
+<section class="lore-section reveal">
+
+    <div class="lore-number">
+        02
+    </div>
+
+
+    <div class="lore-content">
+
+        <span>
+            THE MAN BEHIND THE EYES
+        </span>
+
+        <h2>
+            A STORY WRITTEN
+            <em>IN SHADOWS</em>
+        </h2>
+
+        <p>
+
+            Itachi's character is closely connected to
+            the Uchiha clan and to his relationship with
+            his younger brother Sasuke.
+
+        </p>
+
+        <p>
+
+            His journey places him between the interests
+            of his clan, his village and his family.
+
+        </p>
+
+        <p>
+
+            Rather than presenting his story as a simple
+            battle between good and evil, the Itachi
+            storyline explores choices, consequences
+            and conflicting loyalties.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ABILITIES
+========================================================= -->
+
+<section
+    class="abilities-section"
+    id="abilities"
+>
+
+    <div class="section-label">
+        SIGNATURE TECHNIQUES
+    </div>
+
+    <h2>
+        THE EYES OF
+        <span>THE UCHIHA</span>
+    </h2>
+
+
+    <div class="ability-grid">
+
+
+        <article class="ability-card reveal">
+
+            <div class="ability-number">
+                01
+            </div>
+
+            <div class="ability-icon">
+                ◉
+            </div>
+
+            <h3>
+                SHARINGAN
+            </h3>
+
+            <p>
+
+                The Sharingan is the characteristic
+                dōjutsu associated with the Uchiha clan.
+
+            </p>
+
+            <span class="ability-line"></span>
+
+        </article>
+
+
+        <article class="ability-card reveal">
+
+            <div class="ability-number">
+                02
+            </div>
+
+            <div class="ability-icon">
+                ◈
+            </div>
+
+            <h3>
+                TSUKUYOMI
+            </h3>
+
+            <p>
+
+                A powerful genjutsu associated with
+                Itachi's Mangekyō Sharingan.
+
+            </p>
+
+            <span class="ability-line"></span>
+
+        </article>
+
+
+        <article class="ability-card reveal">
+
+            <div class="ability-number">
+                03
+            </div>
+
+            <div class="ability-icon">
+                火
+            </div>
+
+            <h3>
+                AMATERASU
+            </h3>
+
+            <p>
+
+                A black-flame technique associated with
+                the Mangekyō Sharingan.
+
+            </p>
+
+            <span class="ability-line"></span>
+
+        </article>
+
+
+        <article class="ability-card reveal">
+
+            <div class="ability-number">
+                04
+            </div>
+
+            <div class="ability-icon">
+                武
+            </div>
+
+            <h3>
+                SUSANOO
+            </h3>
+
+            <p>
+
+                A powerful chakra construct manifested
+                through the Mangekyō Sharingan.
+
+            </p>
+
+            <span class="ability-line"></span>
+
+        </article>
+
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     EYE EXPERIENCE
+========================================================= -->
+
+<section class="eye-experience">
+
+    <div class="eye-copy">
+
+        <span>
+            INTERACTIVE DŌJUTSU
+        </span>
+
+        <h2>
+            LOOK INTO
+            <strong>THE SHARINGAN</strong>
+        </h2>
+
+        <p>
+            Move your cursor across the scene.
+            The eye reacts to your movement.
+        </p>
+
+    </div>
+
+
+    <div
+        class="giant-eye"
+        id="giantEye"
+    >
+
+        <div class="eye-glow"></div>
+
+        <div class="iris">
+
+            <div class="pupil"></div>
+
+            <i></i>
+            <i></i>
+            <i></i>
+
+        </div>
+
+        <div class="eye-lid-top"></div>
+
+        <div class="eye-lid-bottom"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     TIMELINE
+========================================================= -->
+
+<section
+    class="timeline-section"
+    id="timeline"
+>
+
+    <div class="section-label">
+        CHRONICLE
+    </div>
+
+    <h2>
+        THE PATH OF
+        <span>ITACHI</span>
+    </h2>
+
+
+    <div class="timeline">
+
+
+        <article class="timeline-item reveal">
+
+            <span class="timeline-number">
+                01
+            </span>
+
+            <div>
+
+                <small>
+                    BEGINNING
+                </small>
+
+                <h3>
+                    THE PRODIGY
+                </h3>
+
+                <p>
+                    Itachi was recognized as an unusually
+                    talented young shinobi within the
+                    Uchiha clan.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <article class="timeline-item reveal">
+
+            <span class="timeline-number">
+                02
+            </span>
+
+            <div>
+
+                <small>
+                    SHINOBI
+                </small>
+
+                <h3>
+                    ANBU
+                </h3>
+
+                <p>
+                    His path eventually connected him
+                    with the ANBU and the political
+                    tensions surrounding the village.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <article class="timeline-item reveal">
+
+            <span class="timeline-number">
+                03
+            </span>
+
+            <div>
+
+                <small>
+                    AKATSUKI
+                </small>
+
+                <h3>
+                    THE CLOAK
+                </h3>
+
+                <p>
+                    Itachi later became associated with
+                    the Akatsuki organization.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <article class="timeline-item reveal">
+
+            <span class="timeline-number">
+                04
+            </span>
+
+            <div>
+
+                <small>
+                    BROTHER
+                </small>
+
+                <h3>
+                    SASUKE
+                </h3>
+
+                <p>
+                    His relationship with Sasuke became
+                    one of the central emotional threads
+                    of the story.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <article class="timeline-item reveal">
+
+            <span class="timeline-number">
+                05
+            </span>
+
+            <div>
+
+                <small>
+                    LEGACY
+                </small>
+
+                <h3>
+                    THE TRUTH
+                </h3>
+
+                <p>
+                    The later revelations surrounding
+                    Itachi changed how his actions were
+                    understood.
+                </p>
+
+            </div>
+
+        </article>
+
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     UCHIHA CONNECTION
+========================================================= -->
+
+<section class="connection-section">
+
+    <div class="connection-image">
+
+        <img
+            src="{{ url_for('static', filename='images/uchiha.png') }}"
+            alt="Uchiha Clan"
+        >
+
+    </div>
+
+
+    <div class="connection-content">
+
+        <span>
+            BLOODLINE
+        </span>
+
+        <h2>
+            THE UCHIHA
+            <strong>LEGACY</strong>
+        </h2>
+
+        <p>
+
+            The Uchiha clan forms a major part of the
+            history surrounding Itachi and Sasuke.
+
+        </p>
+
+        <p>
+
+            The Sharingan, the clan's political position
+            and the conflict surrounding Konoha all
+            intersect with Itachi's story.
+
+        </p>
+
+
+        <a
+            href="{{ url_for('explore') }}"
+            class="red-button"
+        >
+            EXPLORE THE CLAN
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     MANGEKYO SECTION
+========================================================= -->
+
+<section class="mangekyo-section">
+
+    <div class="mangekyo-copy">
+
+        <span>
+            EVOLUTION OF THE EYE
+        </span>
+
+        <h2>
+            MANGEKYŌ
+            <strong>SHARINGAN</strong>
+        </h2>
+
+        <p>
+            The Mangekyō Sharingan represents an advanced
+            stage of the Sharingan and is associated with
+            unique abilities for its users.
+        </p>
+
+    </div>
+
+
+    <div class="mangekyo-orbit">
+
+        <div class="orbit-ring"></div>
+
+        <div class="orbit-ring second"></div>
+
+        <div class="orbit-eye">
+
+            <div class="orbit-pupil"></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     PHILOSOPHY
+========================================================= -->
+
+<section class="quote-section reveal">
+
+    <div class="quote-mark">
+        “
+    </div>
+
+    <p>
+
+        THE DARKEST SHADOWS
+        OFTEN HIDE THE STORIES
+        WE DO NOT YET UNDERSTAND.
+
+    </p>
+
+    <span>
+        — ITACHIVERSE
+    </span>
+
+</section>
+
+
+<!-- =========================================================
+     RELATED CHARACTERS
+========================================================= -->
+
+<section class="related-section">
+
+    <div class="section-label">
+        CONNECTED STORIES
+    </div>
+
+    <h2>
+        CHARACTERS
+        <span>AROUND HIM</span>
+    </h2>
+
+
+    <div class="related-grid">
+
+
+        <a
+            href="{{ url_for('sasuke') }}"
+            class="related-card"
+        >
+
+            <img
+                src="{{ url_for('static', filename='images/sasuke.png') }}"
+                alt="Sasuke"
+            >
+
+            <div>
+
+                <span>
+                    UCHIHA
+                </span>
+
+                <h3>
+                    SASUKE
+                </h3>
+
+                <p>
+                    THE YOUNGER BROTHER
+                </p>
+
+            </div>
+
+        </a>
+
+
+        <a
+            href="{{ url_for('madara') }}"
+            class="related-card"
+        >
+
+            <img
+                src="{{ url_for('static', filename='images/madara.png') }}"
+                alt="Madara"
+            >
+
+            <div>
+
+                <span>
+                    UCHIHA
+                </span>
+
+                <h3>
+                    MADARA
+                </h3>
+
+                <p>
+                    THE LEGEND
+                </p>
+
+            </div>
+
+        </a>
+
+
+        <a
+            href="{{ url_for('characters') }}"
+            class="related-card"
+        >
+
+            <div class="related-placeholder">
+
+                <span>
+                    UCHIHA
+                </span>
+
+                <h3>
+                    MORE
+                </h3>
+
+                <p>
+                    EXPLORE CHARACTERS
+                </p>
+
+            </div>
+
+        </a>
+
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FINAL CINEMATIC
+========================================================= -->
+
+<section class="detail-ending cinematic-ending">
+
+    <div class="ending-crows">
+
+        <span>𓅃</span>
+        <span>𓅃</span>
+        <span>𓅃</span>
+
+    </div>
+
+
+    <span>
+        THE STORY DOES NOT END
+    </span>
+
+    <h2>
+        THE SHADOW
+        <strong>REMAINS.</strong>
+    </h2>
+
+
+    <a
+        href="{{ url_for('story') }}"
+        class="red-button"
+    >
+        READ HIS STORY →
+    </a>
+
+
+    <div class="ending-line"></div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="itachi-footer">
+
+    <div>
+        ITACHI<span>VERSE</span>
+    </div>
+
+    <p>
+        AN INTERACTIVE SHINOBI EXPERIENCE
+    </p>
+
+    <a href="{{ url_for('home') }}">
+        RETURN HOME ↑
+    </a>
+
+</footer>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+/* =========================================================
+   MOUSE POSITION
+========================================================= */
+
+const page = document.querySelector(".itachi-detail-page");
+
+const cursorGlow = document.querySelector(".cursor-glow");
+
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+
+let targetX = mouseX;
+let targetY = mouseY;
+
+window.addEventListener("mousemove", (event) => {
+
+    targetX = event.clientX;
+    targetY = event.clientY;
+
+});
+
+
+function mouseAnimation(){
+
+    mouseX += (targetX - mouseX) * 0.08;
+    mouseY += (targetY - mouseY) * 0.08;
+
+    document.documentElement.style.setProperty(
+        "--mouse-x",
+        mouseX + "px"
+    );
+
+    document.documentElement.style.setProperty(
+        "--mouse-y",
+        mouseY + "px"
+    );
+
+    if(cursorGlow){
+
+        cursorGlow.style.transform =
+            `translate3d(${mouseX - 150}px,
+                         ${mouseY - 150}px,0)`;
+
+    }
+
+    requestAnimationFrame(mouseAnimation);
+
+}
+
+mouseAnimation();
+
+
+/* =========================================================
+   HERO PARALLAX
+========================================================= */
+
+const heroWorld =
+    document.getElementById("heroWorld");
+
+const hero =
+    document.getElementById("hero");
+
+if(heroWorld){
+
+    hero.addEventListener("mousemove", (e) => {
+
+        const rect = hero.getBoundingClientRect();
+
+        const x =
+            (e.clientX - rect.left) /
+            rect.width - 0.5;
+
+        const y =
+            (e.clientY - rect.top) /
+            rect.height - 0.5;
+
+        heroWorld.style.transform =
+            `rotateY(${x * 5}deg)
+             rotateX(${y * -5}deg)
+             scale(1.04)`;
+
+        heroWorld.style.setProperty(
+            "--eye-x",
+            `${x * 18}px`
+        );
+
+        heroWorld.style.setProperty(
+            "--eye-y",
+            `${y * 12}px`
+        );
+
+    });
+
+
+    hero.addEventListener("mouseleave", () => {
+
+        heroWorld.style.transform =
+            "rotateY(0deg) rotateX(0deg) scale(1)";
+
+    });
+
+}
+
+
+/* =========================================================
+   AUTOMATIC BLINK
+========================================================= */
+
+function blinkEyes(){
+
+    document.body.classList.add("eyes-blinking");
+
+    setTimeout(() => {
+
+        document.body.classList.remove("eyes-blinking");
+
+    }, 190);
+
+}
+
+
+/* Natural random blinking */
+
+function randomBlink(){
+
+    const delay =
+        3000 + Math.random() * 5000;
+
+    setTimeout(() => {
+
+        blinkEyes();
+
+        randomBlink();
+
+    }, delay);
+
+}
+
+randomBlink();
+
+
+/* =========================================================
+   CURSOR EYE REACTION
+========================================================= */
+
+document.addEventListener("mousemove", (e) => {
+
+    const eyes =
+        document.querySelectorAll(".animated-eye");
+
+    eyes.forEach((eye) => {
+
+        const rect =
+            eye.getBoundingClientRect();
+
+        const centerX =
+            rect.left + rect.width / 2;
+
+        const centerY =
+            rect.top + rect.height / 2;
+
+        const dx =
+            e.clientX - centerX;
+
+        const dy =
+            e.clientY - centerY;
+
+        const angle =
+            Math.atan2(dy, dx);
+
+        const distance =
+            Math.min(
+                Math.sqrt(dx * dx + dy * dy),
+                100
+            );
+
+        const moveX =
+            Math.cos(angle) * distance * 0.08;
+
+        const moveY =
+            Math.sin(angle) * distance * 0.08;
+
+        eye.style.setProperty(
+            "--eye-move-x",
+            moveX + "px"
+        );
+
+        eye.style.setProperty(
+            "--eye-move-y",
+            moveY + "px"
+        );
+
+    });
+
+});
+
+
+/* =========================================================
+   GIANT SHARINGAN CURSOR
+========================================================= */
+
+const giantEye =
+    document.getElementById("giantEye");
+
+if(giantEye){
+
+    giantEye.addEventListener(
+        "mousemove",
+        (e) => {
+
+            const rect =
+                giantEye.getBoundingClientRect();
+
+            const x =
+                e.clientX - rect.left;
+
+            const y =
+                e.clientY - rect.top;
+
+            const centerX =
+                rect.width / 2;
+
+            const centerY =
+                rect.height / 2;
+
+            const rotateX =
+                (y - centerY) / 18;
+
+            const rotateY =
+                (centerX - x) / 18;
+
+            giantEye.style.setProperty(
+                "--eye-rotate-x",
+                rotateX + "deg"
+            );
+
+            giantEye.style.setProperty(
+                "--eye-rotate-y",
+                rotateY + "deg"
+            );
+
+        }
+
+    );
+
+}
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const revealElements =
+    document.querySelectorAll(".reveal");
+
+
+const observer =
+    new IntersectionObserver(
+
+        (entries) => {
+
+            entries.forEach((entry) => {
+
+                if(entry.isIntersecting){
+
+                    entry.target.classList.add(
+                        "visible"
+                    );
+
+                }
+
+            });
+
+        },
+
+        {
+            threshold: 0.15
+        }
+
+    );
+
+
+revealElements.forEach((element) => {
+
+    observer.observe(element);
+
+});
+
+
+/* =========================================================
+   PARTICLE SYSTEM
+========================================================= */
+
+const canvas =
+    document.getElementById("particleCanvas");
+
+const ctx =
+    canvas.getContext("2d");
+
+
+let particles = [];
+
+let particleWidth =
+    window.innerWidth;
+
+let particleHeight =
+    window.innerHeight;
+
+
+function resizeCanvas(){
+
+    particleWidth =
+        window.innerWidth;
+
+    particleHeight =
+        window.innerHeight;
+
+    canvas.width =
+        particleWidth * window.devicePixelRatio;
+
+    canvas.height =
+        particleHeight * window.devicePixelRatio;
+
+    canvas.style.width =
+        particleWidth + "px";
+
+    canvas.style.height =
+        particleHeight + "px";
+
+    ctx.scale(
+        window.devicePixelRatio,
+        window.devicePixelRatio
+    );
+
+}
+
+
+resizeCanvas();
+
+
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
+
+
+function createParticle(){
+
+    return {
+
+        x:
+            Math.random() *
+            particleWidth,
+
+        y:
+            Math.random() *
+            particleHeight,
+
+        size:
+            Math.random() * 2 + 0.3,
+
+        speed:
+            Math.random() * 0.6 + 0.1,
+
+        opacity:
+            Math.random() * 0.6 + 0.1,
+
+        drift:
+            (Math.random() - 0.5) * 0.4
+
+    };
+
+}
+
+
+for(
+    let i = 0;
+    i < 160;
+    i++
+){
+
+    particles.push(
+        createParticle()
+    );
+
+}
+
+
+function animateParticles(){
+
+    ctx.clearRect(
+        0,
+        0,
+        particleWidth,
+        particleHeight
+    );
+
+
+    particles.forEach((p) => {
+
+        p.y -= p.speed;
+
+        p.x += p.drift;
+
+
+        if(p.y < -10){
+
+            p.y =
+                particleHeight + 10;
+
+        }
+
+
+        if(p.x < -10){
+
+            p.x =
+                particleWidth + 10;
+
+        }
+
+
+        if(p.x > particleWidth + 10){
+
+            p.x = -10;
+
+        }
+
+
+        ctx.beginPath();
+
+        ctx.arc(
+            p.x,
+            p.y,
+            p.size,
+            0,
+            Math.PI * 2
+        );
+
+
+        ctx.fillStyle =
+            `rgba(255,40,40,${p.opacity})`;
+
+        ctx.fill();
+
+    });
+
+
+    requestAnimationFrame(
+        animateParticles
+    );
+
+}
+
+
+animateParticles();
+
+
+/* =========================================================
+   KEYBOARD EYE BLINK
+========================================================= */
+
+window.addEventListener(
+    "keydown",
+    (e) => {
+
+        if(e.code === "Space"){
+
+            blinkEyes();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   RED LIGHT PULSE
+========================================================= */
+
+setInterval(() => {
+
+    document.body.classList.toggle(
+        "red-pulse"
+    );
+
+}, 2500);
+
+
+/* =========================================================
+   PARALLAX ON SCROLL
+========================================================= */
+
+window.addEventListener(
+    "scroll",
+    () => {
+
+        const scroll =
+            window.scrollY;
+
+        const image =
+            document.querySelector(
+                ".hero-image img"
+            );
+
+        if(image){
+
+            image.style.transform =
+                `translate3d(
+                    0,
+                    ${scroll * 0.08}px,
+                    0
+                ) scale(1.04)`;
+
+        }
+
+    }
+);
+
+</script>
+
+<script src="{{ url_for('static', filename='js/itachi_3d_detail.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,4034 @@
+/* =========================================================
+   ITACHI VERSE — CINEMATIC DETAIL PAGE
+========================================================= */
+
+.itachi-detail-page {
+
+    --red: #ff1616;
+    --dark-red: #7b0000;
+    --deep-red: #280000;
+    --black: #030303;
+    --white: #eeeeee;
+
+    margin: 0;
+    padding: 0;
+
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            #230000 0%,
+            #050000 35%,
+            #000 80%
+        );
+
+    color: var(--white);
+
+    overflow-x: hidden;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+}
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+.itachi-detail-page *,
+.itachi-detail-page *::before,
+.itachi-detail-page *::after {
+
+    box-sizing: border-box;
+
+}
+
+
+.itachi-detail-page a {
+
+    color: inherit;
+
+    text-decoration: none;
+
+}
+
+
+.itachi-detail-page section {
+
+    position: relative;
+
+}
+
+
+.cinematic-bg {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: -20;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(100,0,0,.18),
+            transparent 55%
+        ),
+
+        linear-gradient(
+            180deg,
+            #080000,
+            #000
+        );
+
+}
+
+
+.red-vignette {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 20;
+
+    pointer-events: none;
+
+    background:
+
+        radial-gradient(
+            ellipse at center,
+            transparent 45%,
+            rgba(0,0,0,.7) 100%
+        );
+
+}
+
+
+.noise-layer {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 21;
+
+    pointer-events: none;
+
+    opacity: .08;
+
+    background-image:
+
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(255,255,255,.04) 3px
+        );
+
+}
+
+
+#particleCanvas {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    z-index: 15;
+
+}
+
+
+/* =========================================================
+   CURSOR GLOW
+========================================================= */
+
+.cursor-glow {
+
+    position: fixed;
+
+    width: 300px;
+
+    height: 300px;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    z-index: 18;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(255,20,20,.12),
+            transparent 65%
+        );
+
+    mix-blend-mode: screen;
+
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.itachi-detail-page .inner-nav {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    height: 78px;
+
+    padding:
+        0 7vw;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    z-index: 100;
+
+    background:
+        rgba(0,0,0,.65);
+
+    backdrop-filter:
+        blur(18px);
+
+    border-bottom:
+        1px solid rgba(255,0,0,.15);
+
+}
+
+
+.inner-logo {
+
+    font-size: 20px;
+
+    letter-spacing: 5px;
+
+    font-weight: bold;
+
+}
+
+
+.inner-logo span {
+
+    color: var(--red);
+
+}
+
+
+.itachi-nav {
+
+    display: flex;
+
+    gap: 35px;
+
+}
+
+
+.itachi-nav a {
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    color: #aaa;
+
+    transition: .3s;
+
+}
+
+
+.itachi-nav a:hover {
+
+    color: white;
+
+    text-shadow:
+        0 0 15px red;
+
+}
+
+
+.back-link {
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    color: #aaa;
+
+}
+
+
+.back-link:hover {
+
+    color: var(--red);
+
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.cinematic-hero {
+
+    min-height: 100vh;
+
+    height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+
+    overflow: hidden;
+
+    perspective: 1500px;
+
+}
+
+
+.hero-image-world {
+
+    position: absolute;
+
+    inset: -5%;
+
+    transform-style: preserve-3d;
+
+    transition:
+        transform .25s ease-out;
+
+}
+
+
+.hero-image {
+
+    position: absolute;
+
+    inset: 0;
+
+    overflow: hidden;
+
+}
+
+
+.hero-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: center;
+
+    transform:
+        scale(1.08);
+
+    filter:
+        brightness(.58)
+        contrast(1.15)
+        saturate(1.2);
+
+    transition:
+        transform .8s ease-out;
+
+}
+
+
+/* =========================================================
+   HERO IMAGE LIGHTING
+========================================================= */
+
+.hero-image::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            rgba(0,0,0,.9),
+            rgba(0,0,0,.25) 45%,
+            rgba(0,0,0,.65)
+        ),
+
+        linear-gradient(
+            0deg,
+            #000 0%,
+            transparent 45%,
+            rgba(0,0,0,.4)
+        );
+
+}
+
+
+.hero-image::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2;
+
+    background:
+
+        radial-gradient(
+            circle at 48% 42%,
+            transparent 15%,
+            rgba(90,0,0,.15) 40%,
+            rgba(0,0,0,.75) 100%
+        );
+
+}
+
+
+/* =========================================================
+   EYE LIGHT
+========================================================= */
+
+.eye-light {
+
+    position: absolute;
+
+    width: 200px;
+
+    height: 120px;
+
+    border-radius: 50%;
+
+    filter: blur(35px);
+
+    background:
+        rgba(255,0,0,.25);
+
+    pointer-events: none;
+
+    opacity: .65;
+
+    transform:
+        translate3d(
+            var(--eye-x,0px),
+            var(--eye-y,0px),
+            100px
+        );
+
+}
+
+
+.eye-light-left {
+
+    left: 18%;
+
+    top: 32%;
+
+}
+
+
+.eye-light-right {
+
+    right: 17%;
+
+    top: 34%;
+
+}
+
+
+/* =========================================================
+   EYE BLINK SYSTEM
+========================================================= */
+
+.animated-eye {
+
+    position: absolute;
+
+    z-index: 8;
+
+    width: 220px;
+
+    height: 100px;
+
+    pointer-events: none;
+
+    transform:
+
+        translate3d(
+            var(--eye-move-x,0px),
+            var(--eye-move-y,0px),
+            150px
+        );
+
+}
+
+
+.eye-left {
+
+    left: 17%;
+
+    top: 30%;
+
+}
+
+
+.eye-right {
+
+    right: 16%;
+
+    top: 32%;
+
+}
+
+
+.upper-lid,
+.lower-lid {
+
+    position: absolute;
+
+    left: -10%;
+
+    width: 120%;
+
+    height: 70%;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            #080000,
+            #190000
+        );
+
+    border-radius: 50%;
+
+    transform-origin: center;
+
+    transition:
+        transform .12s ease;
+
+}
+
+
+.upper-lid {
+
+    top: -48%;
+
+    transform:
+        translateY(-35px)
+        rotate(3deg);
+
+}
+
+
+.lower-lid {
+
+    bottom: -48%;
+
+    transform:
+        translateY(35px)
+        rotate(-3deg);
+
+}
+
+
+/* =========================================================
+   BLINK
+========================================================= */
+
+.eyes-blinking .upper-lid {
+
+    transform:
+        translateY(42px)
+        rotate(3deg);
+
+}
+
+
+.eyes-blinking .lower-lid {
+
+    transform:
+        translateY(-42px)
+        rotate(-3deg);
+
+}
+
+
+/* =========================================================
+   CROWS
+========================================================= */
+
+.crow {
+
+    position: absolute;
+
+    z-index: 10;
+
+    color: #050505;
+
+    font-size: 55px;
+
+    filter:
+        drop-shadow(
+            0 0 8px rgba(255,0,0,.3)
+        );
+
+    animation:
+        crowFly 12s linear infinite;
+
+}
+
+
+.crow-1 {
+
+    top: 20%;
+
+    left: -10%;
+
+}
+
+
+.crow-2 {
+
+    top: 35%;
+
+    left: -20%;
+
+    animation-delay: 3s;
+
+}
+
+
+.crow-3 {
+
+    top: 55%;
+
+    right: -15%;
+
+    animation-delay: 5s;
+
+}
+
+
+.crow-4 {
+
+    top: 18%;
+
+    right: -20%;
+
+    animation-delay: 7s;
+
+}
+
+
+@keyframes crowFly {
+
+    0% {
+
+        transform:
+            translateX(-100px)
+            translateY(30px)
+            rotate(-5deg);
+
+        opacity: 0;
+
+    }
+
+    10% {
+
+        opacity: 1;
+
+    }
+
+    50% {
+
+        transform:
+            translateX(55vw)
+            translateY(-70px)
+            rotate(8deg);
+
+    }
+
+    100% {
+
+        transform:
+            translateX(120vw)
+            translateY(40px)
+            rotate(-5deg);
+
+        opacity: 0;
+
+    }
+
+}
+
+
+/* =========================================================
+   CHAKRA ORBS
+========================================================= */
+
+.chakra-orb {
+
+    position: absolute;
+
+    width: 7px;
+
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--red);
+
+    box-shadow:
+        0 0 10px red,
+        0 0 30px red;
+
+    animation:
+        floatOrb 5s ease-in-out infinite;
+
+}
+
+
+.orb-1 {
+
+    left: 35%;
+
+    top: 35%;
+
+}
+
+
+.orb-2 {
+
+    left: 60%;
+
+    top: 55%;
+
+    animation-delay: 1s;
+
+}
+
+
+.orb-3 {
+
+    left: 75%;
+
+    top: 30%;
+
+    animation-delay: 2s;
+
+}
+
+
+.orb-4 {
+
+    left: 25%;
+
+    top: 70%;
+
+    animation-delay: 3s;
+
+}
+
+
+@keyframes floatOrb {
+
+    0%,
+    100% {
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+    50% {
+
+        transform:
+            translateY(-40px)
+            scale(1.8);
+
+    }
+
+}
+
+
+/* =========================================================
+   HERO CONTENT
+========================================================= */
+
+.cinematic-content {
+
+    position: relative;
+
+    z-index: 30;
+
+    width: 52%;
+
+    margin-left: 10vw;
+
+    padding-top: 80px;
+
+}
+
+
+.hero-index {
+
+    display: block;
+
+    color: var(--red);
+
+    font-size: 10px;
+
+    letter-spacing: 6px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.hero-clan {
+
+    font-size: 11px;
+
+    letter-spacing: 5px;
+
+    color: #bbb;
+
+}
+
+
+.cinematic-content h1 {
+
+    margin: 10px 0;
+
+    font-size:
+        clamp(
+            70px,
+            10vw,
+            170px
+        );
+
+    line-height: .8;
+
+    letter-spacing: -5px;
+
+}
+
+
+.cinematic-content h1 span {
+
+    display: block;
+
+    font-size:
+        clamp(
+            35px,
+            5vw,
+            80px
+        );
+
+    color: transparent;
+
+    -webkit-text-stroke:
+        1px rgba(255,255,255,.5);
+
+}
+
+
+.hero-line {
+
+    width: 120px;
+
+    height: 1px;
+
+    margin: 30px 0;
+
+    background: var(--red);
+
+    box-shadow:
+        0 0 15px red;
+
+}
+
+
+.cinematic-content h3 {
+
+    font-size: 13px;
+
+    letter-spacing: 4px;
+
+    color: #ddd;
+
+}
+
+
+.hero-description {
+
+    max-width: 570px;
+
+    line-height: 1.9;
+
+    color: #aaa;
+
+    font-size: 15px;
+
+}
+
+
+.hero-actions {
+
+    display: flex;
+
+    gap: 15px;
+
+    margin-top: 35px;
+
+}
+
+
+.red-button,
+.ghost-button {
+
+    display: inline-flex;
+
+    padding:
+        15px 25px;
+
+    border: 1px solid
+        rgba(255,0,0,.5);
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    transition:
+        .4s;
+
+}
+
+
+.red-button {
+
+    background:
+        rgba(100,0,0,.45);
+
+}
+
+
+.red-button:hover {
+
+    background:
+        var(--red);
+
+    color: black;
+
+    box-shadow:
+        0 0 35px
+        rgba(255,0,0,.5);
+
+}
+
+
+.ghost-button:hover {
+
+    background:
+        rgba(255,255,255,.08);
+
+}
+
+
+.scroll-indicator {
+
+    margin-top: 50px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+}
+
+
+.scroll-indicator span {
+
+    font-size: 8px;
+
+    letter-spacing: 5px;
+
+    color: #777;
+
+}
+
+
+.scroll-indicator i {
+
+    width: 50px;
+
+    height: 1px;
+
+    background: var(--red);
+
+    animation:
+        scrollLine 2s infinite;
+
+}
+
+
+@keyframes scrollLine {
+
+    0% {
+
+        width: 0;
+
+    }
+
+    50% {
+
+        width: 50px;
+
+    }
+
+    100% {
+
+        width: 0;
+
+    }
+
+}
+
+
+/* =========================================================
+   CHAKRA SECTION
+========================================================= */
+
+.chakra-section {
+
+    min-height: 850px;
+
+    padding:
+        150px 10vw;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 50%,
+            #260000,
+            #050000 45%,
+            #000
+        );
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+}
+
+
+.section-label {
+
+    color: var(--red);
+
+    letter-spacing: 6px;
+
+    font-size: 10px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.chakra-section h2,
+.timeline-section h2,
+.abilities-section h2,
+.related-section h2 {
+
+    font-size:
+        clamp(45px,6vw,90px);
+
+    line-height: .95;
+
+    text-align: center;
+
+}
+
+
+.chakra-section h2 span,
+.timeline-section h2 span,
+.abilities-section h2 span,
+.related-section h2 span {
+
+    display: block;
+
+    color: var(--red);
+
+}
+
+
+/* =========================================================
+   3D CHAKRA CORE
+========================================================= */
+
+.chakra-stage {
+
+    width: 100%;
+
+    max-width: 1100px;
+
+    margin-top: 80px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    align-items: center;
+
+}
+
+
+.chakra-core {
+
+    position: relative;
+
+    width: 450px;
+
+    height: 450px;
+
+    margin: auto;
+
+    transform-style:
+        preserve-3d;
+
+    animation:
+        chakraFloat 6s ease-in-out infinite;
+
+}
+
+
+.chakra-sphere {
+
+    position: absolute;
+
+    width: 230px;
+
+    height: 230px;
+
+    left: 110px;
+
+    top: 110px;
+
+    border-radius: 50%;
+
+    background:
+
+        radial-gradient(
+            circle at 35% 30%,
+            #ff7777,
+            #ff1111 20%,
+            #500000 55%,
+            #050000 75%
+        );
+
+    box-shadow:
+
+        0 0 30px red,
+        0 0 100px rgba(255,0,0,.4);
+
+    animation:
+        sphereRotate 8s linear infinite;
+
+}
+
+
+@keyframes chakraFloat {
+
+    0%,
+    100% {
+
+        transform:
+            translateY(0)
+            rotateX(0)
+            rotateY(0);
+
+    }
+
+    50% {
+
+        transform:
+            translateY(-25px)
+            rotateX(10deg)
+            rotateY(15deg);
+
+    }
+
+}
+
+
+@keyframes sphereRotate {
+
+    from {
+
+        transform:
+            rotate(0deg);
+
+    }
+
+    to {
+
+        transform:
+            rotate(360deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   CHAKRA RINGS
+========================================================= */
+
+.chakra-ring {
+
+    position: absolute;
+
+    border:
+        1px solid
+        rgba(255,0,0,.5);
+
+    border-radius: 50%;
+
+    left: 50%;
+
+    top: 50%;
+
+    transform-style:
+        preserve-3d;
+
+}
+
+
+.ring-one {
+
+    width: 350px;
+
+    height: 350px;
+
+    margin-left: -175px;
+
+    margin-top: -175px;
+
+    transform:
+        rotateX(70deg);
+
+    animation:
+        ringRotate 8s linear infinite;
+
+}
+
+
+.ring-two {
+
+    width: 400px;
+
+    height: 400px;
+
+    margin-left: -200px;
+
+    margin-top: -200px;
+
+    transform:
+        rotateY(70deg);
+
+    animation:
+        ringRotate 11s linear infinite reverse;
+
+}
+
+
+.ring-three {
+
+    width: 450px;
+
+    height: 450px;
+
+    margin-left: -225px;
+
+    margin-top: -225px;
+
+    transform:
+        rotateX(35deg)
+        rotateY(35deg);
+
+    animation:
+        ringRotate 15s linear infinite;
+
+}
+
+
+@keyframes ringRotate {
+
+    from {
+
+        transform:
+            rotateX(0)
+            rotateY(0)
+            rotateZ(0);
+
+    }
+
+    to {
+
+        transform:
+            rotateX(360deg)
+            rotateY(360deg)
+            rotateZ(360deg);
+
+    }
+
+}
+
+
+.chakra-info {
+
+    max-width: 450px;
+
+}
+
+
+.chakra-info span {
+
+    color: var(--red);
+
+    letter-spacing: 5px;
+
+    font-size: 10px;
+
+}
+
+
+.chakra-info h3 {
+
+    font-size: 60px;
+
+    margin: 10px 0;
+
+}
+
+
+.chakra-info p {
+
+    color: #888;
+
+    line-height: 1.9;
+
+}
+
+
+.chakra-meter {
+
+    margin-top: 30px;
+
+    width: 100%;
+
+    height: 2px;
+
+    background:
+        #300000;
+
+}
+
+
+.chakra-meter span {
+
+    display: block;
+
+    width: 85%;
+
+    height: 100%;
+
+    background:
+        var(--red);
+
+    box-shadow:
+        0 0 15px red;
+
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats-section {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    border-top:
+        1px solid #250000;
+
+    border-bottom:
+        1px solid #250000;
+
+    background:
+        #020202;
+
+}
+
+
+.stat-card {
+
+    min-height: 230px;
+
+    padding: 50px;
+
+    border-right:
+        1px solid #1c0000;
+
+    position: relative;
+
+    overflow: hidden;
+
+    transition:
+        .5s;
+
+}
+
+
+.stat-card:hover {
+
+    background:
+        #130000;
+
+    transform:
+        translateY(-10px);
+
+}
+
+
+.stat-card small {
+
+    display: block;
+
+    color: #777;
+
+    letter-spacing: 4px;
+
+    font-size: 9px;
+
+}
+
+
+.stat-card strong {
+
+    display: block;
+
+    margin-top: 20px;
+
+    font-size: 27px;
+
+}
+
+
+.stat-card span {
+
+    position: absolute;
+
+    right: 20px;
+
+    bottom: -15px;
+
+    font-size: 100px;
+
+    color: rgba(255,0,0,.05);
+
+}
+
+
+/* =========================================================
+   LORE
+========================================================= */
+
+.lore-section {
+
+    min-height: 750px;
+
+    padding:
+        150px 15vw;
+
+    display: grid;
+
+    grid-template-columns:
+        180px 1fr;
+
+    gap: 80px;
+
+    align-items: center;
+
+    background:
+
+        linear-gradient(
+            120deg,
+            #030303,
+            #160000,
+            #020202
+        );
+
+}
+
+
+.lore-number {
+
+    font-size:
+        150px;
+
+    color:
+        rgba(255,0,0,.08);
+
+}
+
+
+.lore-content > span {
+
+    color: var(--red);
+
+    letter-spacing: 5px;
+
+    font-size: 10px;
+
+}
+
+
+.lore-content h2 {
+
+    font-size:
+        clamp(50px,6vw,90px);
+
+    line-height: .95;
+
+}
+
+
+.lore-content h2 em {
+
+    display: block;
+
+    color: var(--red);
+
+    font-style: normal;
+
+}
+
+
+.lore-content p {
+
+    max-width: 650px;
+
+    color: #888;
+
+    line-height: 2;
+
+}
+
+
+/* =========================================================
+   ABILITIES
+========================================================= */
+
+.abilities-section {
+
+    padding:
+        150px 8vw;
+
+    background:
+        #020202;
+
+}
+
+
+.ability-grid {
+
+    margin-top: 80px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 25px;
+
+}
+
+
+.ability-card {
+
+    min-height: 320px;
+
+    padding: 50px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    border:
+        1px solid #240000;
+
+    background:
+
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(120,0,0,.2),
+            transparent 35%
+        ),
+
+        #080000;
+
+    transition:
+        transform .5s,
+        border .5s;
+
+}
+
+
+.ability-card:hover {
+
+    transform:
+        perspective(800px)
+        rotateX(4deg)
+        rotateY(-4deg)
+        translateY(-10px);
+
+    border-color:
+        rgba(255,0,0,.7);
+
+}
+
+
+.ability-number {
+
+    color: var(--red);
+
+    font-size: 12px;
+
+    letter-spacing: 3px;
+
+}
+
+
+.ability-icon {
+
+    margin-top: 30px;
+
+    font-size: 50px;
+
+    color: var(--red);
+
+    text-shadow:
+        0 0 30px red;
+
+}
+
+
+.ability-card h3 {
+
+    font-size: 32px;
+
+}
+
+
+.ability-card p {
+
+    color: #777;
+
+    line-height: 1.8;
+
+    max-width: 500px;
+
+}
+
+
+.ability-line {
+
+    display: block;
+
+    width: 50px;
+
+    height: 2px;
+
+    background:
+        var(--red);
+
+    transition:
+        width .5s;
+
+}
+
+
+.ability-card:hover
+.ability-line {
+
+    width: 150px;
+
+}
+
+
+/* =========================================================
+   GIANT EYE
+========================================================= */
+
+.eye-experience {
+
+    min-height: 850px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    align-items: center;
+
+    padding:
+        120px 10vw;
+
+    background:
+
+        radial-gradient(
+            circle at 75% 50%,
+            #450000,
+            #080000 30%,
+            #000 70%
+        );
+
+    overflow: hidden;
+
+}
+
+
+.eye-copy span {
+
+    color: var(--red);
+
+    letter-spacing: 5px;
+
+    font-size: 10px;
+
+}
+
+
+.eye-copy h2 {
+
+    font-size:
+        clamp(50px,6vw,90px);
+
+    line-height: .9;
+
+}
+
+
+.eye-copy h2 strong {
+
+    display: block;
+
+    color: var(--red);
+
+}
+
+
+.eye-copy p {
+
+    color: #888;
+
+    max-width: 400px;
+
+    line-height: 1.8;
+
+}
+
+
+/* =========================================================
+   GIANT INTERACTIVE EYE
+========================================================= */
+
+.giant-eye {
+
+    position: relative;
+
+    width: 520px;
+
+    height: 300px;
+
+    margin: auto;
+
+    border-radius:
+        50% 50% 50% 50% /
+        65% 65% 35% 35%;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 50%,
+            #ff4b4b,
+            #650000 35%,
+            #090000 70%
+        );
+
+    border:
+        3px solid
+        rgba(255,0,0,.5);
+
+    box-shadow:
+
+        0 0 40px
+        rgba(255,0,0,.4),
+
+        inset 0 0 70px
+        #000;
+
+    transform:
+
+        perspective(800px)
+        rotateX(var(--eye-rotate-x,0deg))
+        rotateY(var(--eye-rotate-y,0deg));
+
+    transition:
+        transform .2s;
+
+}
+
+
+/* iris */
+
+.iris {
+
+    position: absolute;
+
+    width: 190px;
+
+    height: 190px;
+
+    left: 50%;
+
+    top: 50%;
+
+    margin:
+        -95px;
+
+    border-radius: 50%;
+
+    background:
+
+        repeating-conic-gradient(
+            from 0deg,
+            #ff1111 0deg 12deg,
+            #5d0000 13deg 20deg
+        );
+
+    border:
+        8px solid #180000;
+
+    box-shadow:
+        0 0 30px red;
+
+    transform:
+
+        translate3d(
+            var(--eye-move-x,0px),
+            var(--eye-move-y,0px),
+            30px
+        );
+
+}
+
+
+.pupil {
+
+    position: absolute;
+
+    width: 60px;
+
+    height: 60px;
+
+    left: 50%;
+
+    top: 50%;
+
+    margin: -30px;
+
+    border-radius: 50%;
+
+    background: #000;
+
+    box-shadow:
+        0 0 30px #000;
+
+}
+
+
+/* tomoe */
+
+.iris i {
+
+    position: absolute;
+
+    width: 28px;
+
+    height: 28px;
+
+    border-radius: 50%;
+
+    background: #080000;
+
+}
+
+
+.iris i:nth-child(2) {
+
+    top: 20px;
+
+    left: 80px;
+
+}
+
+
+.iris i:nth-child(3) {
+
+    right: 20px;
+
+    bottom: 70px;
+
+}
+
+
+.iris i:nth-child(4) {
+
+    left: 25px;
+
+    bottom: 55px;
+
+}
+
+
+/* =========================================================
+   EYE LIDS
+========================================================= */
+
+.eye-lid-top,
+.eye-lid-bottom {
+
+    position: absolute;
+
+    width: 110%;
+
+    height: 70%;
+
+    left: -5%;
+
+    background:
+        #090000;
+
+    z-index: 10;
+
+}
+
+
+.eye-lid-top {
+
+    top: -45%;
+
+    border-radius:
+        0 0 50% 50%;
+
+}
+
+
+.eye-lid-bottom {
+
+    bottom: -48%;
+
+    border-radius:
+        50% 50% 0 0;
+
+}
+
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+.timeline-section {
+
+    padding:
+        150px 15vw;
+
+    background:
+        #030303;
+
+}
+
+
+.timeline {
+
+    position: relative;
+
+    max-width: 900px;
+
+    margin:
+        100px auto 0;
+
+}
+
+
+.timeline::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 25px;
+
+    top: 0;
+
+    bottom: 0;
+
+    width: 1px;
+
+    background:
+        linear-gradient(
+            #ff0000,
+            transparent
+        );
+
+}
+
+
+.timeline-item {
+
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns:
+        100px 1fr;
+
+    gap: 50px;
+
+    margin-bottom: 100px;
+
+}
+
+
+.timeline-number {
+
+    width: 50px;
+
+    height: 50px;
+
+    border:
+        1px solid red;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: red;
+
+    background: #050000;
+
+    z-index: 2;
+
+}
+
+
+.timeline-item small {
+
+    color: var(--red);
+
+    letter-spacing: 4px;
+
+}
+
+
+.timeline-item h3 {
+
+    font-size: 40px;
+
+    margin: 10px 0;
+
+}
+
+
+.timeline-item p {
+
+    color: #777;
+
+    line-height: 1.8;
+
+}
+
+
+/* =========================================================
+   CONNECTION
+========================================================= */
+
+.connection-section {
+
+    min-height: 700px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    background:
+        #050000;
+
+}
+
+
+.connection-image {
+
+    overflow: hidden;
+
+}
+
+
+.connection-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    filter:
+        brightness(.45)
+        saturate(1.3);
+
+    transition:
+        transform 1s;
+
+}
+
+
+.connection-section:hover
+.connection-image img {
+
+    transform:
+        scale(1.08);
+
+}
+
+
+.connection-content {
+
+    padding:
+        100px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+}
+
+
+.connection-content > span {
+
+    color: var(--red);
+
+    letter-spacing: 5px;
+
+    font-size: 10px;
+
+}
+
+
+.connection-content h2 {
+
+    font-size:
+        clamp(50px,6vw,90px);
+
+    line-height: .9;
+
+}
+
+
+.connection-content h2 strong {
+
+    display: block;
+
+    color: var(--red);
+
+}
+
+
+.connection-content p {
+
+    color: #888;
+
+    max-width: 500px;
+
+    line-height: 1.9;
+
+}
+
+
+/* =========================================================
+   MANGEKYO
+========================================================= */
+
+.mangekyo-section {
+
+    min-height: 800px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    align-items: center;
+
+    padding:
+        120px 12vw;
+
+    background:
+
+        radial-gradient(
+            circle at 75% 50%,
+            #350000,
+            #030303 45%
+        );
+
+}
+
+
+.mangekyo-copy > span {
+
+    color: var(--red);
+
+    letter-spacing: 5px;
+
+    font-size: 10px;
+
+}
+
+
+.mangekyo-copy h2 {
+
+    font-size:
+        clamp(60px,7vw,110px);
+
+    line-height: .8;
+
+}
+
+
+.mangekyo-copy h2 strong {
+
+    display: block;
+
+    color: var(--red);
+
+}
+
+
+.mangekyo-copy p {
+
+    max-width: 500px;
+
+    color: #777;
+
+    line-height: 1.9;
+
+}
+
+
+/* =========================================================
+   ORBIT EYE
+========================================================= */
+
+.mangekyo-orbit {
+
+    position: relative;
+
+    width: 450px;
+
+    height: 450px;
+
+    margin: auto;
+
+    transform-style:
+        preserve-3d;
+
+}
+
+
+.orbit-ring {
+
+    position: absolute;
+
+    inset: 0;
+
+    border:
+        1px solid
+        rgba(255,0,0,.5);
+
+    border-radius: 50%;
+
+    transform:
+        rotateX(70deg);
+
+    animation:
+        orbitSpin 7s linear infinite;
+
+}
+
+
+.orbit-ring.second {
+
+    transform:
+        rotateY(70deg);
+
+    animation-duration:
+        10s;
+
+}
+
+
+.orbit-eye {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 50%;
+
+    width: 180px;
+
+    height: 180px;
+
+    margin: -90px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #ff4444,
+            #500000 50%,
+            #050000 75%
+        );
+
+    box-shadow:
+        0 0 80px
+        rgba(255,0,0,.6);
+
+}
+
+
+.orbit-pupil {
+
+    position: absolute;
+
+    width: 55px;
+
+    height: 55px;
+
+    background: #000;
+
+    border-radius: 50%;
+
+    left: 50%;
+
+    top: 50%;
+
+    margin: -27px;
+
+}
+
+
+@keyframes orbitSpin {
+
+    to {
+
+        transform:
+            rotateX(360deg)
+            rotateY(360deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   QUOTE
+========================================================= */
+
+.quote-section {
+
+    min-height: 600px;
+
+    padding:
+        120px 15vw;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            #020202,
+            #150000,
+            #020202
+        );
+
+}
+
+
+.quote-mark {
+
+    font-size: 150px;
+
+    line-height: .4;
+
+    color: var(--red);
+
+    opacity: .5;
+
+}
+
+
+.quote-section p {
+
+    max-width: 900px;
+
+    font-size:
+        clamp(30px,4vw,60px);
+
+    line-height: 1.1;
+
+}
+
+
+.quote-section span {
+
+    color: #666;
+
+    letter-spacing: 4px;
+
+    font-size: 10px;
+
+}
+
+
+/* =========================================================
+   RELATED
+========================================================= */
+
+.related-section {
+
+    padding:
+        150px 8vw;
+
+    background:
+        #020202;
+
+}
+
+
+.related-grid {
+
+    margin-top: 70px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 25px;
+
+}
+
+
+.related-card {
+
+    min-height: 450px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    border:
+        1px solid #220000;
+
+    background: #070000;
+
+    transition:
+        .5s;
+
+}
+
+
+.related-card:hover {
+
+    transform:
+        translateY(-15px);
+
+    border-color:
+        red;
+
+}
+
+
+.related-card img {
+
+    width: 100%;
+
+    height: 100%;
+
+    position: absolute;
+
+    object-fit: cover;
+
+    opacity: .6;
+
+    transition:
+        1s;
+
+}
+
+
+.related-card:hover img {
+
+    transform:
+        scale(1.12);
+
+    opacity: .8;
+
+}
+
+
+.related-card > div {
+
+    position: absolute;
+
+    bottom: 0;
+
+    left: 0;
+
+    right: 0;
+
+    padding: 35px;
+
+    background:
+        linear-gradient(
+            transparent,
+            #000
+        );
+
+}
+
+
+.related-card span {
+
+    color: var(--red);
+
+    letter-spacing: 4px;
+
+    font-size: 9px;
+
+}
+
+
+.related-card h3 {
+
+    font-size: 35px;
+
+    margin: 8px 0;
+
+}
+
+
+.related-card p {
+
+    color: #aaa;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+}
+
+
+.related-placeholder {
+
+    position: relative !important;
+
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-end;
+
+}
+
+
+/* =========================================================
+   ENDING
+========================================================= */
+
+.cinematic-ending {
+
+    min-height: 800px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    overflow: hidden;
+
+    background:
+
+        radial-gradient(
+            circle at center,
+            #360000,
+            #050000 50%,
+            #000
+        );
+
+}
+
+
+.cinematic-ending > span {
+
+    color: #777;
+
+    letter-spacing: 6px;
+
+    font-size: 10px;
+
+}
+
+
+.cinematic-ending h2 {
+
+    font-size:
+        clamp(60px,9vw,150px);
+
+    line-height: .8;
+
+    margin: 25px 0 50px;
+
+}
+
+
+.cinematic-ending h2 strong {
+
+    display: block;
+
+    color: var(--red);
+
+    text-shadow:
+        0 0 50px
+        rgba(255,0,0,.4);
+
+}
+
+
+.ending-crows {
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+}
+
+
+.ending-crows span {
+
+    position: absolute;
+
+    font-size: 70px;
+
+    color: #000;
+
+    animation:
+        finalCrow 10s linear infinite;
+
+}
+
+
+.ending-crows span:nth-child(1) {
+
+    top: 30%;
+
+    left: -10%;
+
+}
+
+
+.ending-crows span:nth-child(2) {
+
+    top: 55%;
+
+    left: -20%;
+
+    animation-delay: 2s;
+
+}
+
+
+.ending-crows span:nth-child(3) {
+
+    top: 20%;
+
+    left: -30%;
+
+    animation-delay: 5s;
+
+}
+
+
+@keyframes finalCrow {
+
+    to {
+
+        transform:
+            translateX(130vw)
+            translateY(-80px);
+
+    }
+
+}
+
+
+.ending-line {
+
+    width: 200px;
+
+    height: 1px;
+
+    margin-top: 70px;
+
+    background:
+        var(--red);
+
+    box-shadow:
+        0 0 20px red;
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.itachi-footer {
+
+    min-height: 180px;
+
+    padding:
+        50px 8vw;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-top:
+        1px solid #240000;
+
+    background: #010101;
+
+}
+
+
+.itachi-footer div {
+
+    font-size: 20px;
+
+    letter-spacing: 4px;
+
+}
+
+
+.itachi-footer div span {
+
+    color: var(--red);
+
+}
+
+
+.itachi-footer p {
+
+    color: #555;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+}
+
+
+.itachi-footer a {
+
+    color: #aaa;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+}
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+.reveal {
+
+    opacity: 0;
+
+    transform:
+        translateY(70px);
+
+    transition:
+        opacity 1s ease,
+        transform 1s ease;
+
+}
+
+
+.reveal.visible {
+
+    opacity: 1;
+
+    transform:
+        translateY(0);
+
+}
+
+
+/* =========================================================
+   RED PULSE
+========================================================= */
+
+.red-pulse
+.cinematic-hero::after {
+
+    opacity: .8;
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:900px){
+
+    .itachi-detail-page .inner-nav {
+
+        padding:
+            0 20px;
+
+    }
+
+
+    .itachi-nav {
+
+        display: none;
+
+    }
+
+
+    .back-link {
+
+        font-size: 8px;
+
+    }
+
+
+    .cinematic-content {
+
+        width: 90%;
+
+        margin-left: 7vw;
+
+    }
+
+
+    .cinematic-content h1 {
+
+        font-size:
+            70px;
+
+    }
+
+
+    .hero-description {
+
+        font-size: 13px;
+
+    }
+
+
+    .hero-image img {
+
+        object-position:
+            55% center;
+
+    }
+
+
+    .stats-section {
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+
+    .chakra-stage {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .chakra-core {
+
+        transform:
+            scale(.75);
+
+    }
+
+
+    .chakra-info {
+
+        text-align: center;
+
+        margin: 40px auto 0;
+
+    }
+
+
+    .lore-section {
+
+        grid-template-columns:
+            1fr;
+
+        padding:
+            100px 8vw;
+
+    }
+
+
+    .lore-number {
+
+        font-size: 80px;
+
+    }
+
+
+    .ability-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .eye-experience {
+
+        grid-template-columns:
+            1fr;
+
+        gap: 80px;
+
+    }
+
+
+    .giant-eye {
+
+        width: 90vw;
+
+        height: 230px;
+
+    }
+
+
+    .iris {
+
+        width: 140px;
+
+        height: 140px;
+
+        margin: -70px;
+
+    }
+
+
+    .timeline-section {
+
+        padding:
+            100px 7vw;
+
+    }
+
+
+    .timeline-item {
+
+        grid-template-columns:
+            60px 1fr;
+
+        gap: 25px;
+
+    }
+
+
+    .connection-section {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .connection-image {
+
+        min-height: 500px;
+
+    }
+
+
+    .connection-content {
+
+        padding:
+            70px 8vw;
+
+    }
+
+
+    .mangekyo-section {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .mangekyo-orbit {
+
+        transform:
+            scale(.75);
+
+    }
+
+
+    .related-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .itachi-footer {
+
+        flex-direction: column;
+
+        gap: 25px;
+
+        text-align: center;
+
+    }
+
+}
+/* =========================================================
+   ITACHIVERSE — ITACHI 3D DETAIL PAGE
+   Cinematic / Parallax / Eye Animation
+   ========================================================= */
+
+:root {
+    --red: #ff1111;
+    --dark-red: #720000;
+    --deep-black: #030303;
+    --soft-white: #eeeeee;
+    --gray: #888;
+}
+
+/* ================= RESET ================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #020202;
+    color: white;
+    overflow-x: hidden;
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+
+/* ================= PAGE ================= */
+
+.itachi-detail-page {
+    position: relative;
+    min-height: 100vh;
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(110, 0, 0, 0.18),
+            transparent 40%
+        ),
+        #020202;
+}
+
+
+/* =========================================================
+   BACKGROUND PARTICLES
+   ========================================================= */
+
+.itachi-detail-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+
+    background-image:
+        radial-gradient(circle, rgba(255, 30, 30, .55) 1px, transparent 2px),
+        radial-gradient(circle, rgba(255, 0, 0, .25) 1px, transparent 2px);
+
+    background-size: 90px 90px, 150px 150px;
+
+    animation: particlesMove 18s linear infinite;
+    opacity: .35;
+}
+
+@keyframes particlesMove {
+
+    0% {
+        background-position: 0 0, 40px 60px;
+    }
+
+    100% {
+        background-position: 180px 300px, -120px 200px;
+    }
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.inner-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 7%;
+
+    background: rgba(0, 0, 0, .72);
+    backdrop-filter: blur(14px);
+
+    border-bottom: 1px solid rgba(255, 0, 0, .15);
+
+    z-index: 9999;
+}
+
+.inner-logo {
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 5px;
+}
+
+.inner-logo span {
+    color: var(--red);
+}
+
+.back-link {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: #aaa;
+
+    transition:
+        color .3s ease,
+        transform .3s ease;
+}
+
+.back-link:hover {
+    color: white;
+    transform: translateX(-5px);
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.itachi-detail-hero {
+    position: relative;
+
+    min-height: 100vh;
+
+    display: grid;
+    grid-template-columns: 1.2fr .8fr;
+
+    align-items: center;
+
+    padding: 130px 7% 80px;
+
+    overflow: hidden;
+
+    perspective: 1200px;
+}
+
+
+/* cinematic red light */
+
+.itachi-detail-hero::before {
+    content: "";
+
+    position: absolute;
+    width: 650px;
+    height: 650px;
+
+    left: 5%;
+    top: 20%;
+
+    background: radial-gradient(
+        circle,
+        rgba(255, 0, 0, .18),
+        transparent 65%
+    );
+
+    filter: blur(30px);
+
+    animation: redPulse 5s ease-in-out infinite;
+
+    pointer-events: none;
+}
+
+@keyframes redPulse {
+
+    0%,
+    100% {
+        transform: scale(.9);
+        opacity: .5;
+    }
+
+    50% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+}
+
+
+/* =========================================================
+   IMAGE AREA
+   ========================================================= */
+
+.detail-image {
+    position: relative;
+
+    width: 100%;
+    max-width: 850px;
+
+    min-height: 650px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transform-style: preserve-3d;
+
+    transition:
+        transform .18s ease-out;
+}
+
+
+/* main image */
+
+.detail-image img {
+    width: 100%;
+    max-width: 850px;
+
+    object-fit: cover;
+
+    border-radius: 3px;
+
+    filter:
+        contrast(1.12)
+        saturate(1.15)
+        brightness(.78);
+
+    box-shadow:
+        0 0 80px rgba(120, 0, 0, .35),
+        0 40px 120px rgba(0, 0, 0, .8);
+
+    transform:
+        translateZ(30px)
+        scale(1.02);
+
+    transition:
+        transform .3s ease,
+        filter .3s ease;
+}
+
+
+/* cinematic breathing */
+
+.detail-image img {
+    animation: imageBreathing 7s ease-in-out infinite;
+}
+
+@keyframes imageBreathing {
+
+    0%,
+    100% {
+        transform:
+            translateZ(30px)
+            scale(1.02);
+    }
+
+    50% {
+        transform:
+            translateZ(55px)
+            scale(1.045);
+    }
+}
+
+
+/* =========================================================
+   IMAGE RED GLOW
+   ========================================================= */
+
+.detail-image::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 8%;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(255, 0, 0, .28),
+            transparent 65%
+        );
+
+    filter: blur(45px);
+
+    z-index: -1;
+
+    animation: glowMove 4s ease-in-out infinite;
+}
+
+@keyframes glowMove {
+
+    0%,
+    100% {
+        transform: scale(.85);
+        opacity: .35;
+    }
+
+    50% {
+        transform: scale(1.15);
+        opacity: .8;
+    }
+}
+
+
+/* =========================================================
+   EYE OVERLAY
+   Uses local itachi-face.png
+   ========================================================= */
+
+.detail-image::before {
+    content: "";
+
+    position: absolute;
+
+    width: 48%;
+    height: 26%;
+
+    top: 31%;
+    left: 26%;
+
+    background:
+        url("../images/itachi-face.png")
+        center / cover no-repeat;
+
+    mix-blend-mode: screen;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    z-index: 5;
+
+    filter:
+        contrast(1.4)
+        saturate(1.6)
+        drop-shadow(0 0 18px red);
+
+    animation:
+        eyeReveal 6s ease-in-out infinite;
+}
+
+@keyframes eyeReveal {
+
+    0% {
+        opacity: 0;
+        transform: scale(.96);
+    }
+
+    35% {
+        opacity: .15;
+    }
+
+    50% {
+        opacity: .28;
+        transform: scale(1);
+    }
+
+    70% {
+        opacity: .15;
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(.96);
+    }
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.detail-content {
+    position: relative;
+    z-index: 10;
+
+    max-width: 560px;
+
+    padding-left: 50px;
+
+    transform:
+        translateZ(70px);
+
+    animation:
+        contentAppear 1.5s ease forwards;
+}
+
+@keyframes contentAppear {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(40px)
+            translateZ(70px);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0)
+            translateZ(70px);
+    }
+}
+
+.detail-content > p:first-child {
+    color: var(--red);
+
+    font-size: 11px;
+
+    letter-spacing: 7px;
+
+    margin-bottom: 20px;
+}
+
+.detail-content h1 {
+    font-size: clamp(70px, 9vw, 145px);
+
+    line-height: .78;
+
+    letter-spacing: -5px;
+
+    margin-bottom: 35px;
+
+    text-shadow:
+        0 0 20px rgba(255, 0, 0, .15);
+}
+
+.detail-content h1 span {
+    display: block;
+
+    font-size: .35em;
+
+    color: transparent;
+
+    -webkit-text-stroke: 1px rgba(255, 255, 255, .55);
+
+    letter-spacing: 12px;
+
+    margin-top: 15px;
+}
+
+.detail-content h3 {
+    color: #ddd;
+
+    font-size: 13px;
+
+    letter-spacing: 4px;
+
+    line-height: 1.8;
+
+    margin-bottom: 30px;
+}
+
+.detail-content p:last-child {
+    color: #999;
+
+    font-size: 16px;
+
+    line-height: 2;
+
+    max-width: 500px;
+}
+
+
+/* =========================================================
+   RED SCAN LIGHT
+   ========================================================= */
+
+.itachi-detail-hero::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    height: 2px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        red,
+        transparent
+    );
+
+    box-shadow:
+        0 0 20px red;
+
+    animation:
+        scanLine 6s linear infinite;
+
+    opacity: .35;
+
+    pointer-events: none;
+}
+
+@keyframes scanLine {
+
+    0% {
+        top: 5%;
+    }
+
+    100% {
+        top: 95%;
+    }
+}
+
+
+/* =========================================================
+   STATS
+   ========================================================= */
+
+.stats-section {
+    position: relative;
+
+    z-index: 10;
+
+    display: grid;
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    border-top:
+        1px solid rgba(255, 0, 0, .18);
+
+    border-bottom:
+        1px solid rgba(255, 0, 0, .18);
+
+    background:
+        rgba(8, 8, 8, .85);
+
+    backdrop-filter: blur(12px);
+}
+
+.stats-section > div {
+    min-height: 170px;
+
+    padding: 45px 30px;
+
+    border-right:
+        1px solid rgba(255, 255, 255, .08);
+
+    transition:
+        background .4s ease,
+        transform .4s ease;
+}
+
+.stats-section > div:hover {
+    background:
+        rgba(100, 0, 0, .18);
+
+    transform:
+        translateY(-8px);
+}
+
+.stats-section small {
+    display: block;
+
+    color: #666;
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+
+    margin-bottom: 18px;
+}
+
+.stats-section strong {
+    color: white;
+
+    font-size: 20px;
+
+    letter-spacing: 3px;
+}
+
+
+/* =========================================================
+   ABILITIES
+   ========================================================= */
+
+.abilities-section {
+    position: relative;
+
+    z-index: 5;
+
+    padding: 150px 7%;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(100, 0, 0, .12),
+            transparent 50%
+        );
+}
+
+.abilities-section > p {
+    color: var(--red);
+
+    font-size: 10px;
+
+    letter-spacing: 6px;
+
+    margin-bottom: 20px;
+}
+
+.abilities-section > h2 {
+    font-size:
+        clamp(40px, 6vw, 90px);
+
+    margin-bottom: 80px;
+
+    color: white;
+
+    letter-spacing: -2px;
+}
+
+
+/* ability grid */
+
+.ability-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 2px;
+
+    background:
+        rgba(255, 0, 0, .1);
+}
+
+.ability-grid article {
+    position: relative;
+
+    min-height: 300px;
+
+    padding: 50px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #090909,
+            #030303
+        );
+
+    overflow: hidden;
+
+    transition:
+        transform .5s ease,
+        background .5s ease;
+}
+
+.ability-grid article::before {
+    content: "";
+
+    position: absolute;
+
+    width: 200px;
+    height: 200px;
+
+    right: -80px;
+    top: -80px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 0, 0, .18),
+            transparent 70%
+        );
+
+    transition:
+        transform .6s ease;
+}
+
+.ability-grid article:hover {
+    transform:
+        translateY(-10px)
+        perspective(600px)
+        rotateX(2deg)
+        rotateY(-2deg);
+
+    background:
+        linear-gradient(
+            145deg,
+            #120000,
+            #040404
+        );
+}
+
+.ability-grid article:hover::before {
+    transform:
+        scale(2.2);
+}
+
+.ability-grid span {
+    color: var(--red);
+
+    font-size: 12px;
+
+    letter-spacing: 4px;
+}
+
+.ability-grid h3 {
+    margin-top: 45px;
+
+    font-size: 32px;
+
+    letter-spacing: 3px;
+}
+
+.ability-grid p {
+    color: #777;
+
+    max-width: 430px;
+
+    margin-top: 20px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   ENDING
+   ========================================================= */
+
+.detail-ending {
+    position: relative;
+
+    min-height: 500px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(130, 0, 0, .25),
+            #020202 60%
+        );
+}
+
+.detail-ending::before {
+    content: "";
+
+    position: absolute;
+
+    width: 350px;
+    height: 350px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid rgba(255, 0, 0, .3);
+
+    box-shadow:
+        0 0 50px rgba(255, 0, 0, .12);
+
+    animation:
+        endingRing 12s linear infinite;
+}
+
+@keyframes endingRing {
+
+    from {
+        transform:
+            rotate(0deg)
+            scale(.8);
+    }
+
+    to {
+        transform:
+            rotate(360deg)
+            scale(1.3);
+    }
+}
+
+.detail-ending h2 {
+    position: relative;
+    z-index: 2;
+
+    font-size:
+        clamp(45px, 7vw, 100px);
+
+    letter-spacing: -3px;
+
+    margin-bottom: 40px;
+}
+
+.detail-ending a {
+    position: relative;
+    z-index: 2;
+
+    padding: 16px 32px;
+
+    border:
+        1px solid rgba(255, 0, 0, .5);
+
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    transition:
+        background .3s ease,
+        box-shadow .3s ease,
+        transform .3s ease;
+}
+
+.detail-ending a:hover {
+    background: var(--red);
+
+    color: black;
+
+    box-shadow:
+        0 0 35px rgba(255, 0, 0, .6);
+
+    transform:
+        translateY(-5px);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .itachi-detail-hero {
+        grid-template-columns: 1fr;
+
+        padding-top: 120px;
+    }
+
+    .detail-image {
+        min-height: auto;
+
+        margin-bottom: 60px;
+    }
+
+    .detail-content {
+        padding-left: 0;
+    }
+
+    .stats-section {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .inner-nav {
+        padding: 0 20px;
+    }
+
+    .inner-logo {
+        font-size: 15px;
+    }
+
+    .back-link {
+        font-size: 8px;
+        letter-spacing: 2px;
+    }
+
+    .itachi-detail-hero {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .detail-content h1 {
+        font-size: 70px;
+    }
+
+    .stats-section {
+        grid-template-columns: 1fr;
+    }
+
+    .ability-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .abilities-section {
+        padding: 100px 20px;
+    }
+
+    .ability-grid article {
+        padding: 35px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+    }
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Akatsuki | ItachiVerse</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/pages.css') }}">
+
+</head>
+
+<body class="detail-page">
+
+<header class="detail-nav">
+
+    <a href="{{ url_for('home') }}" class="detail-logo">
+        ITACHI<span>VERSE</span>
+    </a>
+
+    <nav>
+        <a href="{{ url_for('home') }}">HOME</a>
+        <a href="{{ url_for('story') }}">STORY</a>
+        <a href="{{ url_for('characters') }}">CHARACTERS</a>
+        <a href="{{ url_for('explore') }}">EXPLORE</a>
+    </nav>
+
+</header>
+
+
+<section class="detail-hero">
+
+    <div class="detail-image">
+
+        <img
+            src="{{ url_for('static', filename='images/akatsuki.png') }}"
+            alt="Akatsuki">
+
+    </div>
+
+
+    <div class="detail-text">
+
+        <p class="detail-kicker">
+            ORGANIZATION
+        </p>
+
+        <h1>
+            AKATSUKI
+        </h1>
+
+        <h3>
+            THE RED CLOUD
+        </h3>
+
+        <p>
+            Akatsuki is a criminal organization formed by
+            powerful missing-nin from different shinobi villages.
+            The organization became one of the major forces
+            shaping the events of Naruto.
+        </p>
+
+        <p>
+            Itachi Uchiha became one of its members and operated
+            alongside other powerful shinobi, including Kisame Hoshigaki.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="detail-info">
+
+    <div>
+        <small>TYPE</small>
+        <strong>ORGANIZATION</strong>
+    </div>
+
+    <div>
+        <small>SYMBOL</small>
+        <strong>RED CLOUD</strong>
+    </div>
+
+    <div>
+        <small>ITACHI</small>
+        <strong>MEMBER</strong>
+    </div>
+
+    <div>
+        <small>PARTNER</small>
+        <strong>KISAME</strong>
+    </div>
+
+</section>
+
+
+<section class="detail-story">
+
+    <p>THE ORGANIZATION</p>
+
+    <h2>
+        THE RED CLOUD<br>
+        OF THE SHINOBI WORLD
+    </h2>
+
+    <p>
+        The Akatsuki became closely connected with the
+        pursuit of the tailed beasts and the major conflicts
+        surrounding the shinobi world.
+    </p>
+
+</section>
+
+
+<section class="detail-ending">
+
+    <h2>
+        EVERY CLOUD<br>
+        HIDES A SECRET.
+    </h2>
+
+    <a href="{{ url_for('explore') }}">
+        ← BACK TO EXPLORE
+    </a>
+
+</section>
+
+</body>
+</html>

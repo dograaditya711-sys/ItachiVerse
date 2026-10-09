@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Jutsu Archive | ItachiVerse</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/jutsu.css') }}">
+</head>
+
+<body>
+
+<!-- BACKGROUND -->
+<div class="jutsu-bg">
+    <div class="grid"></div>
+    <div class="chakra chakra-one"></div>
+    <div class="chakra chakra-two"></div>
+    <div class="chakra chakra-three"></div>
+</div>
+
+<!-- NAVBAR -->
+<header class="jutsu-nav">
+
+    <a href="{{ url_for('home') }}" class="brand">
+        ITACHI<span>VERSE</span>
+    </a>
+
+    <nav>
+        <a href="{{ url_for('home') }}">HOME</a>
+        <a href="{{ url_for('story') }}">STORY</a>
+        <a href="{{ url_for('characters') }}">CHARACTERS</a>
+        <a href="{{ url_for('shinobi') }}">SHINOBI</a>
+        <a href="{{ url_for('battle') }}">BATTLE</a>
+        <a href="{{ url_for('missions') }}">MISSIONS</a>
+        <a href="{{ url_for('explore') }}">EXPLORE</a>
+        <a href="{{ url_for('jutsu') }}" class="active">JUTSU</a>
+    </nav>
+
+    <div class="online">
+        <i></i>
+        ARCHIVE ONLINE
+    </div>
+
+</header>
+
+
+<!-- HERO -->
+<section class="jutsu-hero">
+
+    <div class="hero-kicker">
+        SHINOBI ABILITY ARCHIVE / 001
+    </div>
+
+    <h1>
+        JUTSU
+        <span>DATABASE</span>
+    </h1>
+
+    <p>
+        Discover the techniques, abilities and forbidden arts
+        that shaped the shinobi world.
+    </p>
+
+    <div class="hero-line"></div>
+
+    <div class="hero-status">
+        <span>● JUTSU NETWORK ONLINE</span>
+        <span>ARCHIVE UNLOCKED</span>
+    </div>
+
+</section>
+
+
+<!-- STATS -->
+<section class="jutsu-stats">
+
+    <div>
+        <strong id="totalJutsu">08</strong>
+        <span>TECHNIQUES</span>
+    </div>
+
+    <div>
+        <strong>05</strong>
+        <span>ELEMENTS</span>
+    </div>
+
+    <div>
+        <strong>03</strong>
+        <span>DOUJUTSU</span>
+    </div>
+
+    <div>
+        <strong>∞</strong>
+        <span>CHAKRA</span>
+    </div>
+
+</section>
+
+
+<!-- SEARCH -->
+<section class="search-area">
+
+    <div class="search-box">
+
+        <span>⌕</span>
+
+        <input
+            type="text"
+            id="jutsuSearch"
+            placeholder="SEARCH JUTSU..."
+            autocomplete="off">
+
+        <strong id="searchCount">08</strong>
+
+    </div>
+
+</section>
+
+
+<!-- FILTERS -->
+<section class="jutsu-filters">
+
+    <button class="filter active" data-type="all">
+        ALL
+    </button>
+
+    <button class="filter" data-type="doujutsu">
+        DOUJUTSU
+    </button>
+
+    <button class="filter" data-type="ninjutsu">
+        NINJUTSU
+    </button>
+
+    <button class="filter" data-type="genjutsu">
+        GENJUTSU
+    </button>
+
+    <button class="filter" data-type="fire">
+        FIRE STYLE
+    </button>
+
+</section>
+
+
+<!-- JUTSU GRID -->
+<main class="jutsu-grid" id="jutsuGrid">
+
+
+    <!-- SHARINGAN -->
+    <article
+        class="jutsu-card"
+        data-name="sharingan"
+        data-type="doujutsu">
+
+        <div class="jutsu-number">01</div>
+
+        <div class="jutsu-symbol">
+            👁
+        </div>
+
+        <div class="jutsu-rank">
+            DOUJUTSU
+        </div>
+
+        <h2>
+            SHARINGAN
+        </h2>
+
+        <p>
+            An ocular ability associated with
+            the Uchiha bloodline.
+        </p>
+
+        <div class="jutsu-meta">
+            <span>CHAKRA</span>
+            <strong>30</strong>
+        </div>
+
+        <button class="view-jutsu">
+            VIEW TECHNIQUE →
+        </button>
+
+    </article>
+
+
+    <!-- MANGEKYO -->
+    <article
+        class="jutsu-card rare"
+        data-name="mangekyo sharingan"
+        data-type="doujutsu">
+
+        <div class="jutsu-number">02</div>
+
+        <div class="jutsu-symbol">
+            ◉
+        </div>
+
+        <div class="jutsu-rank">
+            DOUJUTSU
+        </div>
+
+        <h2>
+            MANGEKYO
+        </h2>
+
+        <p>
+            An advanced evolution of the
+            Sharingan with unique abilities.
+        </p>
+
+        <div class="jutsu-meta">
+            <span>CHAKRA</span>
+            <strong>70</strong>
+        </div>
+
+        <button class="view-jutsu">
+            VIEW TECHNIQUE →
+        </button>
+
+    </article>
+
+
+    <!-- AMATERASU -->
+    <article
+        class="jutsu-card legendary"
+        data-name="amaterasu black flames"
+        data-type="fire">
+
+        <div class="jutsu-number">03</div>
+
+        <div class="jutsu-symbol fire-symbol">
+            火
+        </div>
+
+        <div class="jutsu-rank">
+            FIRE STYLE
+        </div>
+
+        <h2>
+            AMATERASU
+        </h2>
+
+        <p>
+            Black flames that continue burning
+            once ignited.
+        </p>
+
+        <div class="jutsu-meta">
+            <span>CHAKRA</span>
+            <strong>90</strong>
+        </div>
+
+        <button class="view-jutsu">
+            VIEW TECHNIQUE →
+        </button>
+
+    </article>
+
+
+    <!-- TSUKUYOMI -->
+    <article
+        class="jutsu-card legendary"
+        data-name="tsukuyomi genjutsu"
+        data-type="genjutsu">
+
+        <div class="jutsu-number">04</div>
+
+        <div class="jutsu-symbol">
+            月
+        </div>
+
+        <div class="jutsu-rank">
+            GENJUTSU
+        </div>
+
+        <h2>
+            TSUKUYOMI
+        </h2>
+
+        <p>
+            A powerful visual genjutsu
+            associated with Itachi.
+        </p>
+
+        <div class="jutsu-meta">
+            <span>CHAKRA</span>
+            <strong>85</strong>
+        </div>
+
+        <button class="view-jutsu">
+            VIEW TECHNIQUE →
+        </button>
+
+    </article>
+
+
+    <!-- SUSANOO -->
+    <article
+        class="jutsu-card legendary"
+        data-name="susanoo"
+        data-type="ninjutsu">
+
+        <div class="jutsu-number">05</div>
+
+        <div class="jutsu-symbol">
+            須
+        </div>
+
+        <div class="jutsu-rank">
+            NINJUTSU
+        </div>
+
+        <h2>
+            SUSANOO
+        </h2>
+
+        <p>
+            A colossal chakra avatar
+            surrounding its user.
+        </p>
+
+        <div class="jutsu-meta">
+            <span>CHAKRA</span>
+            <strong>100</strong>
+        </div>
+
+        <button class="view-jutsu">
+            VIEW TECHNIQUE →
+        </button>
+
+    </article>
+
+
+    <!-- FIREBALL -->
+    <article
+        class="jutsu-card"
+        data-name="great fireball technique"
+        data-type="fire">
+
+        <div class="jutsu-number">06</div>
+
+        <div class="jutsu-symbol fire-symbol">
+            炎
+        </div>
+
+        <div class="jutsu-rank">
+            FIRE STYLE
+        </div>
+
+        <h2>
+            GREAT FIREBALL
+        </h2>
+
+        <p>
+            A concentrated blast of
+            fire released from the mouth.
+        </p>
+
+        <div class="jutsu-meta">
+            <span>CHAKRA</span>
+            <strong>40</strong>
+        </div>
+
+        <button class="view-jutsu">
+            VIEW TECHNIQUE →
+        </button>
+
+    </article>
+
+
+    <!-- SHADOW CLONE -->
+    <article
+        class="jutsu-card"
+        data-name="shadow clone"
+        data-type="ninjutsu">
+
+        <div class="jutsu-number">07</div>
+
+        <div class="jutsu-symbol">
+            影
+        </div>
+
+        <div class="jutsu-rank">
+            NINJUTSU
+        </div>
+
+        <h2>
+            SHADOW CLONE
+        </h2>
+
+        <p>
+            Creates physical clones that
+            can interact with the battlefield.
+        </p>
+
+        <div class="jutsu-meta">
+            <span>CHAKRA</span>
+            <strong>35</strong>
+        </div>
+
+        <button class="view-jutsu">
+            VIEW TECHNIQUE →
+        </button>
+
+    </article>
+
+
+    <!-- GENJUTSU -->
+    <article
+        class="jutsu-card rare"
+        data-name="genjutsu illusion"
+        data-type="genjutsu">
+
+        <div class="jutsu-number">08</div>
+
+        <div class="jutsu-symbol">
+            幻
+        </div>
+
+        <div class="jutsu-rank">
+            GENJUTSU
+        </div>
+
+        <h2>
+            GENJUTSU
+        </h2>
+
+        <p>
+            Techniques that manipulate
+            perception through chakra.
+        </p>
+
+        <div class="jutsu-meta">
+            <span>CHAKRA</span>
+            <strong>60</strong>
+        </div>
+
+        <button class="view-jutsu">
+            VIEW TECHNIQUE →
+        </button>
+
+    </article>
+
+</main>
+
+
+<!-- NO RESULTS -->
+<section class="no-results" id="noResults">
+
+    <div>◉</div>
+
+    <h2>
+        TECHNIQUE NOT FOUND
+    </h2>
+
+    <p>
+        No jutsu matches your archive query.
+    </p>
+
+</section>
+
+
+<!-- DETAIL MODAL -->
+<div class="jutsu-modal" id="jutsuModal">
+
+    <div class="jutsu-detail">
+
+        <button
+            class="close-modal"
+            id="closeModal">
+            ×
+        </button>
+
+        <span class="detail-kicker">
+            SHINOBI TECHNIQUE
+        </span>
+
+        <div class="detail-symbol" id="detailSymbol">
+            火
+        </div>
+
+        <span class="detail-type" id="detailType">
+            FIRE STYLE
+        </span>
+
+        <h2 id="detailTitle">
+            AMATERASU
+        </h2>
+
+        <div class="detail-line"></div>
+
+        <p id="detailDescription">
+            Technique intelligence loading...
+        </p>
+
+        <div class="detail-stats">
+
+            <div>
+                <span>CHAKRA COST</span>
+                <strong id="detailChakra">90</strong>
+            </div>
+
+            <div>
+                <span>CLASS</span>
+                <strong id="detailClass">FIRE</strong>
+            </div>
+
+            <div>
+                <span>STATUS</span>
+                <strong>ARCHIVED</strong>
+            </div>
+
+        </div>
+
+        <button
+            class="master-btn"
+            id="masterBtn">
+
+            MASTER TECHNIQUE
+            <b>→</b>
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- FINAL -->
+<section class="jutsu-ending">
+
+    <span>
+        ITACHIVERSE / JUTSU ARCHIVE
+    </span>
+
+    <h2>
+        POWER IS<br>
+        <strong>CHAKRA GIVEN FORM.</strong>
+    </h2>
+
+    <p>
+        Every technique carries the history,
+        discipline and will of its shinobi.
+    </p>
+
+</section>
+
+
+<footer>
+
+    <span>ITACHIVERSE</span>
+
+    <span>JUTSU ARCHIVE / 2026</span>
+
+    <a href="{{ url_for('shinobi') }}">
+        ← SHINOBI DATABASE
+    </a>
+
+</footer>
+
+
+<script src="{{ url_for('static', filename='js/jutsu.js') }}"></script>
+
+</body>
+</html>

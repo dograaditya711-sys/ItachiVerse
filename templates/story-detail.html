@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ chapter.title }} | ItachiVerse</title>
+
+
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/story-detail.css') }}">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #050505;
+            color: white;
+            font-family: Georgia, serif;
+            overflow-x: hidden;
+        }
+
+        /* ================= BACKGROUND ================= */
+
+        .story-detail-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -10;
+            background:
+                radial-gradient(
+                    circle at 50% 30%,
+                    rgba(100, 0, 0, .35),
+                    transparent 45%
+                ),
+                #050505;
+        }
+
+        .red-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+
+            left: 50%;
+            top: 35%;
+
+            transform: translate(-50%, -50%);
+
+            background: radial-gradient(
+                circle,
+                rgba(160, 0, 0, .25),
+                transparent 70%
+            );
+
+            filter: blur(40px);
+
+            animation: breathe 5s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+
+            0%,100% {
+                transform:
+                    translate(-50%, -50%)
+                    scale(1);
+            }
+
+            50% {
+                transform:
+                    translate(-50%, -50%)
+                    scale(1.25);
+            }
+
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        .chapter-nav {
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+
+            height: 75px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            background: rgba(0,0,0,.75);
+
+            backdrop-filter: blur(15px);
+
+            border-bottom: 1px solid rgba(255,0,0,.2);
+
+            z-index: 1000;
+
+        }
+
+        .chapter-logo {
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+            letter-spacing: 5px;
+
+        }
+
+        .chapter-logo span {
+
+            color: #b30000;
+
+        }
+
+        .back-story {
+
+            color: #aaa;
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            letter-spacing: 3px;
+
+            transition: .3s;
+
+        }
+
+        .back-story:hover {
+
+            color: #ff2020;
+
+        }
+
+
+        /* ================= HERO ================= */
+
+        .chapter-hero {
+
+            min-height: 100vh;
+
+            padding-top: 100px;
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            align-items: center;
+
+            gap: 60px;
+
+            padding-left: 8%;
+
+            padding-right: 8%;
+
+        }
+
+
+        /* ================= IMAGE ================= */
+
+        .chapter-visual {
+
+            position: relative;
+
+            height: 650px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            perspective: 1200px;
+
+        }
+
+        .chapter-ring {
+
+            position: absolute;
+
+            width: 500px;
+
+            height: 500px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(255,0,0,.35);
+
+            box-shadow:
+
+                0 0 50px rgba(150,0,0,.2),
+
+                inset 0 0 50px rgba(150,0,0,.15);
+
+            animation: rotateRing 18s linear infinite;
+
+        }
+
+        .chapter-ring::before {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 30px;
+
+            border-radius: 50%;
+
+            border: 1px dashed rgba(255,0,0,.25);
+
+        }
+
+        @keyframes rotateRing {
+
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+
+        }
+
+
+        .chapter-image {
+
+            position: relative;
+
+            z-index: 5;
+
+            width: 80%;
+
+            max-height: 600px;
+
+            object-fit: contain;
+
+            filter:
+
+                drop-shadow(0 0 25px rgba(255,0,0,.4))
+
+                drop-shadow(0 0 80px rgba(100,0,0,.25));
+
+            transform: translateZ(80px);
+
+            animation: characterFloat 5s ease-in-out infinite;
+
+            transition: transform .15s ease-out;
+
+        }
+
+        @keyframes characterFloat {
+
+            0%,100% {
+
+                transform:
+                    translateY(0)
+                    translateZ(80px);
+
+            }
+
+            50% {
+
+                transform:
+                    translateY(-15px)
+                    translateZ(80px);
+
+            }
+
+        }
+
+
+        /* ================= CONTENT ================= */
+
+        .chapter-content {
+
+            max-width: 700px;
+
+        }
+
+        .chapter-number {
+
+            font-family: monospace;
+
+            font-size: 12px;
+
+            letter-spacing: 6px;
+
+            color: #e00000;
+
+            margin-bottom: 20px;
+
+        }
+
+        .chapter-label {
+
+            font-size: 11px;
+
+            letter-spacing: 5px;
+
+            color: #777;
+
+            margin-bottom: 25px;
+
+        }
+
+        .chapter-content h1 {
+
+            font-size: clamp(55px, 7vw, 110px);
+
+            line-height: .85;
+
+            letter-spacing: -4px;
+
+            margin-bottom: 30px;
+
+            text-transform: uppercase;
+
+        }
+
+        .chapter-content h1 span {
+
+            display: block;
+
+            color: transparent;
+
+            -webkit-text-stroke: 1px rgba(255,255,255,.45);
+
+        }
+
+        .chapter-subtitle {
+
+            color: #d00000;
+
+            letter-spacing: 3px;
+
+            font-size: 13px;
+
+            margin-bottom: 25px;
+
+        }
+
+        .chapter-description {
+
+            color: #aaa;
+
+            line-height: 2;
+
+            font-size: 16px;
+
+            max-width: 600px;
+
+        }
+
+
+        /* ================= STORY BODY ================= */
+
+        .chapter-story {
+
+            min-height: 700px;
+
+            padding:
+
+                130px 12%
+
+                150px;
+
+            border-top: 1px solid rgba(255,0,0,.15);
+
+        }
+
+        .chapter-story-label {
+
+            color: #d00000;
+
+            letter-spacing: 6px;
+
+            font-size: 11px;
+
+            margin-bottom: 25px;
+
+        }
+
+        .chapter-story h2 {
+
+            font-size: clamp(40px, 6vw, 85px);
+
+            line-height: .95;
+
+            margin-bottom: 50px;
+
+            text-transform: uppercase;
+
+        }
+
+        .chapter-story p {
+
+            max-width: 850px;
+
+            color: #999;
+
+            font-size: 18px;
+
+            line-height: 2.1;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        /* ================= CHAPTER INFO ================= */
+
+        .chapter-meta {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            border-top: 1px solid #222;
+
+            border-bottom: 1px solid #222;
+
+        }
+
+        .meta-box {
+
+            padding: 50px;
+
+            border-right: 1px solid #222;
+
+        }
+
+        .meta-box small {
+
+            display: block;
+
+            color: #666;
+
+            letter-spacing: 4px;
+
+            margin-bottom: 15px;
+
+        }
+
+        .meta-box strong {
+
+            font-size: 22px;
+
+        }
+
+
+        /* ================= END ================= */
+
+        .chapter-end {
+
+            min-height: 450px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+        }
+
+        .chapter-end h2 {
+
+            font-size: clamp(40px, 6vw, 80px);
+
+            margin-bottom: 40px;
+
+        }
+
+        .chapter-end a {
+
+            color: white;
+
+            text-decoration: none;
+
+            border: 1px solid #700000;
+
+            padding: 18px 35px;
+
+            letter-spacing: 3px;
+
+            font-size: 11px;
+
+            transition: .3s;
+
+        }
+
+        .chapter-end a:hover {
+
+            background: #8b0000;
+
+            box-shadow: 0 0 30px rgba(255,0,0,.3);
+
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width: 900px) {
+
+            .chapter-hero {
+
+                grid-template-columns: 1fr;
+
+                padding-top: 130px;
+
+            }
+
+            .chapter-visual {
+
+                height: 500px;
+
+            }
+
+            .chapter-ring {
+
+                width: 350px;
+                height: 350px;
+
+            }
+
+            .chapter-meta {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .meta-box {
+
+                border-right: 0;
+
+                border-bottom: 1px solid #222;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="story-detail-bg">
+
+    <div class="red-glow"></div>
+
+</div>
+
+
+<!-- NAVBAR -->
+
+<header class="chapter-nav">
+
+    <a href="{{ url_for('home') }}"
+       class="chapter-logo">
+
+        ITACHI<span>VERSE</span>
+
+    </a>
+
+    <a href="{{ url_for('story') }}"
+       class="back-story">
+
+        ← STORY
+
+    </a>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="chapter-hero">
+
+
+    <!-- IMAGE -->
+
+    <div class="chapter-visual">
+
+        <div class="chapter-ring"></div>
+
+        <img
+            src="{{ url_for('static', filename='images/' + chapter.image) }}"
+            class="chapter-image"
+            id="chapterImage"
+            alt="{{ chapter.title }}"
+        >
+
+    </div>
+
+
+    <!-- CONTENT -->
+
+    <div class="chapter-content">
+
+        <div class="chapter-number">
+
+            CHAPTER {{ chapter.number }}
+
+        </div>
+
+        <div class="chapter-label">
+
+            {{ chapter.label }}
+
+        </div>
+
+        <h1>
+
+            {{ chapter.title }}
+
+        </h1>
+
+        <p class="chapter-subtitle">
+
+            {{ chapter.subtitle }}
+
+        </p>
+
+        <p class="chapter-description">
+
+            {{ chapter.text }}
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- INFO -->
+
+<section class="chapter-meta">
+
+    <div class="meta-box">
+
+        <small>
+            CHAPTER
+        </small>
+
+        <strong>
+            {{ chapter.number }}
+        </strong>
+
+    </div>
+
+    <div class="meta-box">
+
+        <small>
+            CATEGORY
+        </small>
+
+        <strong>
+            {{ chapter.label }}
+        </strong>
+
+    </div>
+
+    <div class="meta-box">
+
+        <small>
+            ITACHIVERSE
+        </small>
+
+        <strong>
+            STORY ARCHIVE
+        </strong>
+
+    </div>
+
+</section>
+
+
+<!-- STORY -->
+
+<section class="chapter-story">
+
+    <p class="chapter-story-label">
+
+        THE CHAPTER
+
+    </p>
+
+    <h2>
+
+        {{ chapter.subtitle }}
+
+    </h2>
+
+    <p>
+
+        {{ chapter.text }}
+
+    </p>
+
+    <p>
+
+        This chapter represents another part of the
+        journey through the shinobi world. The events,
+        relationships and choices connected to this
+        period help explain the larger story surrounding
+        Itachi Uchiha.
+
+    </p>
+
+</section>
+<!-- =====================================================
+     EXTENDED STORY EXPERIENCE
+===================================================== -->
+
+<section class="story-depth">
+
+    <div class="depth-intro">
+        <span>ITACHIVERSE ARCHIVE</span>
+
+        <h2>
+            BEHIND THE<br>
+            <em>SHADOW</em>
+        </h2>
+
+        <p>
+            Every chapter contains another piece of the
+            world surrounding Itachi Uchiha.
+        </p>
+    </div>
+
+
+    <!-- CHAPTER MOMENT 01 -->
+
+    <article class="depth-panel">
+
+        <div class="depth-image">
+            <div class="depth-glow"></div>
+
+            <img
+                src="{{ url_for('static', filename='images/' + chapter.image) }}"
+                alt="{{ chapter.title }}"
+            >
+        </div>
+
+        <div class="depth-text">
+
+            <span>01 / MEMORY</span>
+
+            <h3>
+                THE BEGINNING
+            </h3>
+
+            <p>
+                The events of this chapter connect to
+                the larger journey of the shinobi world.
+                Childhood, conflict, relationships and
+                decisions gradually shape the path ahead.
+            </p>
+
+            <p>
+                What appears to be a single moment often
+                becomes part of a much larger chain of
+                events.
+            </p>
+
+        </div>
+
+    </article>
+
+
+    <!-- CHAPTER MOMENT 02 -->
+
+    <article class="depth-panel reverse-depth">
+
+        <div class="depth-image">
+
+            <div class="depth-glow"></div>
+
+            <img
+                src="{{ url_for('static', filename='images/' + chapter.image) }}"
+                alt="{{ chapter.title }}"
+            >
+
+        </div>
+
+        <div class="depth-text">
+
+            <span>02 / CONFLICT</span>
+
+            <h3>
+                THE SHADOW GROWS
+            </h3>
+
+            <p>
+                The shinobi world is built around difficult
+                choices. Alliances change, clans collide
+                and personal relationships become connected
+                to larger conflicts.
+            </p>
+
+            <p>
+                This period becomes another important layer
+                of the story.
+            </p>
+
+        </div>
+
+    </article>
+
+
+    <!-- QUOTE -->
+
+    <section class="depth-quote">
+
+        <span>THE SHINOBI WORLD</span>
+
+        <h2>
+            EVERY CHOICE<br>
+            LEAVES A SHADOW.
+        </h2>
+
+    </section>
+
+
+    <!-- TIMELINE -->
+
+    <section class="deep-timeline">
+
+        <div class="timeline-title">
+
+            <span>CHRONICLE</span>
+
+            <h2>
+                THROUGH<br>
+                THE YEARS
+            </h2>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <strong>01</strong>
+
+            <div>
+                <small>BEGINNING</small>
+
+                <h3>
+                    CHILDHOOD
+                </h3>
+
+                <p>
+                    The first experiences that shape the
+                    character's understanding of the world.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <strong>02</strong>
+
+            <div>
+                <small>SHINOBI</small>
+
+                <h3>
+                    TRAINING
+                </h3>
+
+                <p>
+                    Skills, responsibilities and encounters
+                    begin changing the direction of the story.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <strong>03</strong>
+
+            <div>
+                <small>CONFLICT</small>
+
+                <h3>
+                    THE TURNING POINT
+                </h3>
+
+                <p>
+                    Personal decisions become connected to
+                    events affecting the wider shinobi world.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <strong>04</strong>
+
+            <div>
+                <small>LEGACY</small>
+
+                <h3>
+                    WHAT REMAINS
+                </h3>
+
+                <p>
+                    The consequences of earlier choices continue
+                    long after the original moment has passed.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FINAL CINEMATIC -->
+
+    <section class="cinematic-ending">
+
+        <div class="cinematic-ring"></div>
+
+        <div class="cinematic-content">
+
+            <span>
+                ITACHIVERSE / ARCHIVE
+            </span>
+
+            <h2>
+                THE STORY<br>
+                NEVER ENDS.
+            </h2>
+
+            <p>
+                One chapter leads to another.
+                One decision creates another path.
+                And every shadow contains a story.
+            </p>
+
+            <a href="{{ url_for('story') }}">
+                EXPLORE MORE CHAPTERS →
+            </a>
+
+        </div>
+
+    </section>
+
+</section>
+
+<!-- END -->
+
+<section class="chapter-end">
+
+    <h2>
+
+        THE STORY<br>
+        CONTINUES.
+
+    </h2>
+
+    <a href="{{ url_for('story') }}">
+
+        ← BACK TO STORY
+
+    </a>
+
+</section>
+
+
+<script>
+
+    /* ===============================
+       3D MOUSE PARALLAX
+    =============================== */
+
+    const image =
+        document.getElementById("chapterImage");
+
+    document.addEventListener("mousemove", (event) => {
+
+        const x =
+            (event.clientX / window.innerWidth - .5);
+
+        const y =
+            (event.clientY / window.innerHeight - .5);
+
+        image.style.transform =
+            `translateZ(80px)
+             rotateY(${x * 10}deg)
+             rotateX(${y * -10}deg)
+             translateY(-10px)`;
+
+    });
+
+
+    /* ===============================
+       SCROLL DEPTH
+    =============================== */
+
+    window.addEventListener("scroll", () => {
+
+        const scroll =
+            window.scrollY;
+
+        image.style.transform =
+            `translateZ(80px)
+             translateY(${scroll * .08}px)`;
+
+    });
+
+</script>
+<script>
+
+const depthImages =
+    document.querySelectorAll(".depth-image img");
+
+document.addEventListener("mousemove", (e) => {
+
+    const x =
+        (e.clientX / window.innerWidth - 0.5);
+
+    const y =
+        (e.clientY / window.innerHeight - 0.5);
+
+    depthImages.forEach((img, index) => {
+
+        const strength =
+            index % 2 === 0 ? 18 : -14;
+
+        img.style.transform = `
+            translate3d(
+                ${x * strength}px,
+                ${y * strength}px,
+                60px
+            )
+            rotateY(${x * 8}deg)
+            rotateX(${y * -6}deg)
+        `;
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>

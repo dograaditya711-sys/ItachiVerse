@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Shinobi Database | ItachiVerse</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/shinobi.css') }}">
+</head>
+
+<body>
+
+<!-- =====================================================
+     BACKGROUND
+===================================================== -->
+
+<div class="scene">
+
+    <div class="moon"></div>
+
+    <div class="red-glow glow-one"></div>
+    <div class="red-glow glow-two"></div>
+
+    <div class="particles"></div>
+
+    <div class="kunai kunai-one"></div>
+    <div class="kunai kunai-two"></div>
+    <div class="kunai kunai-three"></div>
+
+</div>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="shinobi-nav">
+
+    <a href="{{ url_for('home') }}" class="brand">
+        ITACHI<span>VERSE</span>
+    </a>
+
+    <nav>
+
+        <a href="{{ url_for('home') }}">HOME</a>
+
+        <a href="{{ url_for('story') }}">STORY</a>
+
+        <a href="{{ url_for('characters') }}">
+            CHARACTERS
+        </a>
+
+        <a href="{{ url_for('shinobi') }}"
+           class="active">
+            SHINOBI
+        </a>
+
+        <a href="{{ url_for('explore') }}">
+            EXPLORE
+        </a>
+
+    </nav>
+
+    <button class="menu-btn" id="menuBtn">
+        ☰
+    </button>
+
+</header>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="shinobi-hero">
+
+    <div class="hero-small">
+        SHINOBI ARCHIVE / 001
+    </div>
+
+    <h1>
+        THE
+        <span>SHINOBI</span>
+        DATABASE
+    </h1>
+
+    <p>
+        Enter the archive of clans, warriors,
+        legends and shadows that shaped the
+        shinobi world.
+    </p>
+
+    <div class="hero-line"></div>
+
+    <div class="hero-stats">
+
+        <div>
+            <strong>09</strong>
+            <span>ARCHIVED</span>
+        </div>
+
+        <div>
+            <strong>03</strong>
+            <span>CLANS</span>
+        </div>
+
+        <div>
+            <strong>∞</strong>
+            <span>LEGENDS</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SEARCH
+===================================================== -->
+
+<section class="search-section">
+
+    <div class="search-box">
+
+        <span class="search-icon">⌕</span>
+
+        <input
+            type="text"
+            id="shinobiSearch"
+            placeholder="SEARCH SHINOBI..."
+            autocomplete="off">
+
+        <span class="search-count" id="searchCount">
+            09
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FILTER
+===================================================== -->
+
+<section class="filter-section">
+
+    <button class="filter active" data-filter="all">
+        ALL
+    </button>
+
+    <button class="filter" data-filter="uchiha">
+        UCHIHA
+    </button>
+
+    <button class="filter" data-filter="akatsuki">
+        AKATSUKI
+    </button>
+
+    <button class="filter" data-filter="legend">
+        LEGENDS
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     DATABASE
+===================================================== -->
+
+<main class="database">
+
+    <!-- ITACHI -->
+
+    <article
+        class="shinobi-card"
+        data-name="itachi uchiha"
+        data-clan="uchiha"
+        data-type="legend"
+        data-url="{{ url_for('itachi') }}">
+
+        <div class="card-number">
+            01
+        </div>
+
+        <div class="card-image">
+
+            <img
+                src="{{ url_for('static', filename='images/itachi.png') }}"
+                alt="Itachi">
+
+            <div class="image-light"></div>
+
+        </div>
+
+        <div class="card-info">
+
+            <span class="card-category">
+                UCHIHA / ANBU
+            </span>
+
+            <h2>
+                ITACHI
+                <small>UCHIHA</small>
+            </h2>
+
+            <p>
+                The shinobi who carried an entire
+                history in silence.
+            </p>
+
+            <div class="card-bottom">
+
+                <span>
+                    SHARINGAN
+                </span>
+
+                <span class="enter">
+                    ENTER →
+                </span>
+
+            </div>
+
+        </div>
+
+    </article>
+
+
+    <!-- SASUKE -->
+
+    <article
+        class="shinobi-card"
+        data-name="sasuke uchiha"
+        data-clan="uchiha"
+        data-type="legend"
+        data-url="{{ url_for('sasuke') }}">
+
+        <div class="card-number">
+            02
+        </div>
+
+        <div class="card-image">
+
+            <img
+                src="{{ url_for('static', filename='images/sasuke.png') }}"
+                alt="Sasuke">
+
+            <div class="image-light"></div>
+
+        </div>
+
+        <div class="card-info">
+
+            <span class="card-category">
+                UCHIHA / AVENGER
+            </span>
+
+            <h2>
+                SASUKE
+                <small>UCHIHA</small>
+            </h2>
+
+            <p>
+                A path shaped by revenge,
+                truth and the search for identity.
+            </p>
+
+            <div class="card-bottom">
+
+                <span>
+                    MANGEKYO
+                </span>
+
+                <span class="enter">
+                    ENTER →
+                </span>
+
+            </div>
+
+        </div>
+
+    </article>
+
+
+    <!-- MADARA -->
+
+    <article
+        class="shinobi-card large-card"
+        data-name="madara uchiha"
+        data-clan="uchiha"
+        data-type="legend"
+        data-url="{{ url_for('madara') }}">
+
+        <div class="card-number">
+            03
+        </div>
+
+        <div class="card-image">
+
+            <img
+                src="{{ url_for('static', filename='images/madara.png') }}"
+                alt="Madara">
+
+            <div class="image-light"></div>
+
+        </div>
+
+        <div class="card-info">
+
+            <span class="card-category">
+                UCHIHA / WAR LORD
+            </span>
+
+            <h2>
+                MADARA
+                <small>UCHIHA</small>
+            </h2>
+
+            <p>
+                A legendary warrior whose vision
+                changed the history of the shinobi world.
+            </p>
+
+            <div class="card-bottom">
+
+                <span>
+                    RINNEGAN
+                </span>
+
+                <span class="enter">
+                    ENTER →
+                </span>
+
+            </div>
+
+        </div>
+
+    </article>
+
+
+    <!-- MADARA WAR -->
+
+    <article
+        class="shinobi-card"
+        data-name="madara war"
+        data-clan="uchiha"
+        data-type="legend"
+        data-url="{{ url_for('madara') }}">
+
+        <div class="card-number">
+            04
+        </div>
+
+        <div class="card-image">
+
+            <img
+                src="{{ url_for('static', filename='images/madara-war.png') }}"
+                alt="Madara War">
+
+            <div class="image-light"></div>
+
+        </div>
+
+        <div class="card-info">
+
+            <span class="card-category">
+                FOURTH WAR
+            </span>
+
+            <h2>
+                MADARA
+                <small>WAR FORM</small>
+            </h2>
+
+            <p>
+                The battlefield incarnation of
+                an Uchiha legend.
+            </p>
+
+            <div class="card-bottom">
+
+                <span>
+                    SUSANOO
+                </span>
+
+                <span class="enter">
+                    ENTER →
+                </span>
+
+            </div>
+
+        </div>
+
+    </article>
+
+
+    <!-- MADARA AKATSUKI -->
+
+    <article
+        class="shinobi-card"
+        data-name="madara akatsuki"
+        data-clan="akatsuki"
+        data-type="legend"
+        data-url="{{ url_for('madara') }}">
+
+        <div class="card-number">
+            05
+        </div>
+
+        <div class="card-image">
+
+            <img
+                src="{{ url_for('static', filename='images/madara-akatsuki.png') }}"
+                alt="Madara Akatsuki">
+
+            <div class="image-light"></div>
+
+        </div>
+
+        <div class="card-info">
+
+            <span class="card-category">
+                AKATSUKI
+            </span>
+
+            <h2>
+                MADARA
+                <small>SHADOW</small>
+            </h2>
+
+            <p>
+                A mysterious presence behind
+                one of the greatest conflicts.
+            </p>
+
+            <div class="card-bottom">
+
+                <span>
+                    SHADOW
+                </span>
+
+                <span class="enter">
+                    ENTER →
+                </span>
+
+            </div>
+
+        </div>
+
+    </article>
+
+
+    <!-- UCHIHA -->
+
+    <article
+        class="shinobi-card"
+        data-name="uchiha clan"
+        data-clan="uchiha"
+        data-type="legend">
+
+        <div class="card-number">
+            06
+        </div>
+
+        <div class="card-image symbol-card">
+
+            <img
+                src="{{ url_for('static', filename='images/uchiha.png') }}"
+                alt="Uchiha">
+
+            <div class="image-light"></div>
+
+        </div>
+
+        <div class="card-info">
+
+            <span class="card-category">
+                BLOODLINE
+            </span>
+
+            <h2>
+                UCHIHA
+                <small>CLAN</small>
+            </h2>
+
+            <p>
+                A clan whose history is deeply
+                connected with the Sharingan.
+            </p>
+
+            <div class="card-bottom">
+
+                <span>
+                    BLOODLINE
+                </span>
+
+                <span class="enter">
+                    ARCHIVE →
+                </span>
+
+            </div>
+
+        </div>
+
+    </article>
+
+
+    <!-- AKATSUKI -->
+
+    <article
+        class="shinobi-card"
+        data-name="akatsuki organization"
+        data-clan="akatsuki"
+        data-type="legend">
+
+        <div class="card-number">
+            07
+        </div>
+
+        <div class="card-image">
+
+            <img
+                src="{{ url_for('static', filename='images/akatsuki.png') }}"
+                alt="Akatsuki">
+
+            <div class="image-light"></div>
+
+        </div>
+
+        <div class="card-info">
+
+            <span class="card-category">
+                ORGANIZATION
+            </span>
+
+            <h2>
+                AKATSUKI
+                <small>RED CLOUD</small>
+            </h2>
+
+            <p>
+                A group of rogue shinobi connected
+                by a mysterious purpose.
+            </p>
+
+            <div class="card-bottom">
+
+                <span>
+                    OUTCASTS
+                </span>
+
+                <span class="enter">
+                    ARCHIVE →
+                </span>
+
+            </div>
+
+        </div>
+
+    </article>
+
+
+    <!-- SHARINGAN -->
+
+    <article
+        class="shinobi-card"
+        data-name="sharingan"
+        data-clan="uchiha"
+        data-type="legend">
+
+        <div class="card-number">
+            08
+        </div>
+
+        <div class="card-image eye-card">
+
+            <img
+                src="{{ url_for('static', filename='images/sharingan.png') }}"
+                alt="Sharingan">
+
+            <div class="eye-ring"></div>
+
+        </div>
+
+        <div class="card-info">
+
+            <span class="card-category">
+                DOUJUTSU
+            </span>
+
+            <h2>
+                SHARINGAN
+                <small>THE EYE</small>
+            </h2>
+
+            <p>
+                An ocular ability associated with
+                the Uchiha bloodline.
+            </p>
+
+            <div class="card-bottom">
+
+                <span>
+                    DOUJUTSU
+                </span>
+
+                <span class="enter">
+                    DISCOVER →
+                </span>
+
+            </div>
+
+        </div>
+
+    </article>
+
+
+    <!-- MANGEKYO -->
+
+    <article
+        class="shinobi-card"
+        data-name="mangekyo sharingan"
+        data-clan="uchiha"
+        data-type="legend">
+
+        <div class="card-number">
+            09
+        </div>
+
+        <div class="card-image eye-card">
+
+            <img
+                src="{{ url_for('static', filename='images/mangekyo.png') }}"
+                alt="Mangekyo">
+
+            <div class="eye-ring"></div>
+
+        </div>
+
+        <div class="card-info">
+
+            <span class="card-category">
+                DOUJUTSU
+            </span>
+
+            <h2>
+                MANGEKYO
+                <small>SHARINGAN</small>
+            </h2>
+
+            <p>
+                A powerful evolution of the
+                Sharingan.
+            </p>
+
+            <div class="card-bottom">
+
+                <span>
+                    UCHIHA
+                </span>
+
+                <span class="enter">
+                    DISCOVER →
+                </span>
+
+            </div>
+
+        </div>
+
+    </article>
+
+</main>
+
+
+<!-- =====================================================
+     EMPTY SEARCH
+===================================================== -->
+
+<section class="no-results" id="noResults">
+
+    <div class="no-eye">
+        ◉
+    </div>
+
+    <h2>
+        SHINOBI NOT FOUND
+    </h2>
+
+    <p>
+        The archive contains no record matching
+        your search.
+    </p>
+
+</section>
+
+
+<!-- =====================================================
+     UCHIHA SECTION
+===================================================== -->
+
+<section class="archive-section">
+
+    <div class="archive-label">
+        ARCHIVE / UCHIHA
+    </div>
+
+    <h2>
+        BLOODLINE<br>
+        <span>OF SHADOWS</span>
+    </h2>
+
+    <p>
+        The archive continues beyond individual
+        warriors. Every shinobi is connected to
+        a larger history of clans, conflicts,
+        alliances and inherited abilities.
+    </p>
+
+</section>
+
+
+<!-- =====================================================
+     FINAL
+===================================================== -->
+
+<section class="shinobi-ending">
+
+    <div class="ending-symbol">
+        ◉
+    </div>
+
+    <p>
+        ITACHIVERSE / SHINOBI DATABASE
+    </p>
+
+    <h2>
+        EVERY LEGEND<br>
+        LEAVES A SHADOW.
+    </h2>
+
+    <a href="{{ url_for('characters') }}">
+        RETURN TO CHARACTERS →
+    </a>
+
+</section>
+
+
+<footer>
+
+    <span>
+        ITACHIVERSE
+    </span>
+
+    <span>
+        SHINOBI ARCHIVE / 2026
+    </span>
+
+</footer>
+
+
+<script src="{{ url_for('static', filename='js/shinobi.js') }}"></script>
+
+</body>
+</html>

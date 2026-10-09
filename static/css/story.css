@@ -1,0 +1,996 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    background: #030303;
+    color: #fff;
+    font-family: Georgia, serif;
+    overflow-x: hidden;
+}
+
+
+#story-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: -5;
+}
+
+
+.cinematic-vignette {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 20;
+
+    background:
+        radial-gradient(
+            circle,
+            transparent 35%,
+            rgba(0,0,0,.8) 100%
+        );
+}
+
+
+.scanlines {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 21;
+
+    opacity: .08;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            transparent 3px,
+            #fff 4px
+        );
+}
+
+
+/* NAV */
+
+.story-nav {
+    height: 82px;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 7vw;
+
+    z-index: 100;
+
+    background: rgba(3,3,3,.72);
+
+    backdrop-filter: blur(15px);
+
+    border-bottom: 1px solid rgba(255,0,0,.15);
+}
+
+
+.story-logo {
+    color: white;
+    text-decoration: none;
+
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 5px;
+}
+
+
+.story-logo span {
+    color: #b40000;
+}
+
+
+.story-nav nav {
+    display: flex;
+    gap: 40px;
+}
+
+
+.story-nav nav a {
+    color: #888;
+
+    text-decoration: none;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    transition: .3s;
+}
+
+
+.story-nav nav a:hover,
+.story-nav nav a.active {
+    color: #e00000;
+}
+
+
+/* HERO */
+
+.story-hero {
+    min-height: 100vh;
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    overflow: hidden;
+}
+
+
+.hero-copy {
+    position: relative;
+    z-index: 5;
+
+    max-width: 900px;
+}
+
+
+.hero-small {
+    color: #d00000;
+
+    letter-spacing: 7px;
+
+    font-size: 10px;
+}
+
+
+.hero-japanese {
+    margin-top: 30px;
+
+    color: #8d0000;
+
+    font-size: 30px;
+
+    letter-spacing: 15px;
+}
+
+
+.hero-copy h1 {
+    margin-top: 20px;
+
+    font-size: clamp(60px, 9vw, 145px);
+
+    line-height: .85;
+
+    letter-spacing: -7px;
+
+    text-transform: uppercase;
+}
+
+
+.hero-copy h1 span {
+    display: block;
+
+    color: transparent;
+
+    -webkit-text-stroke: 1px #aaa;
+}
+
+
+.hero-description {
+    max-width: 620px;
+
+    margin: 45px auto 0;
+
+    color: #aaa;
+
+    line-height: 1.9;
+
+    font-size: 14px;
+}
+
+
+.hero-scroll {
+    margin-top: 70px;
+
+    font-size: 9px;
+
+    letter-spacing: 5px;
+
+    color: #777;
+}
+
+
+.hero-scroll span {
+    display: block;
+
+    width: 1px;
+
+    height: 60px;
+
+    margin: 0 auto 20px;
+
+    background: linear-gradient(
+        #d00000,
+        transparent
+    );
+}
+
+
+/* ORBIT */
+
+.hero-orbit {
+    position: absolute;
+
+    width: 600px;
+    height: 600px;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    opacity: .45;
+}
+
+
+.hero-ring {
+    position: absolute;
+
+    inset: 0;
+
+    border: 1px solid
+        rgba(180,0,0,.3);
+
+    border-radius: 50%;
+}
+
+
+.ring-one {
+    animation:
+        orbitOne 18s linear infinite;
+}
+
+
+.ring-two {
+    inset: 70px;
+
+    animation:
+        orbitTwo 12s linear infinite reverse;
+}
+
+
+.ring-three {
+    inset: 150px;
+
+    animation:
+        orbitOne 8s linear infinite;
+}
+
+
+.chakra-core {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 120px;
+    height: 120px;
+
+    transform:
+        translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #ff0000,
+            #500000 40%,
+            #080000 70%
+        );
+
+    box-shadow:
+        0 0 50px #a00000,
+        0 0 150px rgba(255,0,0,.4);
+}
+
+
+.chakra-eye {
+    position: absolute;
+
+    width: 30px;
+    height: 30px;
+
+    border-radius: 50%;
+
+    border: 2px solid #ff3030;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+}
+
+
+.chakra-eye::after {
+    content: "";
+
+    position: absolute;
+
+    width: 6px;
+    height: 6px;
+
+    background: #fff;
+
+    border-radius: 50%;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+}
+
+
+@keyframes orbitOne {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+@keyframes orbitTwo {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+
+/* INTRO */
+
+.story-introduction {
+    min-height: 80vh;
+
+    padding: 180px 10vw;
+
+    position: relative;
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            #050000
+        );
+}
+
+
+.section-label {
+    color: #a00000;
+
+    font-size: 10px;
+
+    letter-spacing: 5px;
+
+    margin-bottom: 80px;
+}
+
+
+.intro-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 100px;
+}
+
+
+.intro-grid h2 {
+    font-size: clamp(45px, 6vw, 90px);
+
+    line-height: .9;
+}
+
+
+.intro-grid h2 span {
+    color: #c00000;
+}
+
+
+.intro-grid p {
+    color: #999;
+
+    line-height: 2;
+
+    margin-bottom: 30px;
+
+    max-width: 550px;
+}
+
+
+.red-text {
+    color: #d00000 !important;
+
+    letter-spacing: 5px;
+
+    font-size: 10px;
+}
+
+
+/* TIMELINE */
+
+.story-timeline-section {
+    padding: 150px 8vw;
+
+    position: relative;
+}
+
+
+.timeline-heading {
+    text-align: center;
+
+    margin-bottom: 150px;
+}
+
+
+.timeline-heading span {
+    color: #b00000;
+
+    letter-spacing: 6px;
+
+    font-size: 10px;
+}
+
+
+.timeline-heading h2 {
+    font-size: clamp(50px, 7vw, 110px);
+
+    line-height: .85;
+
+    margin-top: 20px;
+}
+
+
+.timeline-heading strong {
+    color: #a00000;
+}
+
+
+.timeline-heading p {
+    color: #666;
+
+    margin-top: 30px;
+}
+
+
+.story-line {
+    position: absolute;
+
+    left: 50%;
+
+    top: 300px;
+    bottom: 150px;
+
+    width: 1px;
+
+    background:
+        linear-gradient(
+            transparent,
+            #8b0000,
+            transparent
+        );
+}
+
+
+.story-card {
+    min-height: 620px;
+
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 100px;
+
+    align-items: center;
+
+    margin-bottom: 180px;
+
+    opacity: 0;
+
+    transform: translateY(100px);
+
+    transition:
+        opacity 1s ease,
+        transform 1s ease;
+}
+
+
+.story-card.visible {
+    opacity: 1;
+
+    transform: translateY(0);
+}
+
+
+.story-card.reverse {
+    direction: rtl;
+}
+
+
+.story-card.reverse
+.story-card-content {
+    direction: ltr;
+}
+
+
+.story-card-number {
+    position: absolute;
+
+    left: 50%;
+
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    z-index: 5;
+
+    width: 50px;
+    height: 50px;
+
+    border-radius: 50%;
+
+    display: grid;
+
+    place-items: center;
+
+    background: #050505;
+
+    border: 1px solid #8d0000;
+
+    color: #e00000;
+
+    font-size: 11px;
+}
+
+
+.story-card-image {
+    height: 620px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background: #080808;
+
+    border:
+        1px solid
+        rgba(170,0,0,.25);
+
+    transform:
+        perspective(1000px)
+        rotateY(0deg);
+
+    transition: .6s;
+}
+
+
+.story-card-image:hover {
+    transform:
+        perspective(1000px)
+        rotateY(-5deg)
+        scale(1.02);
+}
+
+
+.story-card-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+        transform 1.2s,
+        filter 1.2s;
+}
+
+
+.story-card-image:hover img {
+    transform: scale(1.08);
+
+    filter:
+        contrast(1.15)
+        brightness(.8);
+}
+
+
+.image-glow {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2;
+
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            transparent,
+            rgba(0,0,0,.8)
+        );
+
+    pointer-events: none;
+}
+
+
+.story-card-content {
+    direction: ltr;
+}
+
+
+.story-card-content > span {
+    color: #c00000;
+
+    letter-spacing: 5px;
+
+    font-size: 10px;
+}
+
+
+.story-card-content h2 {
+    font-size:
+        clamp(40px, 5vw, 80px);
+
+    line-height: .9;
+
+    margin:
+        20px 0 30px;
+}
+
+
+.story-card-content p {
+    max-width: 480px;
+
+    color: #999;
+
+    line-height: 1.9;
+
+    margin-bottom: 40px;
+}
+
+
+.story-card-content a {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 25px;
+
+    color: white;
+
+    text-decoration: none;
+
+    border-bottom:
+        1px solid #700000;
+
+    padding-bottom: 12px;
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+
+    transition: .3s;
+}
+
+
+.story-card-content a:hover {
+    color: #ff2020;
+
+    gap: 35px;
+}
+
+
+/* CHAKRA */
+
+.chakra-section {
+    min-height: 100vh;
+
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    align-items: center;
+
+    padding: 100px 8vw;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 75% 50%,
+            rgba(100,0,0,.25),
+            transparent 40%
+        );
+}
+
+
+.chakra-copy span {
+    color: #c00000;
+
+    letter-spacing: 5px;
+
+    font-size: 10px;
+}
+
+
+.chakra-copy h2 {
+    font-size:
+        clamp(50px, 7vw, 100px);
+
+    line-height: .9;
+
+    margin-top: 25px;
+}
+
+
+.chakra-copy strong {
+    display: block;
+
+    color: #a00000;
+}
+
+
+.chakra-copy p {
+    color: #777;
+
+    max-width: 400px;
+
+    margin-top: 40px;
+
+    line-height: 1.8;
+}
+
+
+.chakra-stage {
+    height: 600px;
+
+    display: grid;
+
+    place-items: center;
+
+    perspective: 1000px;
+}
+
+
+.chakra-orb-large {
+    width: 300px;
+    height: 300px;
+
+    position: relative;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #ff4d4d,
+            #a00000 20%,
+            #220000 55%,
+            #000 75%
+        );
+
+    box-shadow:
+        0 0 50px #a00000,
+        0 0 120px rgba(255,0,0,.4);
+
+    animation:
+        floatingOrb 5s ease-in-out infinite;
+}
+
+
+.orb-ring {
+    position: absolute;
+
+    inset: -30px;
+
+    border:
+        1px solid
+        rgba(255,0,0,.5);
+
+    border-radius: 50%;
+
+    animation:
+        orbitOne 8s linear infinite;
+}
+
+
+.orb-ring.second {
+    inset: -60px;
+
+    border-color:
+        rgba(255,0,0,.15);
+
+    animation-duration: 14s;
+
+    animation-direction: reverse;
+}
+
+
+.orb-core {
+    position: absolute;
+
+    width: 80px;
+    height: 80px;
+
+    border-radius: 50%;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    background: #ff1010;
+
+    box-shadow:
+        0 0 40px #ff0000;
+}
+
+
+@keyframes floatingOrb {
+
+    0%,100% {
+        transform:
+            translateY(-20px)
+            rotateX(0)
+            rotateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(20px)
+            rotateX(10deg)
+            rotateY(20deg);
+    }
+
+}
+
+
+/* END */
+
+.story-ending {
+    min-height: 80vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 100px 20px;
+}
+
+
+.story-ending span {
+    color: #b00000;
+
+    font-size: 10px;
+
+    letter-spacing: 6px;
+}
+
+
+.story-ending h2 {
+    font-size:
+        clamp(60px, 10vw, 150px);
+
+    line-height: .8;
+
+    margin: 30px 0;
+}
+
+
+.story-ending p {
+    color: #777;
+
+    margin-bottom: 40px;
+}
+
+
+.story-ending a {
+    color: white;
+
+    text-decoration: none;
+
+    letter-spacing: 4px;
+
+    font-size: 10px;
+
+    border-bottom: 1px solid #700000;
+
+    padding-bottom: 15px;
+}
+
+
+/* MOBILE */
+
+@media(max-width: 800px) {
+
+    .story-nav {
+        padding: 0 25px;
+    }
+
+    .story-nav nav {
+        display: none;
+    }
+
+    .intro-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .story-line {
+        display: none;
+    }
+
+    .story-card,
+    .story-card.reverse {
+        grid-template-columns: 1fr;
+
+        direction: ltr;
+
+        gap: 30px;
+    }
+
+    .story-card-number {
+        display: none;
+    }
+
+    .story-card-image {
+        height: 450px;
+    }
+
+    .chakra-section {
+        grid-template-columns: 1fr;
+    }
+
+    .chakra-stage {
+        height: 400px;
+    }
+
+}

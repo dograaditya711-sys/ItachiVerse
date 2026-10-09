@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ItachiVerse — Battle Arena</title>
+
+
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/battle.css') }}">
+
+</head>
+
+
+<body class="battle-page">
+
+
+<!-- =====================================================
+     CINEMATIC BACKGROUND
+===================================================== -->
+
+<div class="battle-background">
+
+    <!-- Optional video.
+         Put battle-bg.mp4 inside static/videos/
+         If you don't have the video, CSS background
+         will still work.
+    -->
+
+    <video
+        class="battle-video"
+        autoplay
+        muted
+        loop
+        playsinline>
+
+        <source
+            src="{{ url_for('static', filename='videos/battle-bg.mp4') }}"
+            type="video/mp4">
+
+    </video>
+
+
+    <div class="video-overlay"></div>
+
+    <div class="red-glow glow-one"></div>
+    <div class="red-glow glow-two"></div>
+
+</div>
+
+
+<!-- =====================================================
+     PARTICLE CANVAS
+===================================================== -->
+
+<canvas id="battleCanvas"></canvas>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="battle-navbar">
+
+    <a href="/" class="battle-logo">
+        ITACHI<span>VERSE</span>
+    </a>
+
+
+    <div class="battle-nav-links">
+
+        <a href="/">HOME</a>
+
+        <a href="/characters">
+            CHARACTERS
+        </a>
+
+        <a href="/shinobi">
+            DATABASE
+        </a>
+
+        <a href="/explore">
+            EXPLORE
+        </a>
+
+    </div>
+
+
+    <div class="arena-status">
+
+        <span class="status-dot"></span>
+
+        ONLINE
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<header class="battle-hero">
+
+    <div class="hero-small">
+        SHINOBI COMBAT SYSTEM
+    </div>
+
+
+    <h1>
+        BATTLE
+        <span>ARENA</span>
+    </h1>
+
+
+    <p>
+        ENTER THE SHINOBI WARZONE
+    </p>
+
+
+    <div class="hero-line"></div>
+
+
+    <div class="hero-status">
+
+        <span>
+            ● LIVE COMBAT SIMULATION
+        </span>
+
+        <span id="heroBattleState">
+            WAITING FOR BATTLE
+        </span>
+
+    </div>
+
+</header>
+
+<section class="battle-intro-3d">
+
+    <div class="battle-intro-grid"></div>
+
+    <div class="battle-orbit orbit-one"></div>
+    <div class="battle-orbit orbit-two"></div>
+
+    <div class="battle-energy energy-left"></div>
+    <div class="battle-energy energy-right"></div>
+
+    <div class="battle-intro-content">
+
+        <span class="battle-system-label">
+            SHINOBI COMBAT SYSTEM // ONLINE
+        </span>
+
+        <h1>
+            SHADOW
+            <span>CLASH</span>
+        </h1>
+
+        <p>
+            ENTER THE 3D SHINOBI WARZONE
+        </p>
+
+        <div class="battle-status-live">
+            <i></i>
+            LIVE COMBAT SIMULATION
+        </div>
+
+    </div>
+
+    <!-- FLOATING SHINOBI SYMBOLS -->
+
+    <div class="ninja-symbol symbol-one">卍</div>
+    <div class="ninja-symbol symbol-two">忍</div>
+    <div class="ninja-symbol symbol-three">火</div>
+    <div class="ninja-symbol symbol-four">眼</div>
+
+</section>
+<section class="combat-hud-3d">
+
+    <div class="hud-card">
+
+        <span class="hud-label">
+            BATTLE STATUS
+        </span>
+
+        <strong id="hudBattleStatus">
+            WAITING FOR COMBAT
+        </strong>
+
+        <div class="hud-line"></div>
+
+        <div class="hud-stat">
+            <span>PLAYER</span>
+            <b id="hudPlayerName">SASUKE</b>
+        </div>
+
+        <div class="hud-stat">
+            <span>ENEMY</span>
+            <b id="hudEnemyName">MADARA</b>
+        </div>
+
+    </div>
+
+
+    <div class="hud-center">
+
+        <div class="hud-ring ring-a"></div>
+        <div class="hud-ring ring-b"></div>
+        <div class="hud-ring ring-c"></div>
+
+        <span>VS</span>
+
+    </div>
+
+
+    <div class="hud-card">
+
+        <span class="hud-label">
+            COMBAT CORE
+        </span>
+
+        <strong id="hudCombatCore">
+            READY
+        </strong>
+
+        <div class="hud-line"></div>
+
+        <div class="hud-stat">
+            <span>ROUND</span>
+            <b id="battleRound">01</b>
+        </div>
+
+        <div class="hud-stat">
+            <span>MODE</span>
+            <b>3D ARENA</b>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+     BATTLE ARENA
+===================================================== -->
+
+<main class="battle-wrapper">
+
+
+<section class="battle-arena" id="battleArena">
+
+
+    <!-- ARENA TOP HUD -->
+
+    <div class="arena-hud">
+
+
+        <div class="hud-item">
+
+            <small>
+                MATCH
+            </small>
+
+            <strong>
+                UCHIHA WAR
+            </strong>
+
+        </div>
+
+
+        <div class="battle-clock">
+
+            <small>
+                BATTLE TIME
+            </small>
+
+            <strong id="battleTimer">
+                00:00
+            </strong>
+
+        </div>
+
+
+        <div class="hud-item right">
+
+            <small>
+                STATUS
+            </small>
+
+            <strong id="battleStatus">
+                READY
+            </strong>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ARENA FLOOR -->
+
+    <div class="arena-floor">
+
+        <div class="floor-grid"></div>
+
+        <div class="floor-ring ring-one"></div>
+        <div class="floor-ring ring-two"></div>
+        <div class="floor-ring ring-three"></div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         PLAYER
+    ================================================= -->
+
+    <section
+        class="fighter-card player-card"
+        id="playerCard">
+
+
+        <div class="fighter-label">
+
+            <span>
+                01
+            </span>
+
+            PLAYER
+
+        </div>
+
+
+        <div class="fighter-image-wrap">
+
+
+            <div class="character-aura"></div>
+
+
+            <div class="fighter-ring"></div>
+
+
+            <img
+                id="playerImage"
+                src="{{ url_for('static', filename='images/itachi.png') }}"
+                alt="Player">
+
+
+            <div
+                class="damage-number"
+                id="playerDamage">
+            </div>
+
+
+        </div>
+
+
+        <div class="fighter-info">
+
+
+            <div class="fighter-name">
+
+                <h2 id="playerName">
+                    ITACHI
+                </h2>
+
+                <span id="playerClan">
+                    UCHIHA CLAN
+                </span>
+
+            </div>
+
+
+            <!-- HP -->
+
+            <div class="stat">
+
+                <div class="stat-top">
+
+                    <span>
+                        HP
+                    </span>
+
+                    <strong id="playerHPText">
+                        100 / 100
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-bar">
+
+                    <div
+                        class="hp-fill player-hp"
+                        id="playerHealth">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CHAKRA -->
+
+            <div class="stat">
+
+                <div class="stat-top">
+
+                    <span>
+                        CHAKRA
+                    </span>
+
+                    <strong id="playerChakraText">
+                        100 / 100
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-bar chakra-bar">
+
+                    <div
+                        class="chakra-fill"
+                        id="playerChakra">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         CENTER
+    ================================================= -->
+
+    <section class="battle-center">
+
+
+        <div class="versus-symbol">
+
+            <div class="vs-circle">
+
+                <span>
+                    戦
+                </span>
+
+            </div>
+
+
+            <div class="vs-text">
+                VS
+            </div>
+
+        </div>
+
+
+
+        <div class="battle-message"
+             id="battleMessage">
+
+            BATTLE READY
+
+        </div>
+
+
+
+        <button
+            class="start-battle-btn"
+            id="startBattleBtn">
+
+            <span>
+                START BATTLE
+            </span>
+
+            <b>
+                →
+            </b>
+
+        </button>
+
+
+        <button
+            class="reset-btn"
+            id="resetBtn">
+
+            RESET ARENA
+
+        </button>
+
+
+        <div class="turn-indicator">
+
+            <span class="turn-dot"></span>
+
+            <span id="turnText">
+                WAITING
+
+            </span>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         ENEMY
+    ================================================= -->
+
+    <section
+        class="fighter-card enemy-card"
+        id="enemyCard">
+
+
+        <div class="fighter-label enemy-label">
+
+            OPPONENT
+
+            <span>
+                02
+            </span>
+
+        </div>
+
+
+        <div class="fighter-image-wrap">
+
+
+            <div class="character-aura enemy-aura"></div>
+
+
+            <div class="fighter-ring"></div>
+
+
+            <img
+                id="enemyImage"
+                src="{{ url_for('static', filename='images/madara.png') }}"
+                alt="Enemy">
+
+
+            <div
+                class="damage-number"
+                id="enemyDamage">
+            </div>
+
+
+        </div>
+
+
+        <div class="fighter-info">
+
+
+            <div class="fighter-name">
+
+                <h2 id="enemyName">
+                    MADARA
+                </h2>
+
+                <span id="enemyClan">
+                    UCHIHA CLAN
+                </span>
+
+            </div>
+
+
+            <!-- HP -->
+
+            <div class="stat">
+
+                <div class="stat-top">
+
+                    <span>
+                        HP
+                    </span>
+
+                    <strong id="enemyHPText">
+                        100 / 100
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-bar">
+
+                    <div
+                        class="hp-fill enemy-hp"
+                        id="enemyHealth">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CHAKRA -->
+
+            <div class="stat">
+
+                <div class="stat-top">
+
+                    <span>
+                        CHAKRA
+                    </span>
+
+                    <strong id="enemyChakraText">
+                        100 / 100
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-bar chakra-bar">
+
+                    <div
+                        class="chakra-fill enemy-chakra"
+                        id="enemyChakra">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     TECHNIQUE CONTROL
+===================================================== -->
+
+<section class="technique-section">
+
+
+    <div class="section-heading">
+
+        <span>
+            SHINOBI CONTROL SYSTEM
+        </span>
+
+        <h2>
+            CHOOSE YOUR
+            <strong>TECHNIQUE</strong>
+        </h2>
+
+        <p>
+            Every technique consumes chakra.
+            Choose your attack carefully.
+        </p>
+
+    </div>
+
+
+
+    <div class="technique-grid">
+
+
+        <button
+            class="technique-card"
+            data-action="attack"
+            id="attackBtn">
+
+            <div class="technique-number">
+                01
+            </div>
+
+            <div class="technique-icon">
+                ◉
+            </div>
+
+            <h3>
+                SHARINGAN
+            </h3>
+
+            <p>
+                Precision Strike
+            </p>
+
+            <span>
+                POWER 18
+            </span>
+
+        </button>
+
+
+
+        <button
+            class="technique-card"
+            data-action="chakra"
+            id="chakraBtn">
+
+            <div class="technique-number">
+                02
+            </div>
+
+            <div class="technique-icon">
+                火
+            </div>
+
+            <h3>
+                AMATERASU
+            </h3>
+
+            <p>
+                Black Flame
+            </p>
+
+            <span>
+                POWER 25
+            </span>
+
+        </button>
+
+
+
+        <button
+            class="technique-card ultimate"
+            data-action="ultimate"
+            id="ultimateBtn">
+
+            <div class="technique-number">
+                03
+            </div>
+
+            <div class="technique-icon">
+                ⚔
+            </div>
+
+            <h3>
+                SUSANOO
+            </h3>
+
+            <p>
+                Ultimate Power
+            </p>
+
+            <span>
+                POWER 35
+            </span>
+
+        </button>
+
+
+
+        <button
+            class="technique-card"
+            data-action="guard"
+            id="guardBtn">
+
+            <div class="technique-number">
+                04
+            </div>
+
+            <div class="technique-icon">
+                眼
+            </div>
+
+            <h3>
+                MANGEKYŌ
+            </h3>
+
+            <p>
+                Defensive Focus
+            </p>
+
+            <span>
+                GUARD
+            </span>
+
+        </button>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     WARRIOR SELECTION
+===================================================== -->
+
+<section class="warrior-section">
+
+
+    <div class="section-heading">
+
+        <span>
+            SHINOBI DATABASE
+        </span>
+
+        <h2>
+            CHOOSE YOUR
+            <strong>WARRIOR</strong>
+        </h2>
+
+    </div>
+
+
+
+    <div class="warrior-grid">
+
+
+        <button
+            class="warrior-card active"
+            data-character="itachi"
+            data-name="ITACHI"
+            data-image="{{ url_for('static', filename='images/itachi.png') }}">
+
+            <div class="warrior-image">
+
+                <img
+                    src="{{ url_for('static', filename='images/itachi.png') }}"
+                    alt="Itachi">
+
+            </div>
+
+            <div class="warrior-number">
+                01
+            </div>
+
+            <h3>
+                ITACHI
+            </h3>
+
+            <p>
+                GENJUTSU MASTER
+            </p>
+
+        </button>
+
+
+
+        <button
+            class="warrior-card"
+            data-character="sasuke"
+            data-name="SASUKE"
+            data-image="{{ url_for('static', filename='images/sasuke.png') }}">
+
+            <div class="warrior-image">
+
+                <img
+                    src="{{ url_for('static', filename='images/sasuke.png') }}"
+                    alt="Sasuke">
+
+            </div>
+
+            <div class="warrior-number">
+                02
+            </div>
+
+            <h3>
+                SASUKE
+            </h3>
+
+            <p>
+                AVENGER
+            </p>
+
+        </button>
+
+
+
+        <button
+            class="warrior-card"
+            data-character="madara"
+            data-name="MADARA"
+            data-image="{{ url_for('static', filename='images/madara.png') }}">
+
+            <div class="warrior-image">
+
+                <img
+                    src="{{ url_for('static', filename='images/madara.png') }}"
+                    alt="Madara">
+
+            </div>
+
+            <div class="warrior-number">
+                03
+            </div>
+
+            <h3>
+                MADARA
+            </h3>
+
+            <p>
+                UCHIHA LEGEND
+            </p>
+
+        </button>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     BATTLE LOG
+===================================================== -->
+
+<section class="battle-log-section">
+
+
+    <div class="section-heading">
+
+        <span>
+            COMBAT RECORD
+        </span>
+
+        <h2>
+            BATTLE
+            <strong>LOG</strong>
+        </h2>
+
+    </div>
+
+
+
+    <div class="battle-terminal">
+
+
+        <div class="terminal-header">
+
+            <span class="terminal-dot"></span>
+            <span class="terminal-dot"></span>
+            <span class="terminal-dot"></span>
+
+            <span class="terminal-title">
+                SHINOBI_COMBAT_TERMINAL
+            </span>
+
+        </div>
+
+
+        <div
+            class="terminal-body"
+            id="battleLog">
+
+            <div class="log-line">
+
+                <span>
+                    SYSTEM
+                </span>
+
+                >
+                Combat arena initialized.
+
+            </div>
+
+
+            <div class="log-line">
+
+                <span>
+                    SYSTEM
+                </span>
+
+                >
+                Waiting for player input...
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     BATTLE STATS
+===================================================== -->
+
+<section class="stats-section">
+
+
+    <div class="section-heading">
+
+        <span>
+            COMBAT ANALYTICS
+        </span>
+
+        <h2>
+            ARENA
+            <strong>STATISTICS</strong>
+        </h2>
+
+    </div>
+
+
+
+    <div class="stats-grid">
+
+
+        <div class="stat-panel">
+
+            <span>
+                TOTAL ATTACKS
+            </span>
+
+            <strong id="totalAttacks">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="stat-panel">
+
+            <span>
+                DAMAGE DEALT
+            </span>
+
+            <strong id="damageDealt">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="stat-panel">
+
+            <span>
+                CHAKRA USED
+            </span>
+
+            <strong id="chakraUsed">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="stat-panel">
+
+            <span>
+                COMBO
+            </span>
+
+            <strong id="comboCount">
+                0
+            </strong>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     LORE
+===================================================== -->
+
+<section class="battle-lore">
+
+
+    <div class="lore-symbol">
+        戦
+    </div>
+
+
+    <span>
+        THE SHINOBI WORLD
+    </span>
+
+
+    <h2>
+        EVERY BATTLE
+        <br>
+        CREATES A
+        <strong>LEGEND.</strong>
+    </h2>
+
+
+    <p>
+        Strength is only one part of a shinobi.
+        Chakra, timing, strategy and will determine
+        the outcome of every battle.
+    </p>
+
+
+    <div class="lore-grid">
+
+
+        <div>
+
+            <strong>
+                01
+            </strong>
+
+            <h3>
+                POWER
+            </h3>
+
+            <p>
+                Strength can destroy an opponent,
+                but control determines victory.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <strong>
+                02
+            </strong>
+
+            <h3>
+                CHAKRA
+            </h3>
+
+            <p>
+                Manage your chakra and choose
+                the perfect moment to strike.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <strong>
+                03
+            </strong>
+
+            <h3>
+                WILL
+            </h3>
+
+            <p>
+                Every warrior carries a reason
+                to enter the battlefield.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="battle-footer">
+
+
+    <div class="footer-logo">
+        ITACHI<span>VERSE</span>
+    </div>
+
+
+    <p>
+        THE SHINOBI WORLD AWAITS.
+    </p>
+
+
+    <h2>
+        ONLY ONE REMAINS.
+    </h2>
+
+
+    <a href="/characters">
+        ← RETURN TO CHARACTERS
+    </a>
+
+
+</footer>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     VICTORY SCREEN
+===================================================== -->
+
+<div
+    class="battle-result"
+    id="battleResult">
+
+
+    <div class="result-box">
+
+
+        <div class="result-kanji">
+            戦
+        </div>
+
+
+        <span id="resultSmall">
+            COMBAT COMPLETE
+        </span>
+
+
+        <h2 id="resultTitle">
+            VICTORY
+        </h2>
+
+
+        <p id="resultText">
+            THE ENEMY HAS FALLEN.
+        </p>
+
+
+        <button id="resultReset">
+            FIGHT AGAIN
+        </button>
+
+
+    </div>
+
+
+</div>
+
+
+
+<script src="{{ url_for('static', filename='js/battle.js') }}"></script>
+
+
+</body>
+
+</html>

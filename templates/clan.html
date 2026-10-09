@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Uchiha Clan | ItachiVerse</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+background:#050505;
+color:white;
+font-family:Arial,sans-serif;
+}
+nav{
+padding:22px 7%;
+position:fixed;
+top:0;
+width:100%;
+z-index:5;
+background:rgba(0,0,0,.7);
+backdrop-filter:blur(15px);
+display:flex;
+justify-content:space-between;
+}
+.logo{color:#e50914;font-weight:900;letter-spacing:4px}
+nav a{color:#aaa;text-decoration:none;margin-left:25px}
+.hero{
+min-height:100vh;
+padding:140px 8%;
+background:
+radial-gradient(circle at 50% 40%,rgba(160,0,0,.25),transparent 35%),
+#050505;
+}
+.tag{
+color:#e50914;
+letter-spacing:7px;
+}
+h1{
+font-size:clamp(60px,11vw,150px);
+line-height:.8;
+margin:25px 0;
+}
+.intro{
+max-width:800px;
+color:#999;
+line-height:1.9;
+}
+.cards{
+margin-top:70px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+}
+.card{
+padding:30px;
+border:1px solid #292929;
+background:linear-gradient(145deg,#101010,#070707);
+transition:.3s;
+}
+.card:hover{
+transform:translateY(-8px);
+border-color:#e50914;
+}
+.card h2{margin-bottom:12px}
+.card p{color:#888;line-height:1.7}
+</style>
+</head>
+
+<body>
+
+<nav>
+<div class="logo">ITACHIVERSE</div>
+<div>
+<a href="/">HOME</a>
+<a href="/story">STORY</a>
+<a href="/shinobi">SHINOBI</a>
+</div>
+</nav>
+
+<section class="hero">
+
+<div class="tag">UCHIHA DATABASE</div>
+
+<h1>UCHIHA<br>CLAN</h1>
+
+<p class="intro">
+One of the most powerful clans connected to the history of the
+shinobi world. The Uchiha were known for their exceptional
+chakra, combat ability and the Sharingan.
+</p>
+
+<div class="cards">
+
+<div class="card">
+<h2>SHARINGAN</h2>
+<p>The legendary ocular ability associated with the Uchiha.</p>
+</div>
+
+<div class="card">
+<h2>MANGEKYO</h2>
+<p>An advanced evolution of the Sharingan with unique abilities.</p>
+</div>
+
+<div class="card">
+<h2>FIRE STYLE</h2>
+<p>A signature elemental technique associated with the clan.</p>
+</div>
+
+<div class="card">
+<h2>UCHIHA HISTORY</h2>
+<p>A clan history deeply connected to the formation of Konoha.</p>
+</div>
+
+</div>
+
+</section>
+
+</body>
+</html>
